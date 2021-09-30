@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  drill-admin:
+    image: drill4j/admin:${BACK_VERSION}
+    container_name: drill-admin
+    environment:
+      - TEST2CODE_PLUGIN_VERSION=${TEST2CODE_PLUGIN_VERSION}
+      - TEST2CODE_PLUGIN_URL=${TEST2CODE_PLUGIN_URL}
+      - JAVA_TOOL_OPTIONS="-Dplugin.feature.drealtime=true"
+      - LOG_LEVEL=trace
+      - DRILL_DEFAULT_PACKAGES=org/springframework/samples/petclinic
+    ports:
+      - 9090:8090
+      - 6006:5006
+    networks:
+      - drill4j-dev-network
+
+  admin-ui:
+    image: admin-ui-cypress:latest
+    container_name: admin-ui
+    environment:
+      - UI_PLUGINS_URLS=test2code#http://127.0.0.1:7000/Drill4J-test-to-code.js
+    ports:
+      - 9091:8080
+    networks:
+      - drill4j-dev-network
+
+  browser-proxy:
+    container_name: browser-proxy
+    image: drill4j/browser-proxy:0.2.0
+    ports:
+      - 7777:7777
+    networks:
+      - drill4j-dev-network
+networks:
+  drill4j-dev-network:
