@@ -1,0 +1,78 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:cypress/recommended"
+  ],
+  "plugins": [
+    "prettier",
+    "drill4j",
+    "cypress"
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+  },
+  "env": {
+    "browser": true,
+    "cypress/globals": true
+  },
+  "root": true,
+  "ignorePatterns": [
+    "src/utils/*spec.ts",
+    "dist"
+  ],
+  "rules": {
+    "drill4j/license-header": [
+      "error"
+    ],
+    "import/prefer-default-export": 0,
+    "import/extensions": 0,
+    "no-use-before-define": 0,
+    "no-unused-expressions": 0,
+    "import/no-extraneous-dependencies": [
+      0,
+      {
+        "devDependencies": [
+          "**/spec.tsx",
+          "**/spec.ts"
+        ]
+      }
+    ],
+    "eofline": 0,
+    "arrow-parens": 0,
+    "ordered-imports": 0,
+    "object-literal-sort-keys": 0,
+    "no-empty": 2,
+    "no-unused-expression": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 140
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "operator-linebreak": 0,
+    "implicit-arrow-linebreak": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "quotes": [
+      2,
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "cypress/no-assigning-return-values": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-unnecessary-waiting": "warn",
+    "cypress/no-async-tests": "error"
+  },
+  "globals": {
+    "JSX": true
+  }
+}
