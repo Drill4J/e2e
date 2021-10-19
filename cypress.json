@@ -1,5 +1,10 @@
 {
   "viewportWidth": 1440,
   "viewportHeight": 800,
-  "defaultCommandTimeout": 15000
+  "defaultCommandTimeout": 15000,
+  "env": {
+    "BASE_URL": "http://localhost:9091",
+    "SINGLE_JAVA_AGENT_ID": "dev-pet-standalone"
+  },
+  "testFiles": "**/*.spec.js"
 }

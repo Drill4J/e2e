@@ -13,6 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BASE_URL } from "../fixtures/constants.js";
 
-export const convertUrl = (url) => `${BASE_URL}${url}`;
+export const convertUrl = (url) => `${Cypress.env("BASE_URL")}${url}`;

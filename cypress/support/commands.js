@@ -38,3 +38,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import axios from "axios";
+import { convertUrl } from "../utils";
+
+const TOKEN_HEADER = "Authorization";
+const TOKEN_KEY = "auth_token";
+
+Cypress.Commands.add("login", { }, () => {
+  cy.intercept("/api/login").as("login");
+
+  cy.wrap(null).then(async () => {
+    const response = await axios.post(convertUrl("/api/login"));
+    const authToken = response.headers[TOKEN_HEADER.toLowerCase()];
+    if (authToken) {
+      localStorage.setItem(TOKEN_KEY, authToken);
+    }
+  });
+  cy.wait(["@login"]);
+});
+
+Cypress.Commands.add("getByDataTest", (selector, ...args) => cy.get(`[data-test="${selector}"]`, ...args));
