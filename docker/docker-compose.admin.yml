@@ -20,7 +20,7 @@ services:
     image: admin-ui-cypress:latest
     container_name: admin-ui
     environment:
-      - UI_PLUGINS_URLS=test2code#http://127.0.0.1:7000/Drill4J-test-to-code.js
+      - UI_PLUGINS_URLS=test2code#http://localhost:8034/Drill4J-test-to-code.js
     ports:
       - 9091:8080
     networks:
