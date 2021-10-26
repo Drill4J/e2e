@@ -1,5 +1,5 @@
 {
-  "agentId": "dev-per-standalone",
+  "agentId": "dev-pet-standalone",
   "builds": {
     "0.1.0": {
       "coverage": "17.1",
@@ -112,7 +112,7 @@
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "0"
+            "associatedTestsCount": "1"
           }
         }
       },
