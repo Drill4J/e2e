@@ -5,7 +5,7 @@ services:
     image: drill4j/petclinic-autotests-execute:0.1.0
     container_name: start-petclinic-tests
     environment:
-      - petclinicUrl=http://host.docker.internal:${petclinicPort}
+      - petclinicUrl=http://host.docker.internal:${PETCLINIC_PORT}
       - adminHost=host.docker.internal
       - adminPort=9090
-      - agentId=${agentId}
+      - agentId=${AGENT_ID}

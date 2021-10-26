@@ -31,7 +31,7 @@ services:
       #- ./distr:/data
       - agent-files:/data
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress}:8090,agentId=customer-service,groupId=${groupId},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${ADMIN_ADDRESS}:8090,agentId=customer-service,groupId=${GROUP_ID},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
     depends_on:
       config-server:
         condition: service_started
@@ -53,7 +53,7 @@ services:
       #- ./distr:/data
       - agent-files:/data
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress}:8090,agentId=visits-service,groupId=${groupId},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${ADMIN_ADDRESS}:8090,agentId=visits-service,groupId=${GROUP_ID},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
     depends_on:
       config-server:
         condition: service_started
@@ -75,7 +75,7 @@ services:
       #- ./distr:/data
       - agent-files:/data
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress}:8090,agentId=vets-service,groupId=${groupId},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${ADMIN_ADDRESS}:8090,agentId=vets-service,groupId=${GROUP_ID},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
     depends_on:
       config-server:
         condition: service_started
@@ -97,7 +97,7 @@ services:
       #- ./distr:/data
       - agent-files:/data
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress}:8090,agentId=api-gateway,groupId=${groupId},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${ADMIN_ADDRESS}:8090,agentId=api-gateway,groupId=${GROUP_ID},buildVersion=${PET_MCR_BUILD},logLevel=${LOG_LEVEL}"
     depends_on:
       config-server:
         condition: service_started
