@@ -1,0 +1,187 @@
+{
+  "groupId": "dev-pet-mcr",
+  "agentsCount": "4",
+  "builds": {
+    "0.1.0": {
+      "summary": {
+        "coverage": "9.9"
+      },
+      "agents": {
+        "customer-service": {
+          "coverage": "15.9",
+          "testsCount": "10",
+          "packagesCount": "3",
+          "packages": {
+            "org/springframework/samples/petclinic/customers": {
+              "methodsTotal": "2",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/customers/model": {
+              "methodsTotal": "32",
+              "coverage": "50.5",
+              "methodsCovered": "20",
+              "associatedTestsCount": "1"
+            },
+            "org/springframework/samples/petclinic/customers/web": {
+              "methodsTotal": "45",
+              "coverage": "6.2",
+              "methodsCovered": "1",
+              "associatedTestsCount": "1"
+            }
+          },
+          "testsWithCoveredMethods": {
+            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "15.9",
+              "methodsCovered": "21"
+            }
+          }
+        },
+        "visits-service": {
+          "coverage": "42.9",
+          "testsCount": "10",
+          "packagesCount": "3",
+          "packages": {
+            "org/springframework/samples/petclinic/visits": {
+              "methodsTotal": "2",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/visits/model": {
+              "methodsTotal": "9",
+              "coverage": "57.8",
+              "methodsCovered": "7",
+              "associatedTestsCount": "1"
+            },
+            "org/springframework/samples/petclinic/visits/web": {
+              "methodsTotal": "5",
+              "coverage": "34.2",
+              "methodsCovered": "1",
+              "associatedTestsCount": "1"
+            }
+          },
+          "testsWithCoveredMethods": {
+            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "42.9",
+              "methodsCovered": "8"
+            }
+          }
+        },
+        "api-gateway": {
+          "coverage": "0",
+          "testsCount": "0",
+          "packagesCount": "4",
+          "packages": {
+            "org/springframework/samples/petclinic/api": {
+              "methodsTotal": "9",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/api/application": {
+              "methodsTotal": "6",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/api/boundary/web": {
+              "methodsTotal": "10",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/api/dto": {
+              "methodsTotal": "58",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            }
+          },
+          "testsWithCoveredMethods": {}
+        },
+        "vets-service": {
+          "coverage": "28.4",
+          "testsCount": "10",
+          "packagesCount": "4",
+          "packages": {
+            "org/springframework/samples/petclinic/vets": {
+              "methodsTotal": "2",
+              "coverage": "0",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/vets/model": {
+              "methodsTotal": "16",
+              "coverage": "60.8",
+              "methodsCovered": "10",
+              "associatedTestsCount": "1"
+            },
+            "org/springframework/samples/petclinic/vets/system": {
+              "methodsTotal": "8",
+              "coverage": "8",
+              "methodsCovered": "0",
+              "associatedTestsCount": "n/a"
+            },
+            "org/springframework/samples/petclinic/vets/web": {
+              "methodsTotal": "2",
+              "coverage": "40",
+              "methodsCovered": "1",
+              "associatedTestsCount": "1"
+            }
+          },
+          "testsWithCoveredMethods": {
+            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "28.4",
+              "methodsCovered": "11"
+            }
+          }
+        }
+      }
+    },
+    "0.2.0": {
+      "summary": {
+        "coverage": "2.4",
+        "initialRisks": "5",
+        "risksAfterRunTests": "4",
+        "initialTestsToRun": "3",
+        "testsToRunAfterRunTests": "2"
+      },
+      "customer-service": {
+        "coverage": "17.3",
+        "initialRisks": "3",
+        "risksAfterRunTests": "0",
+        "initialTestsToRun": "1",
+        "testsToRunAfterRunTests": "0"
+      },
+      "visits-service": {
+        "coverage": "44.7",
+        "initialRisks": "1",
+        "risksAfterRunTests": "0",
+        "initialTestsToRun": "1",
+        "testsToRunAfterRunTests": "0"
+      },
+      "api-gateway": {
+        "coverage": "0",
+        "initialRisks": "0",
+        "risksAfterRunTests": "0",
+        "initialTestsToRun": "0",
+        "testsToRunAfterRunTests": "0"
+      },
+      "vets-service": {
+        "coverage": "0",
+        "initialRisks": "1",
+        "risksAfterRunTests": "0",
+        "initialTestsToRun": "01",
+        "testsToRunAfterRunTests": "0"
+      }
+    }
+  }
+}
