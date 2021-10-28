@@ -14,3 +14,7 @@
  * limitations under the License.
  */
 import "./commands";
+import "./tests/methods-table.spec";
+import "./tests/tests-table.spec";
+import "./tests/covered-methods-pane.spec";
+import "./tests/associated-tests-pane.spec";

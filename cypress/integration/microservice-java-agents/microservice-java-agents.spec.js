@@ -25,7 +25,7 @@ context("_", () => {
   //   cy.wait(30000);
   //   cy.task("startPetclinicMicroservice", { build: "0.1.0" });
   // });
-  //
+
   beforeEach(() => {
     cy.login();
     cy.visit(convertUrl("/"));
@@ -43,6 +43,7 @@ context("_", () => {
   //     cy.get('[data-test="wizard:finishng-button"]').click();
   //
   //     cy.wait("@registerGroup", { timeout: 60000 });
+  //     // TODO check redirect and success message
   //   });
   // });
 
@@ -54,48 +55,86 @@ context("_", () => {
 
     context("Initial builds", () => {
       const initialBuildData = data.builds["0.1.0"];
-
-      // before(() => {
+      // it("finish all scope before collect coverage", () => { // temporal hack. Not all services displayed before we finish all scopes
+      //   cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
+      //
+      //   cy.getByDataTest("test-to-code-plugin:list-row").should("not.have.length", 0);
+      //   // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
+      //   cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
+      //   cy.get('[data-test="menu:item:finish-all-scopes"]').click();
+      //   cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
+      //
+      //   cy.wait("@finish-all-scopes", { timeout: 30000 });
+      //
+      //   cy.getByDataTest("message-panel:text").should("exist");
       //   cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 200000 });
       // });
+      //
+      // it("Finish all scopes after the tests finished executing", () => {
+      //   cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
+      //
+      //   cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
+      //   // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
+      //   cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
+      //   cy.get('[data-test="menu:item:finish-all-scopes"]').click();
+      //   cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
+      //
+      //   cy.wait("@finish-all-scopes", { timeout: 30000 });
+      //
+      //   cy.getByDataTest("message-panel:text").should("exist");
+      // });
+      //
+      // context("_", () => { // need to save order of execution
+      //   it("Check the summary coverage percentage after run tests", () => {
+      //     cy.get('[data-test="dashboard-header-cell:coverage:value"]').should("contain", initialBuildData.summary.coverage);
+      //   });
+      // });
 
-      it("Finish all scopes after the tests finished executing", () => {
-        cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
-
-        cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
-        // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-        cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-        cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-        cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-        cy.wait("@finish-all-scopes", { timeout: 30000 });
-
-        cy.getByDataTest("message-panel:text").should("exist");
-      });
-
-      context("_", () => { // need to save order of execution
-        it("Check the summary coverage percentage after run tests", () => {
-          cy.get('[data-test="dashboard-header-cell:coverage:value"]').should("contain", initialBuildData.summary.coverage);
-        });
-      });
-
-      context("Check the coverage percentage for every service after run tests", () => {
-        Object.entries(initialBuildData.agents).forEach(([serviceName, serviceData]) => {
-          it(`should display coverage for ${serviceName} service`, () => {
-            cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
-              .find('[data-test="dashboard-coverage-cell:value"]')
-              .should("contain", serviceData.coverage);
-          });
-        });
-      });
+      // context("Check the coverage percentage for every service after run tests", () => {
+      //   Object.entries(initialBuildData.agents).forEach(([serviceName, serviceData]) => {
+      //     it(`should display coverage for ${serviceName} service`, () => {
+      //       cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
+      //         .find('[data-test="dashboard-coverage-cell:value"]')
+      //         .should("contain", serviceData.coverage);
+      //     });
+      //   });
+      // });
 
       context("Check every service data in the t2c page", () => {
-        beforeEach(() => {
-          cy.contains('[data-test="test-to-code-name-cell:name-cell"]', "visits-service").click();
-          cy.getByDataTest("sidebar:link:Test2Code").click();
-        });
-        it("", () => {
+        Object.entries(initialBuildData.agents).forEach(([serviceName, serviceData]) => {
+          context(`Ckeck ${serviceName} service`, () => {
+            beforeEach(() => {
+              cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+              cy.getByDataTest("sidebar:link:Test2Code").click();
+            });
 
+            context("build methods tab", () => {
+              it("should display packages table", () => {
+                cy.methodsTableTest(serviceData.packages, serviceData.packagesCount);
+              });
+
+              it('should display "Associated tests" pane', () => {
+                const packagesWithAssociatedTests = Object.entries(serviceData.packages)
+                  .filter(([_, value]) => value.associatedTestsCount !== "n/a");
+                console.log(packagesWithAssociatedTests);
+                cy.associatedTestsPaneTest(packagesWithAssociatedTests);
+              });
+            });
+
+            context("build tests tab", () => {
+              beforeEach(() => {
+                cy.getByDataTest("build-overview:tab:build-tests").click();
+              });
+
+              it("should display tests table", () => {
+                cy.testsTableTest(serviceData.testsWithCoveredMethods, serviceData.testsCount);
+              });
+
+              it('should display "Covered methods" pane', () => {
+                cy.coveredMethodsPaneTest(Object.entries(serviceData.testsWithCoveredMethods));
+              });
+            });
+          });
         });
       });
 

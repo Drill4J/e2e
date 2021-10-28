@@ -22,13 +22,15 @@
               "methodsTotal": "32",
               "coverage": "50.5",
               "methodsCovered": "20",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"]
             },
             "org/springframework/samples/petclinic/customers/web": {
               "methodsTotal": "45",
               "coverage": "6.2",
               "methodsCovered": "1",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"]
             }
           },
           "testsWithCoveredMethods": {
@@ -55,17 +57,19 @@
               "methodsTotal": "9",
               "coverage": "57.8",
               "methodsCovered": "7",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"]
             },
             "org/springframework/samples/petclinic/visits/web": {
               "methodsTotal": "5",
               "coverage": "34.2",
               "methodsCovered": "1",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"]
             }
           },
           "testsWithCoveredMethods": {
-            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "42.9",
@@ -120,11 +124,12 @@
               "methodsTotal": "16",
               "coverage": "60.8",
               "methodsCovered": "10",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"]
             },
             "org/springframework/samples/petclinic/vets/system": {
               "methodsTotal": "8",
-              "coverage": "8",
+              "coverage": "0",
               "methodsCovered": "0",
               "associatedTestsCount": "n/a"
             },
@@ -132,11 +137,12 @@
               "methodsTotal": "2",
               "coverage": "40",
               "methodsCovered": "1",
-              "associatedTestsCount": "1"
+              "associatedTestsCount": "1",
+              "associatedTests": ["[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"]
             }
           },
           "testsWithCoveredMethods": {
-            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "28.4",
