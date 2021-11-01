@@ -23,8 +23,8 @@ context("_", () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
+    cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
     cy.task("startPetclinic", { build: "0.1.0" });
-    cy.wait(15000);
   });
 
   beforeEach(() => {
@@ -33,15 +33,15 @@ context("_", () => {
   });
 
   context("Admin part", () => {
-    it("Register agent", () => {
-      cy.get('[data-test="action-column:icons-register"]').click();
+    it("should register agent", () => {
+      cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
 
       cy.get('[data-test="wizard:continue-button"]').click(); // step 2
       cy.get('[data-test="wizard:continue-button"]').click(); // step 3
 
       cy.get('[data-test="wizard:finishng-button"]').click();
 
-      cy.url().should("include", "/dashboard");
+      cy.url().should("include", "/dashboard", { timeout: 90000 });
       cy.contains("Online").should("exist");
       cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
 
@@ -63,7 +63,7 @@ context("_", () => {
         cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
       });
 
-      it("finish active scope after the tests finish executing", () => {
+      it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
 
         cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
