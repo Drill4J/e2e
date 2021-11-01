@@ -308,7 +308,7 @@ context("_", () => {
         });
       });
 
-      context("Tests to run", () => {
+      context("Tests to run after the collect coverage", () => {
         context("Overview page", () => {
           it("should display suggested tests to run count in the header", () => {
             cy.getByDataTest("action-section:count:tests-to-run")
