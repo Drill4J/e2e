@@ -168,7 +168,7 @@
       "summary": {
         "coverage": "2.4",
         "initialTestsToRunCount": "3",
-        "testsToRunCountAfterRunTests": "0",
+        "testsToRunCountAfterTheTestsExecuted": "0",
         "initialRisksCount": "5",
         "risksCountAfterTheTestsExecuted": "0"
       },
