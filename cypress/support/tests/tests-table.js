@@ -34,7 +34,7 @@ Cypress.Commands.add("testsTableTest", { }, (testsWithCoveredMethods, testsCount
       const testName = $testRow.find('[data-test="compound-cell:name"]').text();
       const testData = testsWithCoveredMethods[testName];
       if (testData) { // created no all tests in fixture
-        // TODO need to refactor to individual tests because log is uninformative
+        // TODO need to refactor with using cypress api like on risks table
         expect($testRow.find('[data-test="td-row-cell-type"]').text()).to.be.eq(testData.type);
         expect($testRow.find('[data-test="td-row-cell-details.result"]').text()).to.be.eq(testData.expectedStatus);
         expect($testRow.find('[data-test="td-row-cell-coverage.percentage"]').text()).to.be.eq(`${testData.coverage}`);
@@ -45,28 +45,3 @@ Cypress.Commands.add("testsTableTest", { }, (testsWithCoveredMethods, testsCount
     });
   }
 });
-
-export const testsTableTest = (testsWithCoveredMethods, testsCount) => {
-  if (!Number(testsCount)) {
-    it("should display stub", () => {
-      cy.getByDataTest("stub:title").should("exists");
-      cy.getByDataTest("stub:message").should("exists");
-    });
-  } else {
-    it("should display tests data", () => {
-      cy.get('[data-test="test-details:table-wrapper"] tbody tr').each(($testRow) => {
-        const testName = $testRow.find('[data-test="compound-cell:name"]').text();
-        const testData = testsWithCoveredMethods[testName];
-        if (testData) { // created no all tests in fixture
-          // TODO need to refactor to individual tests because log is uninformative
-          expect($testRow.find('[data-test="td-row-cell-type"]').text()).to.be.eq(testData.type);
-          expect($testRow.find('[data-test="td-row-cell-details.result"]').text()).to.be.eq(testData.expectedStatus);
-          expect($testRow.find('[data-test="td-row-cell-coverage.percentage"]').text()).to.be.eq(`${testData.coverage}`);
-          expect($testRow.find('[data-test="test-actions:view-curl:id"]').text()).to.be.eq(testData.methodsCovered);
-        }
-      }).then(($list) => {
-        expect($list).to.have.length(testsCount);
-      });
-    });
-  }
-};

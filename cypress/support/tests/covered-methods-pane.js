@@ -40,33 +40,3 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
     cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
   }));
 });
-
-export const coveredMethodsPaneTest = (testsWithCoveredMethods) => {
-  testsWithCoveredMethods.forEach((([testName, testData]) => {
-    context(`Covered methods for ${testName} test`, () => {
-      beforeEach(() => {
-        cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
-          .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
-          .click({ force: true }); // this element is detached from the DOM when tests are run
-      });
-
-      it("should display test name", () => {
-        cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testName);
-      });
-
-      it("should display test type", () => {
-        cy.getByDataTest("covered-methods-by-test-sidebar:test-type").should("have.text", testData.type);
-      });
-
-      it("should display covered methods count", () => {
-        cy.getByDataTest("covered-methods-by-test-sidebar:methods-count").should("have.text", testData.methodsCovered);
-      });
-
-      it("should display list with covered methods", () => {
-        // TODO failed because we use virtualization
-        // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
-        cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
-      });
-    });
-  }));
-};
