@@ -18,3 +18,6 @@ import "./tests/methods-table";
 import "./tests/tests-table";
 import "./tests/covered-methods-pane";
 import "./tests/associated-tests-pane";
+import "./tests/risks-count-in-the-cards";
+import "./tests/risks-table";
+import "./tests/tests-to-run-table";
