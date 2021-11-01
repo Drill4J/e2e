@@ -30,7 +30,7 @@ Cypress.Commands.add("methodsTableTest", { }, (packages, packagesCount) => {
     const packageName = $row.find('[data-test="name-cell:content:package"]').text();
     const packageData = packages[packageName];
     if (packageData) {
-      // TODO need to refactor to individual tests because log is uninformative
+      // TODO need to refactor with using cypress api like on risks table
       expect($row.find('[data-test="coverage-cell:coverage"]').text()).to.be.eq(`${packageData.coverage}%`);
       expect($row.find('[data-test="td-row-cell-totalMethodsCount"]').text()).to.be.eq(packageData.methodsTotal);
       expect($row.find('[data-test="td-row-cell-coveredMethodsCount"]').text()).to.be.eq(packageData.methodsCovered);

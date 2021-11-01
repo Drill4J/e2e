@@ -26,6 +26,7 @@
 //     ]
 // }
 // ]
+// remove spec extension
 
 Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTests) => {
   packagesWithAssociatedTests.forEach((([packageName, packageData]) => {
@@ -40,25 +41,3 @@ Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTest
     });
   }));
 });
-
-export const associatedTestsPaneTest = (packagesWithAssociatedTests) => {
-  packagesWithAssociatedTests.forEach((([packageName, packageData]) => {
-    context(`Associate tests for ${packageName} package`, () => {
-      beforeEach(() => {
-        cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-          .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
-          .click({ force: true }); // this element is detached from the DOM when tests are run
-      });
-
-      it("should display package name", () => {
-        cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
-      });
-
-      it("should display list with associated tests", () => {
-        cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
-          expect(packageData.associatedTests.includes($testName.text())).to.be.true;
-        });
-      });
-    });
-  }));
-};
