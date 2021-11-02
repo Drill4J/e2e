@@ -104,6 +104,16 @@ module.exports = (on) => {
       await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml up");
       return null;
     },
+    async stopPetclinicMicroservice() {
+      const containersName = ["api-gateway", "config-server", "tracing-server",
+        "discovery-server", "vets-service", "visits-service", "customers-service", "agent-files"];
+        // eslint-disable-next-line no-restricted-syntax
+      for (const name of containersName) { // TODO make it parallel
+        // eslint-disable-next-line no-await-in-loop
+        await dockerStopAndRmService(name);
+      }
+      return null;
+    },
   });
 };
 
@@ -121,4 +131,8 @@ function promisifiedExec(command) {
 
 async function dockerComposeUp(composePath, envFilePath) {
   return promisifiedExec(`docker-compose -f ${composePath} --env-file ${envFilePath} up -d`);
+}
+
+async function dockerStopAndRmService(serviceName) {
+  return promisifiedExec(`docker stop ${serviceName} && docker rm ${serviceName}`);
 }

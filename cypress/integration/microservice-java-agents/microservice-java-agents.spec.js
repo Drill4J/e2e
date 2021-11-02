@@ -154,6 +154,7 @@ context("_", () => {
     context("Second build", () => {
       const secondBuildData = data.builds["0.2.0"];
       before(() => {
+        cy.task("stopPetclinicMicroservice", {}, { timeout: 120000 });
         cy.task("startPetclinicMicroservice", { build: "0.2.0" });
         cy.wait(15000);
       });
