@@ -33,7 +33,7 @@ context("_", () => {
 
   context("Admin part", () => {
     it("should register group", () => {
-      cy.contains('[data-test="action-column:icons-register"]', data.agentsCount, { timeout: 45000 }).click(); // wait for agent initialization
+      cy.contains('[data-test="action-column:icons-register"]', data.agentsCount, { timeout: 45000 }).click({ force: true }); // wait for agent initialization
 
       cy.get('[data-test="wizard:continue-button"]').click();
       cy.get('[data-test="wizard:continue-button"]').click();
@@ -51,7 +51,7 @@ context("_", () => {
 
   context("Test to code", () => {
     beforeEach(() => {
-      cy.contains('[data-test="name-column"]', data.groupId).click();
+      cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
       cy.get('[data-test="sidebar:link:Test2Code"]').click();
     });
 
