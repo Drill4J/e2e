@@ -25,11 +25,16 @@ context("_", () => {
     cy.task("startAdmin");
     cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
     cy.task("startPetclinic", { build: "0.1.0" });
+    cy.login();
+    cy.visit(convertUrl("/"));
   });
 
   beforeEach(() => {
-    cy.login();
-    cy.visit(convertUrl("/"));
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
   });
 
   context("Admin part", () => {
@@ -51,11 +56,11 @@ context("_", () => {
   });
 
   context("Test2Code part", () => {
-    beforeEach(() => {
-      cy.contains('[data-test="name-column"]', AGENT_NAME)
-        .click({ force: true }); // this element is detached from the DOM when tests are run
-      cy.getByDataTest("sidebar:link:Test2Code").click();
-    });
+    // before(() => {
+    //   cy.contains('[data-test="name-column"]', AGENT_NAME)
+    //     .click({ force: true }); // this element is detached from the DOM when tests are run
+    //   cy.getByDataTest("sidebar:link:Test2Code").click();
+    // });
 
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
@@ -107,7 +112,9 @@ context("_", () => {
                   .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
                   .click({ force: true }); // this element is detached from the DOM when tests are run
               });
-
+              after(() => {
+                cy.getByDataTest("modal:close-button").click();
+              });
               it("should display package name", () => {
                 cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
               });
@@ -123,7 +130,8 @@ context("_", () => {
       });
 
       context("Build tests tab", () => {
-        beforeEach(() => {
+        before(() => {
+          cy.restoreLocalStorage();
           cy.get('[data-test="build-overview:tab:build-tests"]').click();
         });
 
@@ -147,12 +155,15 @@ context("_", () => {
           const testsWithCoveredMethods = Object.entries(initialBuildData.testsWithCoveredMethods);
           testsWithCoveredMethods.forEach((([testName, testData]) => {
             context(`Covered methods for ${testName} test`, () => {
-              beforeEach(() => {
+              before(() => {
+                cy.restoreLocalStorage();
                 cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
                   .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
                   .click({ force: true }); // this element is detached from the DOM when tests are run
               });
-
+              after(() => {
+                cy.getByDataTest("modal:close-button").click();
+              });
               it("should display test name", () => {
                 cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testName);
               });
@@ -184,6 +195,9 @@ context("_", () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
         cy.task("startPetclinic", { build: "0.5.0" });
+        cy.restoreLocalStorage();
+        cy.getByDataTest("crumb:builds").click();
+        cy.contains('[date-test="builds-table:buildVersion"]', "0.5.0").click();
       });
       // TODO add check build versions
 
@@ -216,6 +230,10 @@ context("_", () => {
       });
 
       context("Initial Tests to run", () => {
+        before(() => {
+          cy.restoreLocalStorage();
+          cy.getByDataTest("crumb:test2code").click();
+        });
         context("Overview page", () => {
           it("should display tests to run count in the header", () => {
             cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.initialTestsToRunCount);
@@ -248,7 +266,10 @@ context("_", () => {
           cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
           cy.intercept(`/api/agents/${data.agentId}/plugins/test2code/dispatch-action`).as("finish-active-scope");
         });
-
+        before(() => {
+          cy.restoreLocalStorage();
+          cy.getByDataTest("crumb:test2code").click();
+        });
         context("Overview page", () => {
           beforeEach(() => {
             cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
@@ -309,6 +330,10 @@ context("_", () => {
       });
 
       context("Tests to run after the collect coverage", () => {
+        before(() => {
+          cy.restoreLocalStorage();
+          cy.getByDataTest("crumb:test2code").click();
+        });
         context("Overview page", () => {
           it("should display suggested tests to run count in the header", () => {
             cy.getByDataTest("action-section:count:tests-to-run")
