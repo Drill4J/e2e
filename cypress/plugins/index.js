@@ -67,36 +67,21 @@ module.exports = (on) => {
       );
       return null;
     },
-    async startPetclinicMultinstaces({ agentId = "pet-multinstances", build = "0.1.0" }) {
-      const data = `
-      adminAddress=drill-admin:8090
-      PET_STANDALONE_BUILD=${build}
-      PET_STANDALONE_BUILD_NODE_1=${build}
-      PET_STANDALONE_BUILD_NODE_2=${build}
-      AGENT_VERSION=latest
-      agentId=${agentId}
-      LOG_LEVEL=DEBUG
-      PET_NODE_1_PORT=8085
-      PET_NODE_2_PORT=8086
-      BALANCER_PORT=8087
-      `;
-      writeFile("./docker/multinstances-single-java-agent.env", data, "utf-8", (err) => {
-        if (err) {
-          console.log(err.message);
-        }
-      });
-      await promisifiedExec(
-        "docker-compose -f ./docker/multinstances-single-java-agent.yml --env-file ./docker/multinstances-single-java-agent.env up -d",
+    async startPetclinicMultinstaces({ build = "0.1.0" }) {
+      await dockerComposeUp(
+        "./docker/multinstances-single-java-agent.yml",
+        `./docker/multinstances-single-java-agent-${build}.env`,
       );
       return null;
     },
-    async startPetclinicAutoTests() {
-      await promisifiedExec("docker-compose -f ./docker/single-java-agents-tests.yml --env-file ./docker/single-java-agents-tests.env up");
+    async startPetclinicMultinstacesAutoTests() {
+      // eslint-disable-next-line max-len
+      await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
       console.log("petclinic tests container exited");
       return null;
     },
-    async startPetclinicMultinstacesAutoTests() {
-      await promisifiedExec("docker-compose -f ./docker/single-java-agents-tests.yml --env-file ./docker/single-java-agents-tests.env up");
+    async startPetclinicAutoTests() {
+      await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up");
       console.log("petclinic tests container exited");
       return null;
     },
