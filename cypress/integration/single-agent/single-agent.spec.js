@@ -23,11 +23,11 @@ const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
   "single-java-agent": singleJavaAgentData,
 };
-Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
-Cypress.env("initialApplicationBuildVersion", "0.1.0");
-Cypress.env("secondApplicationBuildVersion", "0.5.0");
-Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
-Cypress.env("fixtureFile", "multinstances-single-java-agent");
+// Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
+// Cypress.env("initialApplicationBuildVersion", "0.1.0");
+// Cypress.env("secondApplicationBuildVersion", "0.5.0");
+// Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
+// Cypress.env("fixtureFile", "multinstances-single-java-agent");
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
 
