@@ -45,7 +45,6 @@ context("_", () => {
       cy.wait("@registerGroup", { timeout: 120000 });
 
       cy.contains(`Agents ${data.agentsCount}`).should("exist");
-      // TODO check redirect and success message
     });
   });
 

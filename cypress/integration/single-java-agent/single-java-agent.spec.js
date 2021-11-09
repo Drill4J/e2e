@@ -41,7 +41,7 @@ context("_", () => {
 
       cy.get('[data-test="wizard:finishng-button"]').click();
 
-      cy.url().should("include", "/dashboard", { timeout: 90000 });
+      cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
       cy.contains("Online").should("exist");
       cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
 
