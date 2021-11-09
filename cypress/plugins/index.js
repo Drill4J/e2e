@@ -75,7 +75,6 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMultinstacesAutoTests() {
-      // eslint-disable-next-line max-len
       await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
       console.log("petclinic tests container exited");
       return null;
