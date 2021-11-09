@@ -22,8 +22,7 @@ context("_", () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
-    cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" });
+    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
   });
 
   beforeEach(() => {
@@ -154,8 +153,7 @@ context("_", () => {
       const secondBuildData = data.builds["0.2.0"];
       before(() => {
         cy.task("stopPetclinicMicroservice", {}, { timeout: 120000 });
-        cy.task("startPetclinicMicroservice", { build: "0.2.0" });
-        cy.wait(15000);
+        cy.task("startPetclinicMicroservice", { build: "0.2.0" }, { timeout: 200000 });
       });
 
       context("Initial Risks", () => {
