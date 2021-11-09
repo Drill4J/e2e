@@ -29,7 +29,6 @@
   "homepage": "https://github.com/Drill4J/e2e#readme",
   "devDependencies": {
     "cypress": "^8.5.0",
-    "cypress-localstorage-commands": "^1.6.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.0",
