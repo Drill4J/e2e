@@ -56,12 +56,6 @@ context("_", () => {
   });
 
   context("Test2Code part", () => {
-    // before(() => {
-    //   cy.contains('[data-test="name-column"]', AGENT_NAME)
-    //     .click({ force: true }); // this element is detached from the DOM when tests are run
-    //   cy.getByDataTest("sidebar:link:Test2Code").click();
-    // });
-
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
@@ -197,7 +191,8 @@ context("_", () => {
         cy.task("startPetclinic", { build: "0.5.0" });
         cy.restoreLocalStorage();
         cy.getByDataTest("crumb:builds").click();
-        cy.contains('[date-test="builds-table:buildVersion"]', "0.5.0").click();
+        cy.contains('[data-test="builds-table:buildVersion"]', "0.5.0").click({ force: true });
+        cy.get('a[data-test="sidebar:link:Test2Code"]').click();
       });
       // TODO add check build versions
 
@@ -209,7 +204,8 @@ context("_", () => {
         });
 
         context("Risks page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:risks"]', buildData.risks.initialRisksCount).click();
           });
 
@@ -241,7 +237,8 @@ context("_", () => {
         });
 
         context("Tests to run page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.initialTestsToRunCount).click();
           });
 
@@ -287,7 +284,8 @@ context("_", () => {
         });
 
         context("Risks page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountAfterTheTestsExecuted).click();
           });
 
@@ -342,7 +340,8 @@ context("_", () => {
         });
 
         context("Tests to run page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:tests-to-run"]',
               buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
           });
