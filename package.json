@@ -1,0 +1,48 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "lint": "eslint . --ext js,ts,tsx",
+    "lint:fix": "eslint . --ext js,ts,tsx --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint . --ext js,ts,tsx --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Drill4J/e2e.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Drill4J/e2e/issues"
+  },
+  "homepage": "https://github.com/Drill4J/e2e#readme",
+  "devDependencies": {
+    "cypress": "^8.5.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-drill4j": "1.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.26.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.4"
+  }
+}
