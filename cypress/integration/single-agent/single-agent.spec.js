@@ -42,10 +42,10 @@ const data = dataObject[Cypress.env("fixtureFile")];
 // TODO rename fixtureFile env
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
-    // cy.task("removeContainers");
-    // cy.task("startAdmin");
-    // cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
-    // cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") });
+    cy.task("removeContainers");
+    cy.task("startAdmin");
+    cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") });
   });
 
   beforeEach(() => {
@@ -53,23 +53,23 @@ context(Cypress.env("fixtureFile"), () => {
     cy.visit(convertUrl("/"));
   });
 
-  // context("Admin part", () => {
-  //   it("should register agent", () => {
-  //     cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
-  //
-  //     cy.get('[data-test="wizard:continue-button"]').click(); // step 2
-  //     cy.get('[data-test="wizard:continue-button"]').click(); // step 3
-  //
-  //     cy.get('[data-test="wizard:finishng-button"]').click();
-  //
-  //     cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
-  //     cy.contains("Online").should("exist");
-  //     cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
-  //
-  //     cy.get('a[data-test="sidebar:link:Test2Code"]').click();
-  //     cy.get("[data-test=methods-table] tbody tr").should("not.have.length", 0);
-  //   });
-  // });
+  context("Admin part", () => {
+    it("should register agent", () => {
+      cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
+
+      cy.get('[data-test="wizard:continue-button"]').click(); // step 2
+      cy.get('[data-test="wizard:continue-button"]').click(); // step 3
+
+      cy.get('[data-test="wizard:finishng-button"]').click();
+
+      cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
+      cy.contains("Online").should("exist");
+      cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
+
+      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+      cy.get("[data-test=methods-table] tbody tr").should("not.have.length", 0);
+    });
+  });
 
   context("Test2Code part", () => {
     beforeEach(() => {
@@ -80,9 +80,9 @@ context(Cypress.env("fixtureFile"), () => {
 
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
-      // before(() => {
-      //   cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 200000 });
-      // });
+      before(() => {
+        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 200000 });
+      });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
@@ -100,20 +100,8 @@ context(Cypress.env("fixtureFile"), () => {
       });
 
       context("Build methods tab", () => {
-        context("Methods table", () => {
-          it("should display packages data", () => {
-            cy.get('[data-test="methods-table"] table tbody tr').each(($row) => {
-              const packageName = $row.find('[data-test="name-cell:content:package"]').text();
-              const packageData = initialBuildData.packages[packageName];
-              // TODO need to refactor to individual tests because log is uninformative
-              expect($row.find('[data-test="coverage-cell:coverage"]').text()).to.be.eq(`${packageData.coverage}%`);
-              expect($row.find('[data-test="td-row-cell-totalMethodsCount"]').text()).to.be.eq(packageData.methodsTotal);
-              expect($row.find('[data-test="td-row-cell-coveredMethodsCount"]').text()).to.be.eq(packageData.methodsCovered);
-              expect($row.find('[data-test="coverage-details:associated-tests-count"]').text()).to.be.eq(packageData.associatedTestsCount);
-            }).then(($list) => {
-              expect($list).to.have.length(initialBuildData.packagesCount);
-            });
-          });
+        it("should display packages data in methods table", () => {
+          cy.methodsTableTest(initialBuildData.packages, initialBuildData.packagesCount);
         });
 
         context("Associated tests pane", () => {
@@ -191,9 +179,9 @@ context(Cypress.env("fixtureFile"), () => {
 
     context("Second build", () => {
       const buildData = data.builds["0.5.0"];
-      // before(() => {
-      //   cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") });
-      // });
+      before(() => {
+        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") });
+      });
       // TODO add check build versions
 
       context("Risks before tests executed", () => {
@@ -224,7 +212,7 @@ context(Cypress.env("fixtureFile"), () => {
         });
       });
 
-      context.only("Tests2run before tests executed", () => {
+      context("Tests2run before tests executed", () => {
         context("Overview page", () => {
           it("should display tests2run count in the header", () => {
             cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.tests2RunBeforeTestsExecuted);
@@ -324,42 +312,40 @@ context(Cypress.env("fixtureFile"), () => {
               .should("have.text", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
           });
         });
-        if (Number(buildData.testsToRun.tests2RunBeforeTestsExecuted) !== 0) {
-          context("Tests to run page", () => {
-            beforeEach(() => {
-              cy.contains('[data-test="action-section:count:tests-to-run"]',
-                buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
-            });
+        context("Tests to run page", () => {
+          beforeEach(() => {
+            cy.contains('[data-test="action-section:count:tests-to-run"]',
+              buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
+          });
 
-            it("should display suggested tests2run count in the header", () => {
-              cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
-            });
+          it("should display suggested tests2run count in the header", () => {
+            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
+          });
 
-            context("Tests2run table", () => {
-              Object.entries(buildData.testsToRun.tests).forEach(([testName, testData]) => {
-                context(`should display data for ${testName} test`, () => {
-                  it("should display test name", () => {
-                    cy.contains("table tbody tr", testName).should("exist");
-                  });
+          context("Tests2run table", () => {
+            Object.entries(buildData.testsToRun.tests).forEach(([testName, testData]) => {
+              context(`should display data for ${testName} test`, () => {
+                it("should display test name", () => {
+                  cy.contains("table tbody tr", testName).should("exist");
+                });
 
-                  it("should display tests type", () => {
-                    cy.contains("table tbody tr", testName).contains('[data-test="td-row-type"]', testData.type).should("exist");
-                  });
+                it("should display tests type", () => {
+                  cy.contains("table tbody tr", testName).contains('[data-test="td-row-type"]', testData.type).should("exist");
+                });
 
-                  it("should display coverage percentage", () => {
-                    cy.contains("table tbody tr", testName)
-                      .contains('[data-test="td-row-cell-coverage.percentage"]', testData.coverage).should("exist");
-                  });
+                it("should display coverage percentage", () => {
+                  cy.contains("table tbody tr", testName)
+                    .contains('[data-test="td-row-cell-coverage.percentage"]', testData.coverage).should("exist");
+                });
 
-                  it("should display methods covered", () => {
-                    cy.contains("table tbody tr", testName)
-                      .contains('[data-test="td-row-cell-coverage.methodCount.covered"]', testData.methodsCovered).should("exist");
-                  });
+                it("should display methods covered", () => {
+                  cy.contains("table tbody tr", testName)
+                    .contains('[data-test="td-row-cell-coverage.methodCount.covered"]', testData.methodsCovered).should("exist");
                 });
               });
             });
           });
-        }
+        });
       });
     });
   });
