@@ -191,12 +191,12 @@ context(Cypress.env("fixtureFile"), () => {
 
     context("Second build", () => {
       const buildData = data.builds["0.5.0"];
-      before(() => {
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") });
-      });
+      // before(() => {
+      //   cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") });
+      // });
       // TODO add check build versions
 
-      context.only("Risks before tests executed", () => {
+      context("Risks before tests executed", () => {
         context("Overview page", () => {
           it("should display risks count in the header", () => {
             cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksBeforeTestsExecuted);
@@ -224,37 +224,30 @@ context(Cypress.env("fixtureFile"), () => {
         });
       });
 
-      context("Initial Tests to run", () => {
+      context.only("Tests2run before tests executed", () => {
         context("Overview page", () => {
           it("should display tests2run count in the header", () => {
-            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.initialTestsToRunCount);
+            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
         });
 
         context("Tests to run page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.initialTestsToRunCount).click();
+            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.tests2RunBeforeTestsExecuted).click();
           });
 
           it("should display suggested tests2run count in the page header", () => {
-            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.initialTestsToRunCount);
+            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
 
           context("Tests to run table", () => {
-            if (Number(buildData.testsToRun.initialTestsToRunCount) === 0) {
-              it("should display stub", () => {
-                cy.getByDataTest("stub:title").should("exist");
-                cy.getByDataTest("stub:message").should("exist");
-              });
-            } else {
-              it("should display all tests2run count in the header", () => {
-                cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.initialTestsToRunCount);
-              });
+            it("should display all tests2run count in the header", () => {
+              cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+            });
 
-              it("should display rows with tests2run", () => {
-                cy.get("table tbody tr").should("have.length", buildData.testsToRun.initialTestsToRunCount);
-              });
-            }
+            it("should display rows with tests2run", () => {
+              cy.get("table tbody tr").should("have.length", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+            });
           });
         });
       });
@@ -331,7 +324,7 @@ context(Cypress.env("fixtureFile"), () => {
               .should("have.text", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
           });
         });
-        if (Number(buildData.testsToRun.initialTestsToRunCount) !== 0) {
+        if (Number(buildData.testsToRun.tests2RunBeforeTestsExecuted) !== 0) {
           context("Tests to run page", () => {
             beforeEach(() => {
               cy.contains('[data-test="action-section:count:tests-to-run"]',

@@ -222,14 +222,14 @@ context("_", () => {
 
       context("Initial Tests to run", () => {
         it("should display summary risks count", () => {
-          cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.initialTestsToRunCount);
+          cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
         });
 
         it("should display risks count for every service", () => {
           Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
             cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
               .find('[data-test="dashboard-cell:value:tests-to-run"]')
-              .should("have.text", serviceData.testsToRun.initialTestsToRunCount);
+              .should("have.text", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
           });
         });
 
@@ -240,34 +240,34 @@ context("_", () => {
                 cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
                 cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
               });
-              if (Number(serviceData.testsToRun.initialTestsToRunCount)) {
+              if (Number(serviceData.testsToRun.tests2RunBeforeTestsExecuted)) {
                 context("Overview page", () => {
                   it("should display tests to run count in the header", () => {
-                    cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.initialTestsToRunCount);
+                    cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                   });
                 });
 
                 context("Tests to run page", () => {
                   beforeEach(() => {
-                    cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.initialTestsToRunCount).click();
+                    cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.tests2RunBeforeTestsExecuted).click();
                   });
 
                   it("should display suggested tests to run count in the page header", () => {
-                    cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.initialTestsToRunCount);
+                    cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                   });
 
                   context("Tests to run table", () => {
                     it("should display all tests to run count in the header", () => {
-                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.initialTestsToRunCount);
+                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                     });
 
                     it("should display rows with tests to run", () => {
-                      cy.get("table tbody tr").should("have.length", serviceData.testsToRun.initialTestsToRunCount);
+                      cy.get("table tbody tr").should("have.length", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                     });
                   });
                 });
               }
-              if (!Number(serviceData.testsToRun.initialTestsToRunCount)) {
+              if (!Number(serviceData.testsToRun.tests2RunBeforeTestsExecuted)) {
                 context("Overview page", () => {
                   it('should display "-" in the header', () => {
                     cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
@@ -389,7 +389,7 @@ context("_", () => {
                 }
               });
 
-              if (Number(serviceData.testsToRun.initialTestsToRunCount)) {
+              if (Number(serviceData.testsToRun.tests2RunBeforeTestsExecuted)) {
                 context("Tests to run page", () => {
                   beforeEach(() => {
                     cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
@@ -401,7 +401,7 @@ context("_", () => {
 
                   it("Tests to run table", () => {
                     it("should display suggested tests to run count in the header", () => {
-                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.initialTestsToRunCount);
+                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                     });
 
                     it("should display tests to run data", () => {

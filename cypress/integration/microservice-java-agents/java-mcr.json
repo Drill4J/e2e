@@ -167,7 +167,7 @@
     "0.2.0": {
       "summary": {
         "coverage": "2.4",
-        "initialTestsToRunCount": "3",
+        "tests2RunBeforeTestsExecuted": "3",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "risksBeforeTestsExecuted": "5",
         "risksCountAfterTheTestsExecuted": "0"
@@ -204,7 +204,7 @@
             }
           },
           "testsToRun": {
-            "initialTestsToRunCount": "1",
+            "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
               "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
@@ -234,7 +234,7 @@
             }
           },
           "testsToRun": {
-            "initialTestsToRunCount": "1",
+            "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
               "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]": {
@@ -257,7 +257,7 @@
             "methods": {}
           },
           "testsToRun": {
-            "initialTestsToRunCount": "0",
+            "tests2RunBeforeTestsExecuted": "0",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {}
           }
@@ -281,7 +281,7 @@
             }
           },
           "testsToRun": {
-            "initialTestsToRunCount": "1",
+            "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
               "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]": {

@@ -117,7 +117,7 @@
         }
       },
       "testsToRun": {
-        "initialTestsToRunCount": "1",
+        "tests2RunBeforeTestsExecuted": "1",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
           "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]": {

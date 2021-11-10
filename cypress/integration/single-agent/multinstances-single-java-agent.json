@@ -109,7 +109,7 @@
         }
       },
       "testsToRun": {
-        "initialTestsToRunCount": "0",
+        "tests2RunBeforeTestsExecuted": "0",
         "testsToRunCountAfterTheTestsExecuted": "0"
       }
     }
