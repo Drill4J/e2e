@@ -35,5 +35,7 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
     // TODO failed because we use virtualization
     // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
     cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
+
+    cy.getByDataTest("modal:close-button").click();
   }));
 });

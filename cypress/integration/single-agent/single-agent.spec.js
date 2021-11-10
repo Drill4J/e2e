@@ -105,7 +105,7 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         it('should display "Asociated tests pane" with tests for methods', () => {
-          cy.associatedTestsPaneTest(initialBuildData.packages);
+          cy.associatedTestsPaneTest(initialBuildData.packagesWithAssociatedTests);
         });
       });
 

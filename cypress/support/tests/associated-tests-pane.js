@@ -26,14 +26,16 @@
 
 Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTests) => {
   Object.entries(packagesWithAssociatedTests).forEach((([packageName, packageData]) => {
-    // cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-    //   .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
-    //   .click({ force: true }); // this element is detached from the DOM when tests are run
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
+      .click({ force: true }); // this element is detached from the DOM when tests are run
 
-    // cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
-    //
-    // cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
-    //   expect(packageData.associatedTests.includes($testName.text())).to.be.true;
-    // });
+    cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
+
+    cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
+      expect(packageData.associatedTests.includes($testName.text())).to.be.true;
+    });
+
+    cy.getByDataTest("modal:close-button").click();
   }));
 });
