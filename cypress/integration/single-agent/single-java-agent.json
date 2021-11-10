@@ -77,7 +77,7 @@
     },
     "0.5.0": {
       "risks": {
-        "initialRisksCount": "5",
+        "risksBeforeTestsExecuted": "5",
         "risksCountAfterTheTestsExecuted": "4",
         "newRisksCount": "2",
         "newRisksCountAfterTheTestsExecuted": "2",

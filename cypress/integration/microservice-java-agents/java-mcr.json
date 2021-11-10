@@ -169,14 +169,14 @@
         "coverage": "2.4",
         "initialTestsToRunCount": "3",
         "testsToRunCountAfterTheTestsExecuted": "0",
-        "initialRisksCount": "5",
+        "risksBeforeTestsExecuted": "5",
         "risksCountAfterTheTestsExecuted": "0"
       },
       "agents": {
         "customer-service": {
           "coverage": "17.3",
           "risks": {
-            "initialRisksCount": "3",
+            "risksBeforeTestsExecuted": "3",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "2",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -218,7 +218,7 @@
         "visits-service": {
           "coverage": "44.7",
           "risks": {
-            "initialRisksCount": "1",
+            "risksBeforeTestsExecuted": "1",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -248,7 +248,7 @@
         "api-gateway": {
           "coverage": "0",
           "risks": {
-            "initialRisksCount": "0",
+            "risksBeforeTestsExecuted": "0",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -265,7 +265,7 @@
         "vets-service": {
           "coverage": "29.6",
           "risks": {
-            "initialRisksCount": "1",
+            "risksBeforeTestsExecuted": "1",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",

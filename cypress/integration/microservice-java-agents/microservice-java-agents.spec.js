@@ -161,14 +161,14 @@ context("_", () => {
       context("Initial Risks", () => {
         context("Service group page", () => {
           it("should display summary risks count in the header", () => {
-            cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.initialRisksCount);
+            cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksBeforeTestsExecuted);
           });
 
           it("should display risks count for every service", () => {
             Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
               cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
                 .find('[data-test="dashboard-cell:value:risks"]')
-                .should("have.text", serviceData.risks.initialRisksCount);
+                .should("have.text", serviceData.risks.risksBeforeTestsExecuted);
             });
           });
         });
@@ -181,34 +181,34 @@ context("_", () => {
                 cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
               });
 
-              if (Number(serviceData.risks.initialRisksCount)) {
+              if (Number(serviceData.risks.risksBeforeTestsExecuted)) {
                 context("Overview page", () => {
                   it("should display risks count in the header", () => {
-                    cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.initialRisksCount);
+                    cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksBeforeTestsExecuted);
                   });
 
                   context("Risks page", () => {
                     beforeEach(() => {
-                      cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.initialRisksCount).click();
+                      cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksBeforeTestsExecuted).click();
                     });
 
                     it("should display not covered risks count in the page header", () => {
-                      cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.initialRisksCount);
+                      cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksBeforeTestsExecuted);
                     });
 
                     context("Risks table", () => {
                       it("should display all risks count in the header", () => {
-                        cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.initialRisksCount);
+                        cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksBeforeTestsExecuted);
                       });
 
                       it("should display rows with risks", () => {
-                        cy.get("table tbody tr").should("have.length", serviceData.risks.initialRisksCount);
+                        cy.get("table tbody tr").should("have.length", serviceData.risks.risksBeforeTestsExecuted);
                       });
                     });
                   });
                 });
               }
-              if (!Number(serviceData.risks.initialRisksCount)) {
+              if (!Number(serviceData.risks.risksBeforeTestsExecuted)) {
                 context("Overview page", () => {
                   it('should display "-" in the header', () => {
                     cy.getByDataTest("action-section:no-value:risks").should("exist");
@@ -313,7 +313,7 @@ context("_", () => {
               });
 
               context("Overview page", () => {
-                if (Number(serviceData.risks.initialRisksCount)) {
+                if (Number(serviceData.risks.risksBeforeTestsExecuted)) {
                   it("should display risks count in the header", () => {
                     cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksCountAfterTheTestsExecuted);
                   });
@@ -328,7 +328,7 @@ context("_", () => {
                 });
               });
 
-              if (Number(serviceData.risks.initialRisksCount)) {
+              if (Number(serviceData.risks.risksBeforeTestsExecuted)) {
                 context("Risks page", () => {
                   beforeEach(() => {
                     cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksCountAfterTheTestsExecuted).click();
@@ -340,7 +340,7 @@ context("_", () => {
 
                   context("Risks table", () => {
                     it("should display all risks count in the header", () => {
-                      cy.getByDataTest("risks-list:table-title").should("contain", serviceData.risks.initialRisksCount);
+                      cy.getByDataTest("risks-list:table-title").should("contain", serviceData.risks.risksBeforeTestsExecuted);
                     });
 
                     it("should display risks data", () => {
@@ -378,7 +378,7 @@ context("_", () => {
               });
 
               context("Overview page", () => {
-                if (Number(serviceData.risks.initialRisksCount)) {
+                if (Number(serviceData.risks.risksBeforeTestsExecuted)) {
                   it("should display tests to run count in the header", () => {
                     cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);
                   });

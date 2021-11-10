@@ -196,29 +196,29 @@ context(Cypress.env("fixtureFile"), () => {
       });
       // TODO add check build versions
 
-      context("Risks before running tests", () => {
+      context.only("Risks before tests executed", () => {
         context("Overview page", () => {
           it("should display risks count in the header", () => {
-            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.initialRisksCount);
+            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksBeforeTestsExecuted);
           });
         });
 
         context("Risks page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.initialRisksCount).click();
+            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksBeforeTestsExecuted).click();
           });
 
           it("should display not covered risks count in the page header", () => {
-            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksBeforeTestsExecuted);
           });
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksBeforeTestsExecuted);
             });
 
             it("should display rows with risks", () => {
-              cy.get("table tbody tr").should("have.length", buildData.risks.initialRisksCount);
+              cy.get("table tbody tr").should("have.length", buildData.risks.risksBeforeTestsExecuted);
             });
           });
         });
@@ -292,7 +292,7 @@ context(Cypress.env("fixtureFile"), () => {
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.risksBeforeTestsExecuted);
             });
 
             context("should display risks  data", () => {
