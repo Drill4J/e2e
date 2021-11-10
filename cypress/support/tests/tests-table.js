@@ -26,22 +26,22 @@
 // testsCount: "3"
 
 Cypress.Commands.add("testsTableTest", { }, (testsWithCoveredMethods, testsCount) => {
-  if (!Number(testsCount)) {
-    cy.getByDataTest("stub:title").should("exist");
-    cy.getByDataTest("stub:message").should("exist");
-  } else {
-    cy.get('[data-test="test-details:table-wrapper"] tbody tr').each(($testRow) => {
-      const testName = $testRow.find('[data-test="compound-cell:name"]').text();
-      const testData = testsWithCoveredMethods[testName];
-      if (testData) { // created no all tests in fixture
-        // TODO need to refactor with using cypress api like on risks table
-        expect($testRow.find('[data-test="td-row-cell-type"]').text()).to.be.eq(testData.type);
-        expect($testRow.find('[data-test="td-row-cell-details.result"]').text()).to.be.eq(testData.expectedStatus);
-        expect($testRow.find('[data-test="td-row-cell-coverage.percentage"]').text()).to.be.eq(`${testData.coverage}`);
-        expect($testRow.find('[data-test="test-actions:view-curl:id"]').text()).to.be.eq(testData.methodsCovered);
-      }
-    }).then(($list) => {
-      expect($list).to.have.length(testsCount);
-    });
-  }
+  Object.entries(testsWithCoveredMethods).forEach(([testName, testData]) => {
+    cy.contains("table tbody tr", testName)
+      .find('[data-test="compound-cell:name"]').should("have.text", testName);
+
+    cy.contains("table tbody tr", testName)
+      .find('[data-test="td-row-cell-type"]').should("have.text", testData.type);
+
+    cy.contains("table tbody tr", testName)
+      .find('[data-test="td-row-cell-details.result"]').should("have.text", testData.expectedStatus);
+
+    cy.contains("table tbody tr", testName)
+      .find('[data-test="td-row-cell-coverage.percentage"]').should("have.text", testData.coverage);
+
+    cy.contains("table tbody tr", testName)
+      .find('[data-test="test-actions:view-curl:id"]').should("have.text", testData.methodsCovered);
+
+    cy.getByDataTest("td-row-testName").should("have.length", testsCount);
+  });
 });
