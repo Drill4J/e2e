@@ -16,20 +16,16 @@
 /// <reference types="cypress" />
 
 // item with example of required data
-// [
-// "org/springframework/samples/petclinic/model",
-// {
+// "org/springframework/samples/petclinic/model": {
 //     "associatedTestsCount": "2",
 //     "associatedTests": [
 //     "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
 //     "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
 //     ]
 // }
-// ]
-// remove spec extension
 
 Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTests) => {
-  packagesWithAssociatedTests.forEach((([packageName, packageData]) => {
+  Object.entries(packagesWithAssociatedTests).forEach((([packageName, packageData]) => {
     cy.contains('[data-test="methods-table"] table tbody tr', packageName)
       .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
       .click({ force: true }); // this element is detached from the DOM when tests are run

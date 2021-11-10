@@ -15,16 +15,13 @@
  */
 /// <reference types="cypress" />
 
-// [
-//     "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]",
-//     {
+// "engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]": {
 //     "type": "Auto",
 //     "methodsCovered": "1"
-//     }
-// ]
+// }
 
 Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) => {
-  testsWithCoveredMethods.forEach((([testName, testData]) => {
+  Object.entries(testsWithCoveredMethods).forEach((([testName, testData]) => {
     cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
       .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
       .click({ force: true }); // this element is detached from the DOM when tests are run

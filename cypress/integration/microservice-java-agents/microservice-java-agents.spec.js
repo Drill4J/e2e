@@ -113,10 +113,7 @@ context("_", () => {
               });
 
               it('should display "Associated tests" pane with tests data', () => {
-                const packagesWithAssociatedTests = Object.entries(serviceData.packages)
-                  .filter(([_, value]) => value.associatedTestsCount !== "n/a");
-
-                cy.associatedTestsPaneTest(packagesWithAssociatedTests);
+                cy.associatedTestsPaneTest(serviceData.packages);
               });
             });
 
@@ -130,7 +127,7 @@ context("_", () => {
               });
 
               it('should display "Covered methods" pane with methods data', () => {
-                cy.coveredMethodsPaneTest(Object.entries(serviceData.testsWithCoveredMethods));
+                cy.coveredMethodsPaneTest(serviceData.testsWithCoveredMethods);
               });
             });
 
@@ -165,7 +162,7 @@ context("_", () => {
           });
 
           it("should display risks count for every service", () => {
-            Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
+            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
               cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
                 .find('[data-test="dashboard-cell:value:risks"]')
                 .should("have.text", serviceData.risks.risksBeforeTestsExecuted);
@@ -226,7 +223,7 @@ context("_", () => {
         });
 
         it("should display risks count for every service", () => {
-          Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
+          Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
             cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
               .find('[data-test="dashboard-cell:value:tests-to-run"]')
               .should("have.text", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
@@ -296,7 +293,7 @@ context("_", () => {
           });
 
           it("should display risks count for every service", () => {
-            Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
+            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
               cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
                 .find('[data-test="dashboard-cell:value:risks"]')
                 .should("have.text", serviceData.risks.risksCountAfterTheTestsExecuted);
@@ -361,7 +358,7 @@ context("_", () => {
           });
 
           it("should display tests to run count for every service", () => {
-            Object.entries(secondBuildData.agents).map(([serviceName, serviceData]) => {
+            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
               cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
                 .find('[data-test="dashboard-cell:value:tests-to-run"]')
                 .should("have.text", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);

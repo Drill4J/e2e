@@ -104,30 +104,8 @@ context(Cypress.env("fixtureFile"), () => {
           cy.methodsTableTest(initialBuildData.packages, initialBuildData.packagesCount);
         });
 
-        context("Associated tests pane", () => {
-          // TODO need to add tests for classes and methods
-          const packagesWithAssociatedTests = Object.entries(initialBuildData.packages)
-            .filter(([_, value]) => value.associatedTestsCount !== "n/a");
-
-          packagesWithAssociatedTests.forEach((([packageName, packageData]) => {
-            context(`Associate tests for ${packageName} package`, () => {
-              beforeEach(() => {
-                cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-                  .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
-                  .click({ force: true }); // this element is detached from the DOM when tests are run
-              });
-
-              it("should display package name", () => {
-                cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
-              });
-
-              it("should display list with associated tests", () => {
-                cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
-                  expect(packageData.associatedTests.includes($testName.text())).to.be.true;
-                });
-              });
-            });
-          }));
+        it('should display "Asociated tests pane" with tests for methods', () => {
+          cy.associatedTestsPaneTest(initialBuildData.packages);
         });
       });
 
@@ -140,38 +118,19 @@ context(Cypress.env("fixtureFile"), () => {
           cy.testsTableTest(initialBuildData.testsWithCoveredMethods, initialBuildData.testsCount);
         });
 
-        context("Covered methods pane", () => {
-          const testsWithCoveredMethods = Object.entries(initialBuildData.testsWithCoveredMethods);
-          testsWithCoveredMethods.forEach((([testName, testData]) => {
-            context(`Covered methods for ${testName} test`, () => {
-              beforeEach(() => {
-                cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
-                  .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
-                  .click({ force: true }); // this element is detached from the DOM when tests are run
-              });
-
-              it("should display test name", () => {
-                cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testName);
-              });
-
-              it("should display list with covered methods", () => {
-                // TODO failed because we use virtualization
-                // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
-                cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
-              });
-            });
-          }));
+        it('should display "Covered methods pane" for tests', () => {
+          cy.coveredMethodsPaneTest(initialBuildData.testsWithCoveredMethods);
         });
       });
 
       context("Risks", () => {
-        it("should display '-' for initial build", () => {
+        it("should display '-' in the header on overview page for initial build", () => {
           cy.getByDataTest("action-section:no-value:risks").should("exist");
         });
       });
 
       context("Tests to run", () => {
-        it("should display '-' for initial build", () => {
+        it("should display '-' in the header on overview page for initial build", () => {
           cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
         });
       });
@@ -276,30 +235,8 @@ context(Cypress.env("fixtureFile"), () => {
               cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.risksBeforeTestsExecuted);
             });
 
-            context("should display risks  data", () => {
-              Object.entries(buildData.risks.methods).forEach(([riskName, riskData]) => {
-                context(`should display data for ${riskName}`, () => {
-                  it("should display package and method names", () => {
-                    cy.contains("table tbody tr", riskName).should("exist");
-                    cy.contains("table tbody tr", riskData.packageName).should("exist");
-                  });
-
-                  it("should display risk type", () => {
-                    cy.contains("table tbody tr", riskName).contains('[data-test="td-row-cell-type"]', riskData.type).should("exist");
-                  });
-
-                  it("should display coverage", () => {
-                    cy.contains("table tbody tr", riskName)
-                      .contains('[data-test="coverage-cell:coverage"]', riskData.coverage).should("exist");
-                  });
-
-                  it("should display associated tests count", () => {
-                    cy.contains("table tbody tr", riskName)
-                      .contains('[data-test="risks-table:associated-tests-count"]', riskData.associatedTestsCount)
-                      .should("exist");
-                  });
-                });
-              });
+            it("should display risks data", () => {
+              cy.risksTableTest(buildData.risks.methods);
             });
           });
         });
@@ -322,28 +259,8 @@ context(Cypress.env("fixtureFile"), () => {
             cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
           });
 
-          context("Tests2run table", () => {
-            Object.entries(buildData.testsToRun.tests).forEach(([testName, testData]) => {
-              context(`should display data for ${testName} test`, () => {
-                it("should display test name", () => {
-                  cy.contains("table tbody tr", testName).should("exist");
-                });
-
-                it("should display tests type", () => {
-                  cy.contains("table tbody tr", testName).contains('[data-test="td-row-type"]', testData.type).should("exist");
-                });
-
-                it("should display coverage percentage", () => {
-                  cy.contains("table tbody tr", testName)
-                    .contains('[data-test="td-row-cell-coverage.percentage"]', testData.coverage).should("exist");
-                });
-
-                it("should display methods covered", () => {
-                  cy.contains("table tbody tr", testName)
-                    .contains('[data-test="td-row-cell-coverage.methodCount.covered"]', testData.methodsCovered).should("exist");
-                });
-              });
-            });
+          it("should display tests data in the table", () => {
+            cy.testsToRunTableTest(buildData.testsToRun.tests);
           });
         });
       });

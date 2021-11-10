@@ -28,7 +28,7 @@
 Cypress.Commands.add("methodsTableTest", { }, (packages, packagesCount) => {
   Object.entries(packages).forEach(([packageName, packageData]) => {
     cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-      .find('[data-test="compound-cell:name"]').should("have.text", packageName);
+      .find('[data-test="name-cell:content:package"]').should("have.text", packageName);
 
     cy.contains('[data-test="methods-table"] table tbody tr', packageName)
       .find('[data-test="coverage-cell:coverage"]').should("have.text", `${packageData.coverage}%`);
