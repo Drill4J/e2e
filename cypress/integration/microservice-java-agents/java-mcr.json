@@ -37,6 +37,20 @@
               ]
             }
           },
+          "packagesWithAssociatedTests": {
+            "org/springframework/samples/petclinic/customers/model": {
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"
+              ]
+            },
+            "org/springframework/samples/petclinic/customers/web": {
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"
+              ]
+            }
+          },
           "testsWithCoveredMethods": {
             "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
               "type": "Auto",
@@ -70,6 +84,20 @@
               "methodsTotal": "5",
               "coverage": "34.2",
               "methodsCovered": "1",
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"
+              ]
+            }
+          },
+          "packagesWithAssociatedTests": {
+            "org/springframework/samples/petclinic/visits/model": {
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"
+              ]
+            },
+            "org/springframework/samples/petclinic/visits/web": {
               "associatedTestsCount": "1",
               "associatedTests": [
                 "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"
@@ -115,6 +143,7 @@
               "associatedTestsCount": "n/a"
             }
           },
+          "packagesWithAssociatedTests": {},
           "testsWithCoveredMethods": {}
         },
         "vets-service": {
@@ -153,6 +182,20 @@
               ]
             }
           },
+          "packagesWithAssociatedTests": {
+            "org/springframework/samples/petclinic/vets/model": {
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"
+              ]
+            },
+            "org/springframework/samples/petclinic/vets/web": {
+              "associatedTestsCount": "1",
+              "associatedTests": [
+                "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"
+              ]
+            }
+          },
           "testsWithCoveredMethods": {
             "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]": {
               "type": "Auto",
@@ -169,14 +212,43 @@
         "coverage": "2.4",
         "tests2RunBeforeTestsExecuted": "3",
         "testsToRunCountAfterTheTestsExecuted": "0",
-        "risksBeforeTestsExecuted": "5",
+        "risksCountBeforeTestsExecuted": "5",
         "risksCountAfterTheTestsExecuted": "0"
       },
       "agents": {
         "customer-service": {
           "coverage": "17.3",
+          "risksCountBeforeTestsExecuted": "3",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "1",
+          "testsToRunCountAfterTheTestsExecuted": "0"
+        },
+        "visits-service": {
+          "coverage": "44.7",
+          "risksCountBeforeTestsExecuted": "1",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "1",
+          "testsToRunCountAfterTheTestsExecuted": "0"
+        },
+        "api-gateway": {
+          "coverage": "0",
+          "risksCountBeforeTestsExecuted": "0",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "0",
+          "testsToRunCountAfterTheTestsExecuted": "0"
+        },
+        "vets-service": {
+          "coverage": "29.6",
+          "risksCountBeforeTestsExecuted": "1",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "1",
+          "testsToRunCountAfterTheTestsExecuted": "0"
+        }
+      },
+      "agentsWithRisks": {
+        "customer-service": {
           "risks": {
-            "risksBeforeTestsExecuted": "3",
+            "risksCountBeforeTestsExecuted": "3",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "2",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -202,23 +274,11 @@
                 "associatedTestsCount": "1"
               }
             }
-          },
-          "testsToRun": {
-            "tests2RunBeforeTestsExecuted": "1",
-            "testsToRunCountAfterTheTestsExecuted": "0",
-            "tests": {
-              "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
-                "type": "Auto",
-                "coverage": "17.3",
-                "methodsCovered": "23"
-              }
-            }
           }
         },
         "visits-service": {
-          "coverage": "44.7",
           "risks": {
-            "risksBeforeTestsExecuted": "1",
+            "risksCountBeforeTestsExecuted": "1",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -232,40 +292,11 @@
                 "associatedTestsCount": "1"
               }
             }
-          },
-          "testsToRun": {
-            "tests2RunBeforeTestsExecuted": "1",
-            "testsToRunCountAfterTheTestsExecuted": "0",
-            "tests": {
-              "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]": {
-                "type": "Auto",
-                "coverage": "47.7",
-                "methodsCovered": "8"
-              }
-            }
-          }
-        },
-        "api-gateway": {
-          "coverage": "0",
-          "risks": {
-            "risksBeforeTestsExecuted": "0",
-            "risksCountAfterTheTestsExecuted": "0",
-            "newRisksCount": "0",
-            "newRisksCountAfterTheTestsExecuted": "0",
-            "modifiedRisksCount": "0",
-            "modifiedRisksCountAfterTheTestsExecuted": "0",
-            "methods": {}
-          },
-          "testsToRun": {
-            "tests2RunBeforeTestsExecuted": "0",
-            "testsToRunCountAfterTheTestsExecuted": "0",
-            "tests": {}
           }
         },
         "vets-service": {
-          "coverage": "29.6",
           "risks": {
-            "risksBeforeTestsExecuted": "1",
+            "risksCountBeforeTestsExecuted": "1",
             "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
@@ -279,7 +310,40 @@
                 "associatedTestsCount": "1"
               }
             }
-          },
+          }
+        }
+      },
+      "agentsWithoutRisks": [
+        "api-gateway"
+      ],
+      "agentsWithTests2Run": {
+        "customer-service": {
+          "testsToRun": {
+            "tests2RunBeforeTestsExecuted": "1",
+            "testsToRunCountAfterTheTestsExecuted": "0",
+            "tests": {
+              "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+                "type": "Auto",
+                "coverage": "17.3",
+                "methodsCovered": "23"
+              }
+            }
+          }
+        },
+        "visits-service": {
+          "testsToRun": {
+            "tests2RunBeforeTestsExecuted": "1",
+            "testsToRunCountAfterTheTestsExecuted": "0",
+            "tests": {
+              "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]": {
+                "type": "Auto",
+                "coverage": "44.7",
+                "methodsCovered": "8"
+              }
+            }
+          }
+        },
+        "vets-service": {
           "testsToRun": {
             "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
@@ -292,7 +356,10 @@
             }
           }
         }
-      }
+      },
+      "agentsWithoutTests2Run": [
+        "api-gateway"
+      ]
     }
   }
 }
