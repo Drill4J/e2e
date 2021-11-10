@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  agent-files:
+    image: drill4j/java-agent:${AGENT_VERSION}
+    environment:
+      - AGENT_VERSION=${AGENT_VERSION}
+    volumes:
+      - agent-files:/data
+    networks:
+      - drill4j-dev-network
+
   nginx-balancer:
     build:
       context : ./multiinstances-nginx/
@@ -14,27 +23,39 @@ services:
     networks:
       - drill4j-dev-network
 
+
   pet-node-1:
     image: drill4j/spring-petclinic-sample:${PET_STANDALONE_BUILD_NODE_1}
     ports:
       - ${PET_NODE_1_PORT}:8080
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/libdrill_agent.so=drillInstallationDir=/data,adminAddress=${adminAddress},agentId=${agentId},buildVersion=${PET_STANDALONE_BUILD_NODE_1},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress},agentId=${agentId},buildVersion=${PET_STANDALONE_BUILD_NODE_1},logLevel=${LOG_LEVEL}"
     volumes:
-      - ./distr:/data
+      - agent-files:/data
     networks:
       - drill4j-dev-network
+    depends_on:
+      agent-files:
+        condition: service_completed_successfully
 
   pet-node-2:
     image: drill4j/spring-petclinic-sample:${PET_STANDALONE_BUILD_NODE_2}
     ports:
       - ${PET_NODE_2_PORT}:8080
     environment:
-      - JAVA_TOOL_OPTIONS="-agentpath:/data/libdrill_agent.so=drillInstallationDir=/data,adminAddress=${adminAddress},agentId=${agentId},buildVersion=${PET_STANDALONE_BUILD_NODE_2},logLevel=${LOG_LEVEL}"
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=${adminAddress},agentId=${agentId},buildVersion=${PET_STANDALONE_BUILD_NODE_2},logLevel=${LOG_LEVEL}"
     volumes:
-      - ./distr:/data
+      - agent-files:/data
     networks:
       - drill4j-dev-network
+    depends_on:
+      agent-files:
+        condition: service_completed_successfully
 
 networks:
   drill4j-dev-network:
+
+volumes:
+  agent-files:
+
+
