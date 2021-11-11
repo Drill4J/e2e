@@ -1,7 +1,12 @@
 name: Run Workflow Dispatch
 
-on:
+on: 
   workflow_dispatch:
+    inputs:
+      admin-ui-root-config-version:
+        description: 'admin-ui-root-config version'     
+        required: true
+        default: 'latest'
 
 jobs:
   build:
@@ -10,3 +15,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
+    - run: |
+        echo "admin-ui-root-config version: ${{ github.event.inputs.admin-ui-root-config-version }}"
