@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
-      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
+      - run: 'echo "client_payload: ${{ toJson(github.event.client_payload) }}"'
