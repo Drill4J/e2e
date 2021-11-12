@@ -12,6 +12,11 @@ jobs:
       - uses: actions/checkout@v1
       - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
       - run: 'echo "client_payload: ${{ toJson(github.event.client_payload) }}"'
+      - run: 'docker-compose -f docker/docker-compose.admin.yml --env-file docker/docker-compose.admin.env up -d'
+      - run: 'sleep 60'
+      - run: 'curl -i http://localhost:9090'
+      - run: 'curl -i http://localhost:9091'
+      - run: 'docker-compose -f docker/docker-compose.admin.yml --env-file docker/docker-compose.admin.env down'
 
 
 # Run action
