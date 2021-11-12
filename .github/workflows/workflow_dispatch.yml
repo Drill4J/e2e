@@ -1,20 +1,12 @@
-name: Run Workflow Dispatch
+name: Run Repository_Dispatch
 
-on: 
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'admin-ui-root-config version'     
-        required: true
-        default: 'latest'
+on: repository_dispatch
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - run: |
-        echo "admin-ui-root-config version: ${{ github.event.inputs.version }}"
+      - uses: actions/checkout@v1
+      - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
+      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
