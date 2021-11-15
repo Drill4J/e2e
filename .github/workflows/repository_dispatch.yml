@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '14'
       - run: npm install
-      - run: cypress open
+      - run: $(npm bin)/cypress open
 
 
 # Run action
