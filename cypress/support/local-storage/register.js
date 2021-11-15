@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { register } from "./local-storage/register";
-import "./commands";
-import "./tests/methods-table";
-import "./tests/tests-table";
-import "./tests/covered-methods-pane";
-import "./tests/associated-tests-pane";
-import "./tests/risks-count-in-the-cards";
-import "./tests/risks-table";
-import "./tests/tests-to-run-table";
+import { LocalStorage } from "./local-storage";
 
-register(Cypress, cy, localStorage);
+export const register = (Cypress, cy, localStorage) => {
+  const localStorageCommands = new LocalStorage(localStorage, cy);
+
+  // Register commands
+  LocalStorage.cypressCommands.forEach((commandName) => {
+    Cypress.Commands.add(
+      commandName,
+      localStorageCommands[commandName].bind(localStorageCommands),
+    );
+  });
+};
