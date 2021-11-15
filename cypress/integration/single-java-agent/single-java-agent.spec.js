@@ -190,26 +190,26 @@ context("_", () => {
       context("Initial Risks", () => {
         context("Overview page", () => {
           it("should display risks count in the header", () => {
-            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.initialRisksCount);
+            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksCountBeforeTestsExecuted);
           });
         });
 
         context("Risks page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.initialRisksCount).click();
+            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountBeforeTestsExecuted).click();
           });
 
           it("should display not covered risks count in the page header", () => {
-            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
           });
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
             });
 
             it("should display rows with risks", () => {
-              cy.get("table tbody tr").should("have.length", buildData.risks.initialRisksCount);
+              cy.get("table tbody tr").should("have.length", buildData.risks.risksCountBeforeTestsExecuted);
             });
           });
         });
@@ -218,26 +218,26 @@ context("_", () => {
       context("Initial Tests to run", () => {
         context("Overview page", () => {
           it("should display tests to run count in the header", () => {
-            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.initialTestsToRunCount);
+            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
         });
 
         context("Tests to run page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.initialTestsToRunCount).click();
+            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.tests2RunBeforeTestsExecuted).click();
           });
 
           it("should display suggested tests to run count in the page header", () => {
-            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.initialTestsToRunCount);
+            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
 
           context("Tests to run table", () => {
             it("should display all tests to run count in the header", () => {
-              cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.initialTestsToRunCount);
+              cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
             });
 
             it("should display rows with tests to run", () => {
-              cy.get("table tbody tr").should("have.length", buildData.testsToRun.initialTestsToRunCount);
+              cy.get("table tbody tr").should("have.length", buildData.testsToRun.tests2RunBeforeTestsExecuted);
             });
           });
         });
@@ -276,7 +276,7 @@ context("_", () => {
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
             });
 
             context("should display risks  data", () => {

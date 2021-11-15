@@ -20,6 +20,7 @@
 // modifiedRisksCount: "0",
 // modifiedRisksCountAfterTheTestsExecuted: "0",
 
+// TODO refactor this test
 Cypress.Commands.add("risksCountInTheCardsTest", { }, (risks) => {
   cy.getByDataTest("build-methods-card:total-count:NEW").should("have.text", risks.newRisksCount);
   if (Number(risks.newRisksCountAfterTheTestsExecuted)) {

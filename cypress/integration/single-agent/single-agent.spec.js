@@ -23,15 +23,24 @@ const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
   "single-java-agent": singleJavaAgentData,
 };
+// Multiinstances
 // Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
 // Cypress.env("initialApplicationBuildVersion", "0.1.0");
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
+// Single java agent
+Cypress.env("startApplicationTaskName", "startPetclinic");
+Cypress.env("initialApplicationBuildVersion", "0.1.0");
+Cypress.env("secondApplicationBuildVersion", "0.5.0");
+Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+Cypress.env("fixtureFile", "single-java-agent");
+
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
 
-context("_", () => {
+// TODO rename fixtureFile env
+context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
@@ -91,46 +100,12 @@ context("_", () => {
       });
 
       context("Build methods tab", () => {
-        context("Methods table", () => {
-          it("should display packages data", () => {
-            cy.get('[data-test="methods-table"] table tbody tr').each(($row) => {
-              const packageName = $row.find('[data-test="name-cell:content:package"]').text();
-              const packageData = initialBuildData.packages[packageName];
-              // TODO need to refactor to individual tests because log is uninformative
-              expect($row.find('[data-test="coverage-cell:coverage"]').text()).to.be.eq(`${packageData.coverage}%`);
-              expect($row.find('[data-test="td-row-cell-totalMethodsCount"]').text()).to.be.eq(packageData.methodsTotal);
-              expect($row.find('[data-test="td-row-cell-coveredMethodsCount"]').text()).to.be.eq(packageData.methodsCovered);
-              expect($row.find('[data-test="coverage-details:associated-tests-count"]').text()).to.be.eq(packageData.associatedTestsCount);
-            }).then(($list) => {
-              expect($list).to.have.length(initialBuildData.packagesCount);
-            });
-          });
+        it("should display packages data in methods table", () => {
+          cy.methodsTableTest(initialBuildData.packages, initialBuildData.packagesCount);
         });
 
-        context("Associated tests pane", () => {
-          // TODO need to add tests for classes and methods
-          const packagesWithAssociatedTests = Object.entries(initialBuildData.packages)
-            .filter(([_, value]) => value.associatedTestsCount !== "n/a");
-
-          packagesWithAssociatedTests.forEach((([packageName, packageData]) => {
-            context(`Associate tests for ${packageName} package`, () => {
-              beforeEach(() => {
-                cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-                  .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
-                  .click({ force: true }); // this element is detached from the DOM when tests are run
-              });
-
-              it("should display package name", () => {
-                cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
-              });
-
-              it("should display list with associated tests", () => {
-                cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
-                  expect(packageData.associatedTests.includes($testName.text())).to.be.true;
-                });
-              });
-            });
-          }));
+        it('should display "Asociated tests pane" with tests for methods', () => {
+          cy.associatedTestsPaneTest(initialBuildData.packagesWithAssociatedTests);
         });
       });
 
@@ -139,54 +114,23 @@ context("_", () => {
           cy.get('[data-test="build-overview:tab:build-tests"]').click();
         });
 
-        it("should display tests data", () => {
-          cy.get('[data-test="test-details:table-wrapper"] tbody tr').each(($testRow) => {
-            const testName = $testRow.find('[data-test="compound-cell:name"]').text();
-            const testData = initialBuildData.testsWithCoveredMethods[testName];
-            if (testData) { // created no all tests in fixture
-              // TODO need to refactor to individual tests because log is uninformative
-              expect($testRow.find('[data-test="td-row-cell-type"]').text()).to.be.eq(testData.type);
-              expect($testRow.find('[data-test="td-row-cell-details.result"]').text()).to.be.eq(testData.expectedStatus);
-              expect($testRow.find('[data-test="td-row-cell-coverage.percentage"]').text()).to.be.eq(`${testData.coverage}`);
-              expect($testRow.find('[data-test="test-actions:view-curl:id"]').text()).to.be.eq(testData.methodsCovered);
-            }
-          }).then(($list) => {
-            expect($list).to.have.length(initialBuildData.testsCount);
-          });
+        it("should display tests data in the table", () => {
+          cy.testsTableTest(initialBuildData.testsWithCoveredMethods, initialBuildData.testsCount);
         });
 
-        context("Covered methods pane", () => {
-          const testsWithCoveredMethods = Object.entries(initialBuildData.testsWithCoveredMethods);
-          testsWithCoveredMethods.forEach((([testName, testData]) => {
-            context(`Covered methods for ${testName} test`, () => {
-              beforeEach(() => {
-                cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
-                  .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
-                  .click({ force: true }); // this element is detached from the DOM when tests are run
-              });
-
-              it("should display test name", () => {
-                cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testName);
-              });
-
-              it("should display list with covered methods", () => {
-                // TODO failed because we use virtualization
-                // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
-                cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
-              });
-            });
-          }));
+        it('should display "Covered methods pane" for tests', () => {
+          cy.coveredMethodsPaneTest(initialBuildData.testsWithCoveredMethods);
         });
       });
 
       context("Risks", () => {
-        it("should display '-' for initial build", () => {
+        it("should display '-' in the header on overview page for initial build", () => {
           cy.getByDataTest("action-section:no-value:risks").should("exist");
         });
       });
 
       context("Tests to run", () => {
-        it("should display '-' for initial build", () => {
+        it("should display '-' in the header on overview page for initial build", () => {
           cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
         });
       });
@@ -199,65 +143,58 @@ context("_", () => {
       });
       // TODO add check build versions
 
-      context("Initial Risks", () => {
+      context("Risks before tests executed", () => {
         context("Overview page", () => {
           it("should display risks count in the header", () => {
-            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.initialRisksCount);
+            cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksCountBeforeTestsExecuted);
           });
         });
 
         context("Risks page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.initialRisksCount).click();
+            cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountBeforeTestsExecuted).click();
           });
 
           it("should display not covered risks count in the page header", () => {
-            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+            cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
           });
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
             });
 
             it("should display rows with risks", () => {
-              cy.get("table tbody tr").should("have.length", buildData.risks.initialRisksCount);
+              cy.get("table tbody tr").should("have.length", buildData.risks.risksCountBeforeTestsExecuted);
             });
           });
         });
       });
 
-      context("Initial Tests to run", () => {
+      context("Tests2run before tests executed", () => {
         context("Overview page", () => {
-          it("should display tests to run count in the header", () => {
-            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.initialTestsToRunCount);
+          it("should display tests2run count in the header", () => {
+            cy.getByDataTest("action-section:count:tests-to-run").should("have.text", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
         });
 
         context("Tests to run page", () => {
           beforeEach(() => {
-            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.initialTestsToRunCount).click();
+            cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.tests2RunBeforeTestsExecuted).click();
           });
 
-          it("should display suggested tests to run count in the page header", () => {
-            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.initialTestsToRunCount);
+          it("should display suggested tests2run count in the page header", () => {
+            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
           });
 
           context("Tests to run table", () => {
-            if (Number(buildData.testsToRun.initialTestsToRunCount) === 0) {
-              it("should display stub", () => {
-                cy.getByDataTest("stub:title").should("exist");
-                cy.getByDataTest("stub:message").should("exist");
-              });
-            } else {
-              it("should display all tests to run count in the header", () => {
-                cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.initialTestsToRunCount);
-              });
+            it("should display all tests2run count in the header", () => {
+              cy.getByDataTest("tests-to-run-list:table-title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+            });
 
-              it("should display rows with tests to run", () => {
-                cy.get("table tbody tr").should("have.length", buildData.testsToRun.initialTestsToRunCount);
-              });
-            }
+            it("should display rows with tests2run", () => {
+              cy.get("table tbody tr").should("have.length", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+            });
           });
         });
       });
@@ -295,81 +232,37 @@ context("_", () => {
 
           context("Risks table", () => {
             it("should display all risks count in the header", () => {
-              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.initialRisksCount);
+              cy.getByDataTest("risks-list:table-title").should("contain", buildData.risks.risksCountBeforeTestsExecuted);
             });
 
-            context("should display risks  data", () => {
-              Object.entries(buildData.risks.methods).forEach(([riskName, riskData]) => {
-                context(`should display data for ${riskName}`, () => {
-                  it("should display package and method names", () => {
-                    cy.contains("table tbody tr", riskName).should("exist");
-                    cy.contains("table tbody tr", riskData.packageName).should("exist");
-                  });
-
-                  it("should display risk type", () => {
-                    cy.contains("table tbody tr", riskName).contains('[data-test="td-row-cell-type"]', riskData.type).should("exist");
-                  });
-
-                  it("should display coverage", () => {
-                    cy.contains("table tbody tr", riskName)
-                      .contains('[data-test="coverage-cell:coverage"]', riskData.coverage).should("exist");
-                  });
-
-                  it("should display associated tests count", () => {
-                    cy.contains("table tbody tr", riskName)
-                      .contains('[data-test="risks-table:associated-tests-count"]', riskData.associatedTestsCount)
-                      .should("exist");
-                  });
-                });
-              });
+            it("should display risks data", () => {
+              cy.risksTableTest(buildData.risks.methods);
             });
           });
         });
       });
 
-      context("Tests to run after the collect coverage", () => {
+      context("Tests2run after the collect coverage", () => {
         context("Overview page", () => {
-          it("should display suggested tests to run count in the header", () => {
+          it("should display suggested tests2run count in the header", () => {
             cy.getByDataTest("action-section:count:tests-to-run")
               .should("have.text", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
           });
         });
-        if (Number(buildData.testsToRun.initialTestsToRunCount) !== 0) {
-          context("Tests to run page", () => {
-            beforeEach(() => {
-              cy.contains('[data-test="action-section:count:tests-to-run"]',
-                buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
-            });
-
-            it("should display suggested tests to run count in the header", () => {
-              cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
-            });
-
-            context("tests to run table", () => {
-              Object.entries(buildData.testsToRun.tests).forEach(([testName, testData]) => {
-                context(`should display data for ${testName} test`, () => {
-                  it("should display test name", () => {
-                    cy.contains("table tbody tr", testName).should("exist");
-                  });
-
-                  it("should display tests type", () => {
-                    cy.contains("table tbody tr", testName).contains('[data-test="td-row-type"]', testData.type).should("exist");
-                  });
-
-                  it("should display coverage percentage", () => {
-                    cy.contains("table tbody tr", testName)
-                      .contains('[data-test="td-row-cell-coverage.percentage"]', testData.coverage).should("exist");
-                  });
-
-                  it("should display methods covered", () => {
-                    cy.contains("table tbody tr", testName)
-                      .contains('[data-test="td-row-cell-coverage.methodCount.covered"]', testData.methodsCovered).should("exist");
-                  });
-                });
-              });
-            });
+        context("Tests to run page", () => {
+          beforeEach(() => {
+            cy.contains('[data-test="action-section:count:tests-to-run"]',
+              buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
           });
-        }
+
+          it("should display suggested tests2run count in the header", () => {
+            cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
+          });
+
+          it("should display tests data in the table", () => {
+            cy.testsToRunTableTest(buildData.testsToRun.tests);
+          });
+        });
       });
     });
   });

@@ -9,4 +9,4 @@ services:
       - adminHost=host.docker.internal
       - adminPort=9090
       - groupId=dev-pet-mcr
-      - autotestAgentVersion=0.16.6
+      - autotestAgentVersion=0.17.1

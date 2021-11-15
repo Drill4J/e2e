@@ -26,17 +26,22 @@
 // packagesCount: "3"
 
 Cypress.Commands.add("methodsTableTest", { }, (packages, packagesCount) => {
-  cy.get('[data-test="methods-table"] table tbody tr').each(($row) => {
-    const packageName = $row.find('[data-test="name-cell:content:package"]').text();
-    const packageData = packages[packageName];
-    if (packageData) {
-      // TODO need to refactor with using cypress api like on risks table
-      expect($row.find('[data-test="coverage-cell:coverage"]').text()).to.be.eq(`${packageData.coverage}%`);
-      expect($row.find('[data-test="td-row-cell-totalMethodsCount"]').text()).to.be.eq(packageData.methodsTotal);
-      expect($row.find('[data-test="td-row-cell-coveredMethodsCount"]').text()).to.be.eq(packageData.methodsCovered);
-      expect($row.find('[data-test="coverage-details:associated-tests-count"]').text()).to.be.eq(packageData.associatedTestsCount);
-    }
-  }).then(($list) => {
-    expect($list).to.have.length(packagesCount);
+  Object.entries(packages).forEach(([packageName, packageData]) => {
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .find('[data-test="name-cell:content:package"]').should("have.text", packageName);
+
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .find('[data-test="coverage-cell:coverage"]').should("have.text", `${packageData.coverage}%`);
+
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .find('[data-test="td-row-cell-totalMethodsCount"]').should("have.text", packageData.methodsTotal);
+
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .find('[data-test="td-row-cell-coveredMethodsCount"]').should("have.text", packageData.methodsCovered);
+
+    cy.contains('[data-test="methods-table"] table tbody tr', packageName)
+      .find('[data-test="coverage-details:associated-tests-count"]').should("have.text", packageData.associatedTestsCount);
+
+    cy.getByDataTest("name-cell:content:package").should("have.length", packagesCount);
   });
 });
