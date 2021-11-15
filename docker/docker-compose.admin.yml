@@ -17,10 +17,10 @@ services:
       - drill4j-dev-network
 
   admin-ui:
-    image: admin-ui-cypress:latest
+    image: drill4j/admin-ui-root-config:0.1.0-67
     container_name: admin-ui
     environment:
-      - UI_PLUGINS_URLS=test2code#http://127.0.0.1:8034/Drill4J-test-to-code.js
+      - UI_PLUGINS_URLS=test2code#https://cdn.jsdelivr.net/npm/@drill4j/test2code-ui@0.1.0-64/dist/Drill4J-test-to-code.js
     ports:
       - 9091:8080
     networks:
