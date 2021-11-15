@@ -18,6 +18,13 @@ jobs:
           node-version: '14'
       - run: npm install
       - run: $(npm bin)/cypress run --spec ./cypress/integration/single-java-agent/single-java-agent.spec.js
+      - run: ls
+      - run: ls cypress
+      - name: Archive cypress videos results
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
 
 # Run action
