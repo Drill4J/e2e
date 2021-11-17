@@ -1,0 +1,31 @@
+name: Run Repository_Dispatch
+
+on:
+  repository_dispatch:
+    types: [run_test]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
+      - run: 'echo "client_payload: ${{ toJson(github.event.client_payload) }}"'
+      
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: $(npm bin)/cypress run --spec ./cypress/integration/single-java-agent/single-java-agent.spec.js  || true
+      - name: Archive cypress videos results
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+# Run action
+# curl -H "Authorization: token xxx" \
+#    -H 'Accept: application/vnd.github.everest-preview+json' \
+#    "https://api.github.com/repos/Drill4J/e2e/dispatches" \
+#    -d '{ "event_type": "run_test", "client_payload": {"admin_version": "1.0.58"}}'
