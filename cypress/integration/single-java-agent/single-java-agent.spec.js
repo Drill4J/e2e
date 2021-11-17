@@ -23,7 +23,6 @@ context("_", () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
-    cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
     cy.task("startPetclinic", { build: "0.1.0" });
   });
 

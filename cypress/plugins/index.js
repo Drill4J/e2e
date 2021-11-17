@@ -26,13 +26,13 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
 const { exec } = require("child_process");
 const { writeFile } = require("fs");
+const axios = require("axios");
 
 module.exports = (on) => {
   on("task", {
@@ -51,6 +51,8 @@ module.exports = (on) => {
     async startAdmin() {
       const containersIds = await dockerComposeUp("./docker/docker-compose.admin.yml", "./docker/docker-compose.admin.env");
       console.log(`Started containers: ${containersIds}`);
+      await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
+      console.log("BE is available");
       return null;
     },
     async startPetclinic({ build = "0.1.0" }) {
@@ -58,6 +60,8 @@ module.exports = (on) => {
         "./docker/single-java-agent.yml",
         `./docker/single-java-agent-build-${build}.env`,
       );
+      await ping("http://localhost:8087");
+      console.log("Petclinic is available");
       return null;
     },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
@@ -65,6 +69,8 @@ module.exports = (on) => {
         "./docker/microservice-java-agents.yml",
         `./docker/microservice-java-agents-build-${build}.env`,
       );
+      await ping("http://localhost:8080/#!/welcome");
+      console.log("Petclinic is available");
       return null;
     },
     async startPetclinicMultinstaces({ build = "0.1.0" }) {
@@ -119,4 +125,25 @@ async function dockerComposeUp(composePath, envFilePath) {
 
 async function dockerStopAndRmService(serviceName) {
   return promisifiedExec(`docker stop ${serviceName} && docker rm ${serviceName}`);
+}
+
+async function ping(url) {
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    const intervalId = setInterval(async () => {
+      count += 1;
+      try {
+        const res = await axios.get(url);
+        if (res.status === 200) {
+          clearInterval(intervalId);
+          resolve();
+        }
+      } catch (e) {
+        if (count > 40) {
+          clearInterval(intervalId);
+          reject();
+        }
+      }
+    }, 3000);
+  });
 }

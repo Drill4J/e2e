@@ -57,27 +57,4 @@ Cypress.Commands.add("login", { }, () => {
   cy.wait(["@login"]);
 });
 
-Cypress.Commands.add("req", { }, (url) => ping(url));
-
-async function ping(url) {
-  return new Promise((resolve, reject) => {
-    let count = 0;
-    const intervalId = setInterval(async () => {
-      count += 1;
-      try {
-        const res = await axios.get(url);
-        if (res.status === 200) {
-          clearInterval(intervalId);
-          resolve();
-        }
-      } catch (e) {
-        if (count > 15) {
-          clearInterval(intervalId);
-          reject();
-        }
-      }
-    }, 3000);
-  });
-}
-
 Cypress.Commands.add("getByDataTest", (selector, ...args) => cy.get(`[data-test="${selector}"]`, ...args));
