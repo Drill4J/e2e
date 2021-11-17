@@ -31,7 +31,6 @@
  */
 // eslint-disable-next-line no-unused-vars
 const { exec } = require("child_process");
-const { writeFile } = require("fs");
 const axios = require("axios");
 
 module.exports = (on) => {
@@ -51,8 +50,12 @@ module.exports = (on) => {
     async startAdmin() {
       const containersIds = await dockerComposeUp("./docker/docker-compose.admin.yml", "./docker/docker-compose.admin.env");
       console.log(`Started containers: ${containersIds}`);
-      await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
-      console.log("BE is available");
+      try {
+        await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
+        console.log("BE is available");
+      } catch (e) {
+        console.log("BE is not available");
+      }
       return null;
     },
     async startPetclinic({ build = "0.1.0" }) {
@@ -60,8 +63,12 @@ module.exports = (on) => {
         "./docker/single-java-agent.yml",
         `./docker/single-java-agent-build-${build}.env`,
       );
-      await ping("http://localhost:8087");
-      console.log("Petclinic is available");
+      try {
+        await ping("http://localhost:8087");
+        console.log("Petclinic is available");
+      } catch (e) {
+        console.log("Petclinic is not available");
+      }
       return null;
     },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
@@ -69,8 +76,12 @@ module.exports = (on) => {
         "./docker/microservice-java-agents.yml",
         `./docker/microservice-java-agents-build-${build}.env`,
       );
-      await ping("http://localhost:8080/#!/welcome");
-      console.log("Petclinic is available");
+      try {
+        await ping("http://localhost:8080/#!/welcome");
+        console.log("Petclinic is available");
+      } catch (e) {
+        console.log("Petclinic is not available");
+      }
       return null;
     },
     async startPetclinicMultinstaces({ build = "0.1.0" }) {
@@ -78,6 +89,12 @@ module.exports = (on) => {
         "./docker/multinstances-single-java-agent.yml",
         `./docker/multinstances-single-java-agent-${build}.env`,
       );
+      try {
+        await ping("http://localhost:8087");
+        console.log("Petclinic is available");
+      } catch (e) {
+        console.log("Petclinic is not available");
+      }
       return null;
     },
     async startPetclinicMultinstacesAutoTests() {
