@@ -46,11 +46,16 @@ context(Cypress.env("fixtureFile"), () => {
     cy.task("startAdmin");
     cy.req("http://localhost:9090/apidocs/index.html?url=./openapi.json");
     cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") });
+    cy.login();
+    cy.visit(convertUrl("/"));
   });
 
   beforeEach(() => {
-    cy.login();
-    cy.visit(convertUrl("/"));
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
   });
 
   context("Admin part", () => {
@@ -72,12 +77,6 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Test2Code part", () => {
-    beforeEach(() => {
-      cy.contains('[data-test="name-column"]', data.agentId)
-        .click({ force: true }); // this element is detached from the DOM when tests are run
-      cy.getByDataTest("sidebar:link:Test2Code").click();
-    });
-
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
@@ -110,7 +109,8 @@ context(Cypress.env("fixtureFile"), () => {
       });
 
       context("Build tests tab", () => {
-        beforeEach(() => {
+        before(() => {
+          cy.restoreLocalStorage();
           cy.get('[data-test="build-overview:tab:build-tests"]').click();
         });
 
@@ -140,6 +140,10 @@ context(Cypress.env("fixtureFile"), () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
         cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") });
+        cy.restoreLocalStorage();
+        cy.getByDataTest("crumb:builds").click();
+        cy.contains('[data-test="builds-table:buildVersion"]', "0.5.0").click({ force: true });
+        cy.get('a[data-test="sidebar:link:Test2Code"]').click();
       });
       // TODO add check build versions
 
@@ -151,8 +155,13 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Risks page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountBeforeTestsExecuted).click();
+          });
+
+          after(() => {
+            cy.getByDataTest("crumb:test2code").click();
           });
 
           it("should display not covered risks count in the page header", () => {
@@ -179,8 +188,13 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Tests to run page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.tests2RunBeforeTestsExecuted).click();
+          });
+
+          after(() => {
+            cy.getByDataTest("crumb:test2code").click();
           });
 
           it("should display suggested tests2run count in the page header", () => {
@@ -206,7 +220,8 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Overview page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
             cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
           });
@@ -222,8 +237,13 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Risks page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountAfterTheTestsExecuted).click();
+          });
+
+          after(() => {
+            cy.getByDataTest("crumb:test2code").click();
           });
 
           it("should display not covered risks count in the page header", () => {
@@ -250,9 +270,14 @@ context(Cypress.env("fixtureFile"), () => {
           });
         });
         context("Tests to run page", () => {
-          beforeEach(() => {
+          before(() => {
+            cy.restoreLocalStorage();
             cy.contains('[data-test="action-section:count:tests-to-run"]',
               buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
+          });
+
+          after(() => {
+            cy.getByDataTest("crumb:test2code").click();
           });
 
           it("should display suggested tests2run count in the header", () => {
