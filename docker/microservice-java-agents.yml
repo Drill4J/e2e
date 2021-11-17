@@ -124,6 +124,7 @@ services:
 
   agent-files:
     image: drill4j/java-agent:${AGENT_VERSION}
+    container_name: agent-files
     environment:
       - AGENT_VERSION=${AGENT_VERSION}
     volumes:

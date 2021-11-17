@@ -3,7 +3,7 @@
   "builds": {
     "0.1.0": {
       "coverage": "17.1",
-      "testsCount": "12",
+      "testsCount": "10",
       "packagesCount": "6",
       "packages": {
         "org/springframework/samples/petclinic": {
@@ -16,6 +16,35 @@
           "methodsTotal": "13",
           "coverage": "61.7",
           "methodsCovered": "9",
+          "associatedTestsCount": "2"
+        },
+        "org/springframework/samples/petclinic/owner": {
+          "methodsTotal": "55",
+          "coverage": "18",
+          "methodsCovered": "15",
+          "associatedTestsCount": "2"
+        },
+        "org/springframework/samples/petclinic/system": {
+          "methodsTotal": "8",
+          "coverage": "6.3",
+          "methodsCovered": "1",
+          "associatedTestsCount": "1"
+        },
+        "org/springframework/samples/petclinic/vet": {
+          "methodsTotal": "12",
+          "coverage": "0",
+          "methodsCovered": "0",
+          "associatedTestsCount": "n/a"
+        },
+        "org/springframework/samples/petclinic/visit": {
+          "methodsTotal": "7",
+          "coverage": "0",
+          "methodsCovered": "0",
+          "associatedTestsCount": "n/a"
+        }
+      },
+      "packagesWithAssociatedTests": {
+        "org/springframework/samples/petclinic/model": {
           "associatedTestsCount": "2",
           "associatedTests": [
             "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
@@ -23,9 +52,6 @@
           ]
         },
         "org/springframework/samples/petclinic/owner": {
-          "methodsTotal": "55",
-          "coverage": "18",
-          "methodsCovered": "15",
           "associatedTestsCount": "2",
           "associatedTests": [
             "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
@@ -40,18 +66,6 @@
           "associatedTests": [
             "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]"
           ]
-        },
-        "org/springframework/samples/petclinic/vet": {
-          "methodsTotal": "12",
-          "coverage": "0",
-          "methodsCovered": "0",
-          "associatedTestsCount": "n/a"
-        },
-        "org/springframework/samples/petclinic/visit": {
-          "methodsTotal": "7",
-          "coverage": "0",
-          "methodsCovered": "0",
-          "associatedTestsCount": "n/a"
         }
       },
       "testsWithCoveredMethods": {
