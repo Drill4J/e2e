@@ -17,6 +17,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/var/lib/docker/overlay2
+          key: ${{ runner.os }}-docker-images
 
       - uses: actions/setup-node@v2
         with:
