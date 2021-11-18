@@ -48,8 +48,8 @@ module.exports = (on) => {
       return null;
     },
     async startAdmin() {
-      const containersIds = await dockerComposeUp("./docker/docker-compose.admin.yml", "./docker/docker-compose.admin.env");
-      console.log(`Started containers: ${containersIds}`);
+      const log = await dockerComposeUp("./docker/docker-compose.admin.yml", "./docker/docker-compose.admin.env");
+      console.log(log);
       try {
         await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
         console.log("BE is available");
@@ -59,10 +59,11 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinic({ build = "0.1.0" }) {
-      await dockerComposeUp(
+      const log = await dockerComposeUp(
         "./docker/single-java-agent.yml",
         `./docker/single-java-agent-build-${build}.env`,
       );
+      console.log(log);
       try {
         await ping("http://localhost:8087");
         console.log("Petclinic is available");
@@ -72,10 +73,11 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
-      await dockerComposeUp(
+      const log = await dockerComposeUp(
         "./docker/microservice-java-agents.yml",
         `./docker/microservice-java-agents-build-${build}.env`,
       );
+      console.log(log);
       try {
         await ping("http://localhost:8080/#!/welcome");
         console.log("Petclinic is available");
@@ -85,10 +87,11 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMultinstaces({ build = "0.1.0" }) {
-      await dockerComposeUp(
+      const log = await dockerComposeUp(
         "./docker/multinstances-single-java-agent.yml",
         `./docker/multinstances-single-java-agent-${build}.env`,
       );
+      console.log(log);
       try {
         await ping("http://localhost:8087");
         console.log("Petclinic is available");
@@ -98,17 +101,20 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMultinstacesAutoTests() {
-      await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
+      const log = await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
+      console.log(log);
       console.log("petclinic tests container exited");
       return null;
     },
     async startPetclinicAutoTests() {
-      await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up");
+      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up");
+      console.log(log);
       console.log("petclinic tests container exited");
       return null;
     },
     async startPetclinicMicroserviceAutoTests() {
-      await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml up");
+      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml up");
+      console.log(log);
       return null;
     },
     async stopPetclinicMicroservice() {
