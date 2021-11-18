@@ -13,6 +13,11 @@ jobs:
       - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
       - run: 'echo "client_payload: ${{ toJson(github.event.client_payload) }}"'
 
+      - name: Cache Docker dependency
+        uses: actions/cache@v2
+        with:
+          path: ~/var/lib/docker/overlay2
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
