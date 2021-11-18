@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '14'
       - run: npm install
-      - run: $(npm bin)/cypress run --spec ./cypress/integration/single-agent/single-agent.spec.js --env startApplicationTaskName=startPetclinic,initialApplicationBuildVersion=0.1.0,secondApplicationBuildVersion=0.5.0,startApplicationTestsTaskName=startPetclinicAutoTests  || true
+      - run: $(npm bin)/cypress run --spec ./cypress/integration/single-agent/single-agent.spec.js
       - name: Archive cypress videos results
         uses: actions/upload-artifact@v2
         with:
