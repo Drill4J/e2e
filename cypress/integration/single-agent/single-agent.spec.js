@@ -44,9 +44,9 @@ context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 150000 });
     cy.login();
     cy.visit(convertUrl("/"));
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 150000 });
   });
 
   beforeEach(() => {
