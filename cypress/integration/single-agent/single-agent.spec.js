@@ -28,7 +28,7 @@ const dataObject = {
 // Cypress.env("initialApplicationBuildVersion", "0.1.0");
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
-// Cypress.env("fixtureFile", "multinstances-single-java-agent");
+// Cypress.env("fixtureFile", "multinstances-single-java-agent-with-multiple-scopes");
 // Single java agent
 Cypress.env("startApplicationTaskName", "startPetclinic");
 Cypress.env("initialApplicationBuildVersion", "0.1.0");
