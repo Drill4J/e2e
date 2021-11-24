@@ -17,7 +17,7 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent-with-multiple-scopes.json";
 
-Cypress.env("scopesCount", "3");
+Cypress.env("scopesCount", 3);
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -46,17 +46,19 @@ context("single-java-agent-with-multiple-scopes", () => {
       cy.get('[data-test="wizard:finishng-button"]').click();
 
       cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
+      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
     });
   });
 
   context("Test2Code part", () => {
-    before(() => {
-      cy.restoreLocalStorage();
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
-    });
-
-    (new Array(Cypress.env("scopesCount"))).forEach((_, scopeNumber) => {
+    (new Array(Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
+        after(() => {
+          cy.restoreLocalStorage();
+          cy.task("stopPetclinic");
+          cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
+          cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+        });
         it("should collect coverage to scope after autotests executed", () => {
           cy.task("startPetclinicAutoTests", {}, { timeout: 300000 });
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${data.coverage}%`);
@@ -77,10 +79,10 @@ context("single-java-agent-with-multiple-scopes", () => {
         cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
       });
 
-      (new Array(Cypress.env("scopesCount"))).forEach((_, scopeNumber) => {
+      (new Array(Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
         it(`should display ${data.coverage}% for New Scope ${scopeNumber + 1}`, () => {
-          cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('data-test="scopes-list:coverage"')
-            .should("contains", data.coverage);
+          cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('[data-test="scopes-list:coverage"]')
+            .should("contain", data.coverage);
         });
       });
     });

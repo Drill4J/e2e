@@ -72,6 +72,10 @@ module.exports = (on) => {
       }
       return null;
     },
+    async stopPetclinic() {
+      await dockerStopAndRmService("spring-petclinic-sample");
+      return null;
+    },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
       const log = await dockerComposeUp(
         "./docker/microservice-java-agents.yml",
@@ -148,6 +152,10 @@ async function dockerComposeUp(composePath, envFilePath) {
 
 async function dockerStopAndRmService(serviceName) {
   return promisifiedExec(`docker stop ${serviceName} && docker rm ${serviceName}`);
+}
+
+async function dockerStopService(serviceName) {
+  return promisifiedExec(`docker stop ${serviceName}`);
 }
 
 async function ping(url) {
