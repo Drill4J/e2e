@@ -9,4 +9,4 @@ services:
       - adminHost=host.docker.internal
       - adminPort=9090
       - agentId=dev-pet-standalone
-      - autotestAgentVersion=0.17.1
+      - autotestAgentVersion=0.17.7
