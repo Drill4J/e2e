@@ -28,13 +28,13 @@
 Cypress.Commands.add("testsTableTest", { }, (testsWithCoveredMethods, testsCount) => {
   Object.entries(testsWithCoveredMethods).forEach(([testName, testData]) => {
     cy.contains("table tbody tr", testName)
-      .find('[data-test="compound-cell:name"]').should("have.text", testName);
+      .find('[data-test="td-row-cell-overview.details.name"]').should("have.text", testName);
 
     cy.contains("table tbody tr", testName)
       .find('[data-test="td-row-cell-type"]').should("have.text", testData.type);
 
     cy.contains("table tbody tr", testName)
-      .find('[data-test="td-row-cell-details.result"]').should("have.text", testData.expectedStatus);
+      .find('[data-test="td-row-cell-overview.result"]').should("have.text", testData.expectedStatus);
 
     cy.contains("table tbody tr", testName)
       .find('[data-test="td-row-cell-coverage.percentage"]').should("have.text", testData.coverage);
@@ -42,6 +42,6 @@ Cypress.Commands.add("testsTableTest", { }, (testsWithCoveredMethods, testsCount
     cy.contains("table tbody tr", testName)
       .find('[data-test="test-actions:view-curl:id"]').should("have.text", testData.methodsCovered);
 
-    cy.getByDataTest("td-row-testName").should("have.length", testsCount);
+    cy.getByDataTest("td-row-cell-overview.details.name").should("have.length", testsCount);
   });
 });
