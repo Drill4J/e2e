@@ -52,11 +52,12 @@
             }
           },
           "testsWithCoveredMethods": {
-            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]": {
+            "junit5UpdateOwnerInfoTest.()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "15.9",
-              "methodsCovered": "21"
+              "methodsCovered": "21",
+              "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"
             }
           }
         },
@@ -105,11 +106,12 @@
             }
           },
           "testsWithCoveredMethods": {
-            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]": {
+            "junit5CreateNewVisitTest.()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "42.9",
-              "methodsCovered": "8"
+              "methodsCovered": "8",
+              "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"
             }
           }
         },
@@ -197,11 +199,12 @@
             }
           },
           "testsWithCoveredMethods": {
-            "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]": {
+            "junit5GetVetsInfoTest.()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "28.4",
-              "methodsCovered": "11"
+              "methodsCovered": "11",
+              "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"
             }
           }
         }
