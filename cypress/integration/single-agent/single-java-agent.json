@@ -90,6 +90,56 @@
           "methodsCovered": "22",
           "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
         }
+      },
+      "testsWithoutCoveredMethods": {
+        "testNgIgnoredTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[1]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[0]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[3]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[2]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgFailedTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Failed",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgUiIgnoredTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgUiFailedTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        }
       }
     },
     "0.5.0": {
@@ -111,7 +161,7 @@
             "packageName": "org/springframework/samples/petclinic/vet/VetController",
             "type": "New",
             "coverage": "0",
-            "associatedTestsCount":"0"
+            "associatedTestsCount": "0"
           },
           "initFindForm": {
             "packageName": "org/springframework/samples/petclinic/owner/OwnerController",

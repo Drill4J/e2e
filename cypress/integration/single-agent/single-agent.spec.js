@@ -115,6 +115,7 @@ context(Cypress.env("fixtureFile"), () => {
 
         it("should display tests data in the table", () => {
           cy.testsTableTest(initialBuildData.testsWithCoveredMethods, initialBuildData.testsCount);
+          cy.testsTableTest(initialBuildData.testsWithoutCoveredMethods, initialBuildData.testsCount);
         });
 
         it('should display "Covered methods pane" for tests', () => {
