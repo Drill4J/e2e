@@ -59,6 +59,62 @@
               "methodsCovered": "21",
               "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5UpdateOwnerInfoTest()]"
             }
+          },
+          "testsWithoutCoveredMethods": {
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#3": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#1": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#4": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#2": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5FindOwnersTestSelenide.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIFailedTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIgnoredTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Skipped",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CreateNewVisitTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5GetVetsInfoTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            }
           }
         },
         "visits-service": {
@@ -113,6 +169,62 @@
               "methodsCovered": "8",
               "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]"
             }
+          },
+          "testsWithoutCoveredMethods": {
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#3": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#1": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#4": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#2": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5FindOwnersTestSelenide.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIFailedTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIgnoredTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Skipped",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5GetVetsInfoTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UpdateOwnerInfoTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            }
           }
         },
         "api-gateway": {
@@ -146,7 +258,8 @@
             }
           },
           "packagesWithAssociatedTests": {},
-          "testsWithCoveredMethods": {}
+          "testsWithCoveredMethods": {},
+          "testsWithoutCoveredMethods": {}
         },
         "vets-service": {
           "coverage": "28.4",
@@ -205,6 +318,62 @@
               "coverage": "28.4",
               "methodsCovered": "11",
               "fullTestName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5GetVetsInfoTest()]"
+            }
+          },
+          "testsWithoutCoveredMethods": {
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#3": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#1": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#4": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CheckPageHeader.(java.lang.String, java.lang.String)#2": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5FindOwnersTestSelenide.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIFailedTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Failed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UiIgnoredTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Skipped",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5UpdateOwnerInfoTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
+            },
+            "junit5CreateNewVisitTest.()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "0",
+              "methodsCovered": "0"
             }
           }
         }

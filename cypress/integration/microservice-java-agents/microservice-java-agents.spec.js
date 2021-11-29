@@ -119,6 +119,7 @@ context("_", () => {
 
               it("should display tests table", () => {
                 cy.testsTableTest(serviceData.testsWithCoveredMethods, serviceData.testsCount);
+                cy.testsTableTest(serviceData.testsWithoutCoveredMethods, serviceData.testsCount);
               });
 
               it('should display "Covered methods" pane with methods data', () => {
@@ -442,7 +443,7 @@ context("_", () => {
         });
 
         context("Agent page", () => {
-          context("Agents with tests2run before tests executed", () => {
+          context("Agents with tests2run after tests executed", () => {
             Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
               context(`Check ${serviceName} service`, () => {
                 before(() => {
@@ -487,7 +488,7 @@ context("_", () => {
               });
             });
           });
-          context("Agents without tests2run before tests executed", () => {
+          context("Agents without tests2run after tests executed", () => {
             secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
               context(`Check ${serviceName} service`, () => {
                 before(() => {
