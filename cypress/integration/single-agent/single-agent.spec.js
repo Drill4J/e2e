@@ -43,10 +43,10 @@ const data = dataObject[Cypress.env("fixtureFile")];
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.task("removeContainers");
-    cy.task("startAdmin", {}, { timeout: 300000 });
+    cy.task("startAdmin", {}, { timeout: 600000 });
     cy.login();
     cy.visit(convertUrl("/"));
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 300000 });
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
   });
 
   beforeEach(() => {
@@ -79,7 +79,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 300000 });
+        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 600000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
