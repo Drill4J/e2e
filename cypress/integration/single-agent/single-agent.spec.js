@@ -43,10 +43,10 @@ const data = dataObject[Cypress.env("fixtureFile")];
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.task("removeContainers");
-    cy.task("startAdmin", {}, { timeout: 600000 });
+    cy.task("startAdmin", {}, { timeout: 3000000 });
     cy.login();
     cy.visit(convertUrl("/"));
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 3000000 });
   });
 
   beforeEach(() => {
@@ -79,7 +79,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 600000 });
+        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 3000000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
@@ -139,7 +139,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Second build", () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 150000 });
+        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 3000000 });
         cy.restoreLocalStorage();
         cy.getByDataTest("crumb:builds").click();
         cy.contains('[data-test="builds-table:buildVersion"]', "0.5.0").click({ force: true });
