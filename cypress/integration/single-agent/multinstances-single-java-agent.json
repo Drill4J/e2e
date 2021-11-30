@@ -3,7 +3,7 @@
   "builds": {
     "0.1.0": {
       "coverage": "17.1",
-      "testsCount": "10",
+      "testsCount": "12",
       "packagesCount": "6",
       "packages": {
         "org/springframework/samples/petclinic": {
@@ -69,23 +69,76 @@
         }
       },
       "testsWithCoveredMethods": {
-        "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]": {
+        "testNgGetHomePage.()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
-          "methodsCovered": "1"
+          "methodsCovered": "1",
+          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]"
         },
-        "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]": {
+        "testNgGetOwner4EditPage.()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "7.7",
-          "methodsCovered": "14"
+          "methodsCovered": "14",
+          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]"
         },
-        "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]": {
+        "testNgGetOwner4InfoPage.()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "14.9",
-          "methodsCovered": "22"
+          "methodsCovered": "22",
+          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
+        }
+      },
+      "testsWithoutCoveredMethods": {
+        "testNgIgnoredTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[1]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[0]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[3]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgCheckPageHeader.(String,String)[2]": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgFailedTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Failed",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgUiIgnoredTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "testNgUiFailedTest.()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
         }
       }
     },
@@ -108,7 +161,7 @@
             "packageName": "org/springframework/samples/petclinic/vet/VetController",
             "type": "New",
             "coverage": "0",
-            "associatedTestsCount":"0"
+            "associatedTestsCount": "0"
           },
           "initFindForm": {
             "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
@@ -134,7 +187,7 @@
         "tests2RunBeforeTestsExecuted": "1",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]": {
+          "testNgGetHomePage.()": {
             "type": "Auto",
             "coverage": "0.2",
             "methodsCovered": "1"

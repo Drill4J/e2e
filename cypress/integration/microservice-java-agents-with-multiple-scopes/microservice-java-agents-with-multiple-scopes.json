@@ -1,0 +1,23 @@
+{
+  "groupId": "dev-pet-mcr",
+  "agentsCount": "4",
+  "summary": {
+    "coverage": "9.9"
+  },
+  "agentsWithCoverage": {
+    "customer-service": {
+      "coverage": "15.9"
+    },
+    "visits-service": {
+      "coverage": "42.9"
+    },
+    "vets-service": {
+      "coverage": "28.4"
+    }
+  },
+  "agentWithoutCoverages": {
+    "api-gateway": {
+      "coverage": "0"
+    }
+  }
+}

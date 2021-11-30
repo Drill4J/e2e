@@ -30,11 +30,11 @@ const dataObject = {
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
 // Single java agent
-Cypress.env("startApplicationTaskName", "startPetclinic");
-Cypress.env("initialApplicationBuildVersion", "0.1.0");
-Cypress.env("secondApplicationBuildVersion", "0.5.0");
-Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
-Cypress.env("fixtureFile", "single-java-agent");
+// Cypress.env("startApplicationTaskName", "startPetclinic");
+// Cypress.env("initialApplicationBuildVersion", "0.1.0");
+// Cypress.env("secondApplicationBuildVersion", "0.5.0");
+// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+// Cypress.env("fixtureFile", "single-java-agent");
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
@@ -115,6 +115,7 @@ context(Cypress.env("fixtureFile"), () => {
 
         it("should display tests data in the table", () => {
           cy.testsTableTest(initialBuildData.testsWithCoveredMethods, initialBuildData.testsCount);
+          cy.testsTableTest(initialBuildData.testsWithoutCoveredMethods, initialBuildData.testsCount);
         });
 
         it('should display "Covered methods pane" for tests', () => {

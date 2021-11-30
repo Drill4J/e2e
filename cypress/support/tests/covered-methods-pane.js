@@ -26,7 +26,7 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
       .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
       .click({ force: true }); // this element is detached from the DOM when tests are run
 
-    cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testName);
+    cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testData.fullTestName);
 
     cy.getByDataTest("covered-methods-by-test-sidebar:test-type").should("have.text", testData.type);
 
