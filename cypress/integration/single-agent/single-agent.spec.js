@@ -43,7 +43,7 @@ const data = dataObject[Cypress.env("fixtureFile")];
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.task("removeContainers");
-    cy.task("startAdmin", { timeout: 300000 });
+    cy.task("startAdmin", {}, { timeout: 300000 });
     cy.login();
     cy.visit(convertUrl("/"));
     cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 300000 });
