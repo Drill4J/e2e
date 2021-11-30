@@ -15,7 +15,7 @@
  */
 /// <reference types="cypress" />
 import { convertUrl } from "../../utils";
-import data from "./single-java-agent-with-multiple-scopes.json";
+import data from "./single-java-agent.json";
 
 Cypress.env("scopesCount", 3);
 
@@ -57,7 +57,6 @@ context("single-java-agent-with-multiple-scopes", () => {
           cy.restoreLocalStorage();
           cy.task("stopPetclinic");
           cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
-          cy.get('a[data-test="sidebar:link:Test2Code"]').click();
         });
         it("should collect coverage to scope after autotests executed", () => {
           cy.task("startPetclinicAutoTests", {}, { timeout: 300000 });

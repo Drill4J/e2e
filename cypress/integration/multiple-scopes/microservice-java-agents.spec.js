@@ -15,7 +15,7 @@
  */
 /// <reference types="cypress" />
 import { convertUrl } from "../../utils";
-import data from "./microservice-java-agents-with-multiple-scopes.json";
+import data from "./microservice-java-agents.json";
 
 Cypress.env("scopesCount", "3");
 
@@ -60,7 +60,7 @@ context("single-java-agent-with-multiple-scopes", () => {
       cy.get('a[data-test="sidebar:link:Test2Code"]').click();
     });
 
-    (new Array(Cypress.env("scopesCount"))).forEach((_, scopeNumber) => {
+    new Array(Number(Cypress.env("scopesCount"))).fill(1).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         before(() => {
           cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 300000 });
@@ -83,20 +83,29 @@ context("single-java-agent-with-multiple-scopes", () => {
     });
 
     context("Should display the same coverage for every scope on all scope page", () => {
-      before(() => {
-        cy.restoreLocalStorage();
-        cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
-      });
+      Object.entries(data.agentsWithCoverage).forEach(([serviceName, serviceData]) => {
+        context(`${serviceName}`, () => {
+          before(() => {
+            cy.restoreLocalStorage();
+            cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+            cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
+            cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
+          });
 
-      (new Array(Cypress.env("scopesCount"))).forEach((_, scopeNumber) => {
-        it(`should display ${data.coverage}% for New Scope ${scopeNumber + 1}`, () => {
-          cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('data-test="scopes-list:coverage"')
-            .should("contains", data.coverage);
+          after(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("crumb:agents").click();
+            cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+            cy.get('[data-test="sidebar:link:Test2Code"]').click();
+          });
+
+          new Array(Number(Cypress.env("scopesCount"))).fill(1).forEach((_, scopeNumber) => {
+            it(`should display ${serviceData.coverage}% for New Scope ${scopeNumber + 1}`, () => {
+              cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('[data-test="scopes-list:coverage"]')
+                .should("contain", serviceData.coverage);
+            });
+          });
         });
-      });
-
-      it("should display the summary coverage percentage after run tests", () => {
-        cy.get('[data-test="dashboard-header-cell:coverage:value"]').should("contain", data.summary.coverage);
       });
     });
   });
