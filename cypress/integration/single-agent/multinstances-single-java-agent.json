@@ -143,6 +143,10 @@
       }
     },
     "0.5.0": {
+      "coverage": "17.5",
+      "comparedToTheBaselineBuildCoverage": "+ 0.4",
+      "scopesCount": "1",
+      "testsCount": "12",
       "risks": {
         "risksCountBeforeTestsExecuted": "5",
         "risksCountAfterTheTestsExecuted": "4",
