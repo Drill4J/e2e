@@ -22,8 +22,8 @@ context("_", () => {
   before(() => {
     cy.task("removeContainers");
     cy.task("startAdmin");
-    cy.login();
     cy.visit(convertUrl("/"));
+    cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
   });
 
@@ -150,25 +150,102 @@ context("_", () => {
         cy.task("startPetclinicMicroservice", { build: "0.2.0" }, { timeout: 200000 });
       });
 
-      context("Risks before tests executed", () => {
-        context("Service group page", () => {
-          it("should display summary risks count in the header", () => {
-            cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+      context("Before tests executed", () => {
+        context("Dashboard", () => {
+          before(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("sidebar:link:Dashboard").click();
           });
 
-          it("should display risks count for every service", () => {
-            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
-              cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
-                .find('[data-test="dashboard-cell:value:risks"]')
-                .should("have.text", serviceData.risksCountBeforeTestsExecuted);
-            });
+          after(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("sidebar:link:Test2Code").click();
+          });
+
+          it("should display 0% in coverage block", () => {
+            cy.getByDataTest("dashboard:build-coverage:main-info").should("contain", "0%");
+          });
+
+          it("should display 0 tests count in tests block", () => {
+            cy.getByDataTest("dashboard:tests:main-info").should("have.text", "0");
+          });
+
+          it("should display 0 scopes count in tests block", () => {
+            cy.getByDataTest("dashboard:tests:additional-info").should("contain", "0");
+          });
+
+          it(`should display ${secondBuildData.summary.risksCountBeforeTestsExecuted} risks count in risks block`, () => {
+            cy.getByDataTest("dashboard:risks:main-info").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+          });
+
+          it(`should display ${secondBuildData.summary.tests2RunBeforeTestsExecuted} tests2run count in tests2run block`, () => {
+            cy.getByDataTest("dashboard:tests-to-run:main-info").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
           });
         });
 
-        context("Agent page", () => {
-          context("Agents with risks", () => {
-            Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
-              context(`Check ${serviceName} service`, () => {
+        context("Risks", () => {
+          context("Service group page", () => {
+            it("should display summary risks count in the header", () => {
+              cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+            });
+
+            it("should display risks count for every service", () => {
+              Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
+                cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
+                  .find('[data-test="dashboard-cell:value:risks"]')
+                  .should("have.text", serviceData.risksCountBeforeTestsExecuted);
+              });
+            });
+          });
+
+          context("Agent page", () => {
+            context("Agents with risks", () => {
+              Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
+                context(`Check ${serviceName} service`, () => {
+                  before(() => {
+                    cy.restoreLocalStorage();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  });
+
+                  after(() => {
+                    cy.restoreLocalStorage();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                  });
+
+                  context("Overview page", () => {
+                    it("should display risks count in the header", () => {
+                      cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksCountBeforeTestsExecuted);
+                    });
+
+                    context("Risks page", () => {
+                      before(() => {
+                        cy.restoreLocalStorage();
+                        cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksCountBeforeTestsExecuted).click();
+                      });
+
+                      it("should display not covered risks count in the page header", () => {
+                        cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
+                      });
+
+                      context("Risks table", () => {
+                        it("should display all risks count in the header", () => {
+                          cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
+                        });
+
+                        it("should display rows with risks", () => {
+                          cy.get("table tbody tr").should("have.length", serviceData.risks.risksCountBeforeTestsExecuted);
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+            context("Agents without risks", () => {
+              secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
                 before(() => {
                   cy.restoreLocalStorage();
                   cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -182,330 +259,321 @@ context("_", () => {
                   cy.get('[data-test="sidebar:link:Test2Code"]').click();
                 });
 
-                context("Overview page", () => {
-                  it("should display risks count in the header", () => {
-                    cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksCountBeforeTestsExecuted);
+                context(`Check ${serviceName} service`, () => {
+                  context("Overview page", () => {
+                    it('should display "-" in the header', () => {
+                      cy.getByDataTest("action-section:no-value:risks").should("exist");
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+
+        context("Tests2run", () => {
+          context("Service group page", () => {
+            it("should display summary Tests2run count", () => {
+              cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
+            });
+
+            it("should display Tests2run count for every service", () => {
+              Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
+                cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
+                  .find('[data-test="dashboard-cell:value:tests-to-run"]')
+                  .should("have.text", serviceData.tests2RunBeforeTestsExecuted);
+              });
+            });
+          });
+
+          context("Agent page", () => {
+            context("Agents with tests2run", () => {
+              Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
+                context(`Check ${serviceName} service`, () => {
+                  before(() => {
+                    cy.restoreLocalStorage();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  });
+
+                  after(() => {
+                    cy.restoreLocalStorage();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                  });
+
+                  context("Overview page", () => {
+                    it("should display tests to run count in the header", () => {
+                      cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                    });
+                  });
+
+                  context("Tests to run page", () => {
+                    before(() => {
+                      cy.restoreLocalStorage();
+                      cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.tests2RunBeforeTestsExecuted).click();
+                    });
+
+                    it("should display suggested tests to run count in the page header", () => {
+                      cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                    });
+
+                    context("Tests to run table", () => {
+                      it("should display all tests to run count in the header", () => {
+                        cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                      });
+
+                      it("should display rows with tests to run", () => {
+                        cy.get("table tbody tr").should("have.length", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                      });
+                    });
+                  });
+                });
+              });
+            });
+            context("Agents without tests2run", () => {
+              secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
+                before(() => {
+                  cy.restoreLocalStorage();
+                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                  cy.getByDataTest("sidebar:link:Test2Code").click();
+                });
+
+                after(() => {
+                  cy.restoreLocalStorage();
+                  cy.getByDataTest("crumb:agents").click();
+                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                });
+                context(`Check ${serviceName} service`, () => {
+                  context("Overview page", () => {
+                    it('should display "-" in the header', () => {
+                      cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
+      context("After text executed", () => {
+        before(() => {
+          cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 200000 });
+        });
+        it("should finish all scopes after the collcet coverage", () => { // TODO refactor to api request in before hook
+          cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
+
+          cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
+          cy.get('[data-test="menu:item:finish-all-scopes"]').click();
+          cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
+
+          cy.wait("@finish-all-scopes", { timeout: 30000 });
+          cy.getByDataTest("message-panel:text").should("exist");
+        });
+
+        context("Dashboard", () => {
+          before("Open dashboard page", () => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("sidebar:link:Dashboard").click();
+          });
+
+          it(`should display ${secondBuildData.summary.coverage}% in coverage block`, () => {
+            cy.getByDataTest("dashboard:build-coverage:main-info").should("contain", secondBuildData.summary.coverage);
+          });
+
+          it(`should display ${secondBuildData.summary.testsCount} tests count in tests block`, () => {
+            cy.getByDataTest("dashboard:tests:main-info").should("have.text", secondBuildData.summary.testsCount);
+          });
+
+          it(`should display ${secondBuildData.summary.scopesCount} scopes count in tests block`, () => {
+            cy.getByDataTest("dashboard:tests:additional-info").should("contain", secondBuildData.summary.scopesCount);
+          });
+
+          it(`should display ${secondBuildData.summary.risksCountAfterTheTestsExecuted} risks count in risks block`, () => {
+            cy.getByDataTest("dashboard:risks:main-info").should("have.text", secondBuildData.summary.risksCountAfterTheTestsExecuted);
+          });
+
+          it(`should display ${secondBuildData.summary.testsToRunCountAfterTheTestsExecuted} tests2run count in tests2run block`, () => {
+            cy.getByDataTest("dashboard:tests-to-run:main-info")
+              .should("have.text", secondBuildData.summary.testsToRunCountAfterTheTestsExecuted);
+          });
+        });
+
+        context("Risks", () => {
+          context("Service group page", () => {
+            before("Open plugin page", () => {
+              cy.restoreLocalStorage();
+              cy.getByDataTest("sidebar:link:Test2Code").click();
+            });
+
+            it("should display summary risks count in the header", () => {
+              cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountAfterTheTestsExecuted);
+            });
+
+            it("should display risks count for every service", () => {
+              Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
+                cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
+                  .find('[data-test="dashboard-cell:value:risks"]')
+                  .should("have.text", serviceData.risksCountAfterTheTestsExecuted);
+              });
+            });
+          });
+
+          context("Agent page", () => {
+            context("Agents with risks before running tests", () => { // TODO rename
+              Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
+                context(`Check ${serviceName} service`, () => {
+                  before(() => {
+                    cy.restoreLocalStorage();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  });
+
+                  after(() => {
+                    cy.restoreLocalStorage();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                  });
+
+                  context("Overview page", () => {
+                    it("should display risks count in the header", () => {
+                      cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksCountAfterTheTestsExecuted);
+                    });
                   });
 
                   context("Risks page", () => {
                     before(() => {
                       cy.restoreLocalStorage();
-                      cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksCountBeforeTestsExecuted).click();
+                      cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksCountAfterTheTestsExecuted).click();
                     });
 
                     it("should display not covered risks count in the page header", () => {
-                      cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
+                      cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountAfterTheTestsExecuted);
                     });
 
                     context("Risks table", () => {
                       it("should display all risks count in the header", () => {
-                        cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
+                        cy.getByDataTest("risks-list:table-title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
                       });
 
-                      it("should display rows with risks", () => {
-                        cy.get("table tbody tr").should("have.length", serviceData.risks.risksCountBeforeTestsExecuted);
+                      it("should display risks data", () => {
+                        cy.risksTableTest(serviceData.risks.methods);
                       });
                     });
                   });
                 });
               });
             });
-          });
-          context("Agents without risks", () => {
-            secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
-              before(() => {
-                cy.restoreLocalStorage();
-                cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                cy.getByDataTest("sidebar:link:Test2Code").click();
-              });
-
-              after(() => {
-                cy.restoreLocalStorage();
-                cy.getByDataTest("crumb:agents").click();
-                cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                cy.get('[data-test="sidebar:link:Test2Code"]').click();
-              });
-
-              context(`Check ${serviceName} service`, () => {
-                context("Overview page", () => {
-                  it('should display "-" in the header', () => {
-                    cy.getByDataTest("action-section:no-value:risks").should("exist");
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-
-      context("Tests2run before tests executed", () => {
-        context("Service group page", () => {
-          it("should display summary Tests2run count", () => {
-            cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
-          });
-
-          it("should display Tests2run count for every service", () => {
-            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
-              cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
-                .find('[data-test="dashboard-cell:value:tests-to-run"]')
-                .should("have.text", serviceData.tests2RunBeforeTestsExecuted);
-            });
-          });
-        });
-
-        context("Agent page", () => {
-          context("Agents with tests2run", () => {
-            Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
-              context(`Check ${serviceName} service`, () => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click();
-                });
-
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-
-                context("Overview page", () => {
-                  it("should display tests to run count in the header", () => {
-                    cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
-                  });
-                });
-
-                context("Tests to run page", () => {
+            context("Agents without risks", () => {
+              secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
+                context(`Check ${serviceName} service`, () => {
                   before(() => {
                     cy.restoreLocalStorage();
-                    cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.tests2RunBeforeTestsExecuted).click();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
                   });
 
-                  it("should display suggested tests to run count in the page header", () => {
-                    cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                  after(() => {
+                    cy.restoreLocalStorage();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
                   });
-
-                  context("Tests to run table", () => {
-                    it("should display all tests to run count in the header", () => {
-                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                  context("Overview page", () => {
+                    it('should display "-" in the header', () => {
+                      cy.getByDataTest("action-section:no-value:risks").should("exist");
                     });
-
-                    it("should display rows with tests to run", () => {
-                      cy.get("table tbody tr").should("have.length", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
-                    });
-                  });
-                });
-              });
-            });
-          });
-          context("Agents without tests2run", () => {
-            secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
-              before(() => {
-                cy.restoreLocalStorage();
-                cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                cy.getByDataTest("sidebar:link:Test2Code").click();
-              });
-
-              after(() => {
-                cy.restoreLocalStorage();
-                cy.getByDataTest("crumb:agents").click();
-                cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                cy.get('[data-test="sidebar:link:Test2Code"]').click();
-              });
-              context(`Check ${serviceName} service`, () => {
-                context("Overview page", () => {
-                  it('should display "-" in the header', () => {
-                    cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
                   });
                 });
               });
             });
           });
         });
-      });
 
-      context("Risks after tests executed", () => {
-        before(() => {
-          cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 200000 });
-        });
+        context("Tests2run", () => {
+          context("Service group page", () => {
+            it("should display summary tests to run count in the header", () => {
+              cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.testsToRunCountAfterTheTestsExecuted);
+            });
 
-        context("Service group page", () => {
-          it("should finish all scopes after the collcet coverage", () => { // TODO refactor to api request in before hook
-            cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
-
-            cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-            cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-            cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-            cy.wait("@finish-all-scopes", { timeout: 30000 });
-            cy.getByDataTest("message-panel:text").should("exist");
-          });
-
-          it("should display summary risks count in the header", () => {
-            cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountAfterTheTestsExecuted);
-          });
-
-          it("should display risks count for every service", () => {
-            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
-              cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
-                .find('[data-test="dashboard-cell:value:risks"]')
-                .should("have.text", serviceData.risksCountAfterTheTestsExecuted);
+            it("should display tests to run count for every service", () => {
+              Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
+                cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
+                  .find('[data-test="dashboard-cell:value:tests-to-run"]')
+                  .should("have.text", serviceData.testsToRunCountAfterTheTestsExecuted);
+              });
             });
           });
-        });
 
-        context("Agent page", () => {
-          context("Agents with risks before running tests", () => { // TODO rename
-            Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
-              context(`Check ${serviceName} service`, () => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click();
-                });
-
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-
-                context("Overview page", () => {
-                  it("should display risks count in the header", () => {
-                    cy.getByDataTest("action-section:count:risks").should("have.text", serviceData.risks.risksCountAfterTheTestsExecuted);
-                  });
-                });
-
-                context("Risks page", () => {
+          context("Agent page", () => {
+            context("Agents with tests2run after tests executed", () => {
+              Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
+                context(`Check ${serviceName} service`, () => {
                   before(() => {
                     cy.restoreLocalStorage();
-                    cy.contains('[data-test="action-section:count:risks"]', serviceData.risks.risksCountAfterTheTestsExecuted).click();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click();
                   });
 
-                  it("should display not covered risks count in the page header", () => {
-                    cy.getByDataTest("risks-list:title").should("contain", serviceData.risks.risksCountAfterTheTestsExecuted);
-                  });
-
-                  context("Risks table", () => {
-                    it("should display all risks count in the header", () => {
-                      cy.getByDataTest("risks-list:table-title").should("contain", serviceData.risks.risksCountBeforeTestsExecuted);
-                    });
-
-                    it("should display risks data", () => {
-                      cy.risksTableTest(serviceData.risks.methods);
-                    });
-                  });
-                });
-              });
-            });
-          });
-          context("Agents without risks before tests executed", () => {
-            secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
-              context(`Check ${serviceName} service`, () => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
-                });
-
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-                context("Overview page", () => {
-                  it('should display "-" in the header', () => {
-                    cy.getByDataTest("action-section:no-value:risks").should("exist");
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-
-      context("Tests to run after tests executed", () => {
-        context("Service group page", () => {
-          it("should display summary tests to run count in the header", () => {
-            cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.testsToRunCountAfterTheTestsExecuted);
-          });
-
-          it("should display tests to run count for every service", () => {
-            Object.entries(secondBuildData.agents).forEach(([serviceName, serviceData]) => {
-              cy.contains('[data-test="test-to-code-plugin:list-row"]', serviceName)
-                .find('[data-test="dashboard-cell:value:tests-to-run"]')
-                .should("have.text", serviceData.testsToRunCountAfterTheTestsExecuted);
-            });
-          });
-        });
-
-        context("Agent page", () => {
-          context("Agents with tests2run after tests executed", () => {
-            Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
-              context(`Check ${serviceName} service`, () => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click();
-                });
-
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-
-                context("Overview page", () => {
-                  it("should display tests to run count in the header", () => {
-                    cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);
-                  });
-                });
-
-                context("Tests to run page", () => {
-                  before(() => {
+                  after(() => {
                     cy.restoreLocalStorage();
-                    cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
                   });
 
-                  it("should display suggested tests to run count in the header", () => {
-                    cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);
+                  context("Overview page", () => {
+                    it("should display tests to run count in the header", () => {
+                      cy.getByDataTest("action-section:count:tests-to-run").should("have.text", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);
+                    });
                   });
 
-                  context("Tests to run table", () => {
+                  context("Tests to run page", () => {
+                    before(() => {
+                      cy.restoreLocalStorage();
+                      cy.contains('[data-test="action-section:count:tests-to-run"]', serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
+                    });
+
                     it("should display suggested tests to run count in the header", () => {
-                      cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                      cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.testsToRunCountAfterTheTestsExecuted);
                     });
 
-                    it("should display tests to run data", () => {
-                      cy.testsToRunTableTest(serviceData.testsToRun.tests);
+                    context("Tests to run table", () => {
+                      it("should display suggested tests to run count in the header", () => {
+                        cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
+                      });
+
+                      it("should display tests to run data", () => {
+                        cy.testsToRunTableTest(serviceData.testsToRun.tests);
+                      });
                     });
                   });
                 });
               });
             });
-          });
-          context("Agents without tests2run after tests executed", () => {
-            secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
-              context(`Check ${serviceName} service`, () => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
-                });
+            context("Agents without tests2run", () => {
+              secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
+                context(`Check ${serviceName} service`, () => {
+                  before(() => {
+                    cy.restoreLocalStorage();
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
+                  });
 
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-                context("Overview page", () => {
-                  it('should display "-" in the header', () => {
-                    cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
+                  after(() => {
+                    cy.restoreLocalStorage();
+                    cy.getByDataTest("crumb:agents").click();
+                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
+                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                  });
+                  context("Overview page", () => {
+                    it('should display "-" in the header', () => {
+                      cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
+                    });
                   });
                 });
               });

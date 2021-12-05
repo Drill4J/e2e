@@ -17,7 +17,7 @@ services:
       - drill4j-dev-network
 
   admin-ui:
-    image: drill4j/admin-ui-root-config:${FRONT_VERSION}
+    image: cypress-test
     container_name: admin-ui
     environment:
       - UI_PLUGINS_URLS=${UI_PLUGINS_URLS}

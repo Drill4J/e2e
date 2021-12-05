@@ -54,6 +54,7 @@ services:
 
 networks:
   drill4j-dev-network:
+    name: drill4j-dev-network
 
 volumes:
   agent-files:
