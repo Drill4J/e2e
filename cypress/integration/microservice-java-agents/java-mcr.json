@@ -381,7 +381,9 @@
     },
     "0.2.0": {
       "summary": {
-        "coverage": "2.4",
+        "coverage": "10.7",
+        "testsCount": "10",
+        "scopesCount": "3",
         "tests2RunBeforeTestsExecuted": "3",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "risksCountBeforeTestsExecuted": "5",
