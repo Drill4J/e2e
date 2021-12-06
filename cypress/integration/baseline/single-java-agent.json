@@ -1,0 +1,65 @@
+{
+  "agentId": "dev-pet-standalone",
+  "builds": {
+    "0.1.0": {
+      "coverage": "17.1"
+    },
+    "0.5.0": {
+      "coverage": "17.5",
+      "comparedToTheBaselineBuildCoverage": "+ 0.4",
+      "scopesCount": "1",
+      "testsCount": "12",
+      "risks": {
+        "risksCountBeforeTestsExecuted": "5",
+        "risksCountAfterTheTestsExecuted": "4",
+        "newRisksCount": "2",
+        "newRisksCountAfterTheTestsExecuted": "2",
+        "modifiedRisksCount": "3",
+        "modifiedRisksCountAfterTheTestsExecuted": "2",
+        "methods": {
+          "newMethod1": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "newMethod2": {
+            "packageName": "org/springframework/samples/petclinic/vet/VetController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "initFindForm": {
+            "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "triggerException": {
+            "packageName": "org/springframework/samples/petclinic/system/CrashController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "welcome": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "1"
+          }
+        }
+      },
+      "testsToRun": {
+        "tests2RunBeforeTestsExecuted": "1",
+        "testsToRunCountAfterTheTestsExecuted": "0",
+        "tests": {
+          "testNgGetHomePage.()": {
+            "type": "Auto",
+            "coverage": "0.2",
+            "methodsCovered": "1"
+          }
+        }
+      }
+    }
+  }
+}

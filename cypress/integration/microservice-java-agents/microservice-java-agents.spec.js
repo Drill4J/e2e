@@ -20,8 +20,6 @@ import data from "./java-mcr.json";
 
 context("_", () => {
   before(() => {
-    cy.task("removeContainers");
-    cy.task("startAdmin");
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });

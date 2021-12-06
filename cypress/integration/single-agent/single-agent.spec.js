@@ -42,8 +42,6 @@ const data = dataObject[Cypress.env("fixtureFile")];
 // TODO rename fixtureFile env
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
-    cy.task("removeContainers");
-    cy.task("startAdmin", {}, { timeout: 100000 });
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 100000 });

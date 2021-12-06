@@ -21,8 +21,6 @@ Cypress.env("scopesCount", "3");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
-    cy.task("removeContainers");
-    cy.task("startAdmin");
     cy.login();
     cy.visit(convertUrl("/"));
     cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
