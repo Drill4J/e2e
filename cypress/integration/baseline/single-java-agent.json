@@ -1,0 +1,78 @@
+{
+  "agentId": "dev-pet-standalone",
+  "builds": {
+    "0.2.0": {
+      "risks": {
+        "risksCountBeforeTestsExecuted": "1",
+        "methods": {
+          "newMethod": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          }
+        }
+      }
+    },
+    "0.4.0": {
+      "risks": {
+        "risksCountBeforeTestsExecuted": "1",
+        "methods": {
+          "newMethod": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          }
+        }
+      }
+    },
+    "0.5.0": {
+      "risks": {
+        "risksCountBeforeTestsExecuted": "5",
+        "methods": {
+          "newMethod1": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "newMethod2": {
+            "packageName": "org/springframework/samples/petclinic/vet/VetController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "initFindForm": {
+            "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "triggerException": {
+            "packageName": "org/springframework/samples/petclinic/system/CrashController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "welcome": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "Modified",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          }
+        }
+      },
+      "testsToRun": {
+        "tests2RunBeforeTestsExecuted": "1",
+        "tests": {
+          "testNgGetHomePage.()": {
+            "type": "Auto",
+            "coverage": "0",
+            "methodsCovered": "0"
+          }
+        }
+      }
+    }
+  }
+}

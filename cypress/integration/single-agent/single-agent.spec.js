@@ -42,8 +42,6 @@ const data = dataObject[Cypress.env("fixtureFile")];
 // TODO rename fixtureFile env
 context(Cypress.env("fixtureFile"), () => {
   before(() => {
-    cy.task("removeContainers");
-    cy.task("startAdmin", {}, { timeout: 100000 });
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 100000 });
@@ -219,12 +217,16 @@ context(Cypress.env("fixtureFile"), () => {
               cy.contains('[data-test="action-section:count:tests-to-run"]', buildData.testsToRun.tests2RunBeforeTestsExecuted).click();
             });
 
-            after(() => {
-              cy.getByDataTest("crumb:test2code").click();
-            });
-
             it("should display suggested tests2run count in the page header", () => {
               cy.getByDataTest("tests-to-run-header:title").should("contain", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+            });
+
+            it("should display current build version", () => {
+              cy.getByDataTest("tests-to-run-header:current-build-version").should("contain", "0.5.0");
+            });
+
+            it("should display parent build version", () => {
+              cy.getByDataTest("tests-to-run-header:compared-build-version").should("contain", "0.1.0");
             });
 
             context("Tests to run table", () => {
@@ -238,12 +240,19 @@ context(Cypress.env("fixtureFile"), () => {
             });
           });
         });
+
+        context("Time savings", () => {
+          it("should display bar chart", () => {
+            cy.getByDataTest("bar-chart").should("exist");
+          });
+        });
       });
 
       context("After tests executed", () => {
         before(() => {
           cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 200000 });
           cy.restoreLocalStorage();
+          cy.getByDataTest("crumb:test2code").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
           cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
         });
@@ -330,15 +339,12 @@ context(Cypress.env("fixtureFile"), () => {
                 .should("have.text", buildData.testsToRun.testsToRunCountAfterTheTestsExecuted);
             });
           });
+
           context("Tests to run page", () => {
             before(() => {
               cy.restoreLocalStorage();
               cy.contains('[data-test="action-section:count:tests-to-run"]',
                 buildData.testsToRun.testsToRunCountAfterTheTestsExecuted).click();
-            });
-
-            after(() => {
-              cy.getByDataTest("crumb:test2code").click();
             });
 
             it("should display suggested tests2run count in the header", () => {
@@ -348,6 +354,16 @@ context(Cypress.env("fixtureFile"), () => {
             it("should display tests data in the table", () => {
               cy.testsToRunTableTest(buildData.testsToRun.tests);
             });
+          });
+        });
+
+        context("Time savings", () => {
+          it("should display duration chart", () => {
+            cy.getByDataTest("bar-chart:time-saved-chart").should("exist");
+          });
+
+          it("should display total time saved chart", () => {
+            cy.getByDataTest("bar-chart:duration-chart").should("exist");
           });
         });
       });

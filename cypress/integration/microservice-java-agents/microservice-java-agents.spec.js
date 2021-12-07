@@ -20,8 +20,6 @@ import data from "./java-mcr.json";
 
 context("_", () => {
   before(() => {
-    cy.task("removeContainers");
-    cy.task("startAdmin");
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
@@ -319,6 +317,14 @@ context("_", () => {
                       cy.getByDataTest("tests-to-run-header:title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                     });
 
+                    it("should display current build version", () => {
+                      cy.getByDataTest("tests-to-run-header:current-build-version").should("contain", "0.2.0");
+                    });
+
+                    it("should display parent build version", () => {
+                      cy.getByDataTest("tests-to-run-header:compared-build-version").should("contain", "0.1.0");
+                    });
+
                     context("Tests to run table", () => {
                       it("should display all tests to run count in the header", () => {
                         cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
@@ -332,6 +338,7 @@ context("_", () => {
                 });
               });
             });
+
             context("Agents without tests2run", () => {
               secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
                 before(() => {
