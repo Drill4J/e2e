@@ -4,10 +4,6 @@
     "0.2.0": {
       "risks": {
         "risksCountBeforeTestsExecuted": "1",
-        "newRisksCount": "1",
-        "newRisksCountAfterTheTestsExecuted": "1",
-        "modifiedRisksCount": "0",
-        "modifiedRisksCountAfterTheTestsExecuted": "0",
         "methods": {
           "newMethod": {
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
@@ -19,16 +15,8 @@
       }
     },
     "0.4.0": {
-      "coverage": "17.5",
-      "comparedToTheBaselineBuildCoverage": "+ 0.4",
-      "scopesCount": "1",
-      "testsCount": "12",
       "risks": {
         "risksCountBeforeTestsExecuted": "1",
-        "newRisksCount": "0",
-        "newRisksCountAfterTheTestsExecuted": "0",
-        "modifiedRisksCount": "1",
-        "modifiedRisksCountAfterTheTestsExecuted": "1",
         "methods": {
           "newMethod": {
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
@@ -42,11 +30,6 @@
     "0.5.0": {
       "risks": {
         "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "4",
-        "newRisksCount": "2",
-        "newRisksCountAfterTheTestsExecuted": "2",
-        "modifiedRisksCount": "3",
-        "modifiedRisksCountAfterTheTestsExecuted": "2",
         "methods": {
           "newMethod1": {
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",

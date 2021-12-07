@@ -24,11 +24,11 @@ context("Baseline", () => {
     cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 100000 });
   });
 
-  beforeEach("restore local storage", () => {
+  beforeEach(() => {
     cy.restoreLocalStorage();
   });
 
-  afterEach("save local storage", () => {
+  afterEach(() => {
     cy.saveLocalStorage();
   });
 
@@ -36,14 +36,14 @@ context("Baseline", () => {
     it("should register agent", () => {
       cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
 
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 2
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 3
+      cy.get('[data-test="wizard:continue-button"]').click();
+      cy.get('[data-test="wizard:continue-button"]').click();
 
       cy.get('[data-test="wizard:finishng-button"]').click();
 
       cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
       cy.contains("Online").should("exist");
-      cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
+      cy.contains("Agent has been registered").should("exist");
 
       cy.get('a[data-test="sidebar:link:Test2Code"]').click();
       cy.get("[data-test=methods-table] tbody tr").should("not.have.length", 0);
@@ -83,20 +83,7 @@ context("Baseline", () => {
         cy.contains("Current build has been set as baseline successfully. All subsequent builds will be compared to it.").should("exist");
       });
 
-      context("After tests executed", () => {
-        before(() => {
-          cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
-          cy.restoreLocalStorage();
-          cy.get('a[data-test="sidebar:link:Test2Code"]').click();
-        });
-
-        it("should collect coverage after finish scope", () => {
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-
-          cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
-        });
-
+      context("Before tests executed", () => {
         it("should display risks count in the header on overview page", () => {
           cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksCountBeforeTestsExecuted);
         });
@@ -120,6 +107,21 @@ context("Baseline", () => {
           });
         });
       });
+
+      context("Tests executing", () => {
+        before(() => {
+          cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
+          cy.restoreLocalStorage();
+          cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+        });
+
+        it("should collect coverage after finish scope", () => {
+          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
+          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+
+          cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
+        });
+      });
     });
 
     context("Build 0.4.0", () => {
@@ -141,19 +143,7 @@ context("Baseline", () => {
         cy.contains("Current build has been set as baseline successfully. All subsequent builds will be compared to it.").should("exist");
       });
 
-      context("After tests executed", () => {
-        before(() => {
-          cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
-          cy.restoreLocalStorage();
-        });
-
-        it("should collect coverage after finish scope", () => {
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-
-          cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
-        });
-
+      context("Before tests executed", () => {
         it("should display risks count in the header on overview page", () => {
           cy.getByDataTest("action-section:count:risks").should("have.text", buildData.risks.risksCountBeforeTestsExecuted);
         });
@@ -175,6 +165,21 @@ context("Baseline", () => {
           it("should display risks in table", () => {
             cy.risksTableTest(buildData.risks.methods);
           });
+        });
+      });
+
+      context("Tests executing", () => {
+        before(() => {
+          cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
+          cy.restoreLocalStorage();
+          cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+        });
+
+        it("should collect coverage after finish scope", () => {
+          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
+          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+
+          cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
         });
       });
     });
@@ -267,7 +272,11 @@ context("Baseline", () => {
             });
 
             it("should display rows with tests2run", () => {
-              cy.get("table tbody tr").should("have.length", buildData.testsToRun.tests2RunBeforeTestsExecuted);
+              Object.entries(buildData.testsToRun.tests).forEach(([testName, testData]) => {
+                cy.contains("table tbody tr", testName).should("exist");
+
+                cy.contains("table tbody tr", testName).contains('[data-test="td-row-type"]', testData.type).should("exist");
+              });
             });
           });
         });
