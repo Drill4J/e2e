@@ -2,7 +2,11 @@ version: '3'
 
 services:
   start-petclinic-tests:
+<<<<<<< HEAD
     image: antonpatsev/petclinic-autotests-feature-selenoid:5
+=======
+    image: autotests
+>>>>>>> 086f753 (rename me)
     container_name: start-petclinic-tests
     environment:
       - petclinicUrl=http://host.docker.internal:8087
@@ -13,6 +17,7 @@ services:
     networks:
       - drill4j-dev-network
 
+<<<<<<< HEAD
 networks:
   drill4j-dev-network:
     external: true
@@ -50,3 +55,61 @@ networks:
 #     networks:
 #       - drill4j-dev-network
 #     command: [ "--selenoid-uri", "http://selenoid:4444" ]
+=======
+  selenoid:
+    image: "aerokube/selenoid:latest"
+    container_name: selenoid
+    ports:
+      - "4445:4444"
+    networks:
+      - drill4j-dev-network
+    volumes:
+      - ".:/etc/selenoid"
+      - "./target:/output"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./target:/opt/selenoid/video"
+    environment:
+      - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/target"
+    command: [ "-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-container-network", "selenoid" ]
+
+  selenoid-ui:
+    image: "aerokube/selenoid-ui:latest"
+    container_name: selenoid-ui
+    links:
+      - selenoid
+    ports:
+      - "8083:8080"
+    networks:
+      - drill4j-dev-network
+    command: [ "--selenoid-uri", "http://selenoid:4444" ]
+
+  chrome_89.0:
+    image: "selenoid/vnc:chrome_89.0"
+    container_name: chrome_89.0
+    links:
+      - selenoid
+      - selenoid-ui
+    depends_on:
+      - selenoid
+      - selenoid-ui
+    networks:
+      - drill4j-dev-network
+
+  firefox_86.0:
+    image: "selenoid/firefox:86.0"
+    container_name: firefox_86.0
+    links:
+      - selenoid
+      - selenoid-ui
+    depends_on:
+      - selenoid
+      - selenoid-ui
+    networks:
+      - drill4j-dev-network
+
+networks:
+  drill4j-dev-network:
+#  chmod ugo+rwx /selenium/selenium-server-standalone-3.13.0.jar
+#  DISPLAY=:1 xvfb-run java -jar selenium-server-standalone-3.13.0.jar
+#  chmod +rwx selenium-server-standalone-3.141.59.jar
+>>>>>>> 086f753 (rename me)
