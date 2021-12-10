@@ -12,6 +12,9 @@ services:
       - autotestAgentVersion=0.17.7
     networks:
       - drill4j-dev-network
+    depends_on:
+      - selenoid
+      - chrome_89.0
 
   selenoid:
     image: "aerokube/selenoid:latest"
@@ -23,11 +26,12 @@ services:
     volumes:
       - ".:/etc/selenoid"
       - "./target:/output"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+#      - "/var/run/docker.sock:/var/run/docker.sock" # for linux
+      - "//var/run/docker.sock:/var/run/docker.sock" # for windows
       - "./target:/opt/selenoid/video"
     environment:
       - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/target"
-    command: [ "-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-container-network", "selenoid" ]
+    command: [ "-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-container-network", "drill4j-dev-network" ]
 
   selenoid-ui:
     image: "aerokube/selenoid-ui:latest"
@@ -51,18 +55,22 @@ services:
       - selenoid-ui
     networks:
       - drill4j-dev-network
+#    volumes:
+#      - "/dev/shm:/dev/shm"
 
-  firefox_86.0:
-    image: "selenoid/firefox:86.0"
-    container_name: firefox_86.0
-    links:
-      - selenoid
-      - selenoid-ui
-    depends_on:
-      - selenoid
-      - selenoid-ui
-    networks:
-      - drill4j-dev-network
+#  firefox_86.0:
+#    image: "selenoid/firefox:86.0"
+#    container_name: firefox_86.0
+#    links:
+#      - selenoid
+#      - selenoid-ui
+#    depends_on:
+#      - selenoid
+#      - selenoid-ui
+#    networks:
+#      - drill4j-dev-network
+#    volumes:
+#      - "/dev/shm:/dev/shm"
 
 networks:
   drill4j-dev-network:
