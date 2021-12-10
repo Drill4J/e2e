@@ -14,7 +14,6 @@ services:
       - drill4j-dev-network
     depends_on:
       - selenoid
-      - chrome_89.0
 
 networks:
   drill4j-dev-network:
@@ -52,4 +51,8 @@ networks:
 #       - "8083:8080"
 #     networks:
 #       - drill4j-dev-network
+<<<<<<< HEAD
 #     command: [ "--selenoid-uri", "http://selenoid:4444" ]
+=======
+#     command: [ "--selenoid-uri", "http://selenoid:4444" ]
+>>>>>>> e9d07d5 (Use external networks in docker-compose)
