@@ -56,6 +56,14 @@ services:
       - drill4j-dev-network
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
 
+  chrome:
+    image: selenoid/chrome:96.0
+    container_name: chrome
+
+  firefox:
+    image: selenoid/firefox:94.0
+    container_name: firefox
+
 networks:
   drill4j-dev-network:
     external: false
