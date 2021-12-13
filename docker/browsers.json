@@ -3,6 +3,7 @@
       "default": "96.0",
       "versions": {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           "95.0": {
               "image": "selenoid/chrome:95.0",
@@ -10,6 +11,8 @@
               "path": "/"
           },
 >>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
+=======
+>>>>>>> 7b0195a (Remove old image browsers, update readme)
           "96.0": {
               "image": "selenoid/chrome:96.0",
               "port": "4444",
@@ -21,6 +24,7 @@
       "default": "94.0",
       "versions": {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           "93.0": {
               "image": "selenoid/firefox:93.0",
@@ -28,6 +32,8 @@
               "path": "/wd/hub"
           },
 >>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
+=======
+>>>>>>> 7b0195a (Remove old image browsers, update readme)
           "94.0": {
               "image": "selenoid/firefox:94.0",
               "port": "4444",
@@ -36,6 +42,7 @@
 <<<<<<< HEAD
 =======
       }
+<<<<<<< HEAD
   },
   "opera": {
       "default": "82.0",
@@ -52,5 +59,7 @@
           }
 >>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
       }
+=======
+>>>>>>> 7b0195a (Remove old image browsers, update readme)
   }
 }

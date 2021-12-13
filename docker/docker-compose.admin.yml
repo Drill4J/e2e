@@ -56,10 +56,6 @@ services:
       - drill4j-dev-network
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> eb0a1e7 (Add download image chrome and firefox)
   chrome:
     image: selenoid/chrome:96.0
     container_name: chrome
@@ -68,11 +64,6 @@ services:
     image: selenoid/firefox:94.0
     container_name: firefox
 
-<<<<<<< HEAD
-=======
->>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
-=======
->>>>>>> eb0a1e7 (Add download image chrome and firefox)
 networks:
   drill4j-dev-network:
     external: false

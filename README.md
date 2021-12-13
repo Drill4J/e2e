@@ -16,7 +16,11 @@ To launch the development environment, follow these steps:
 ``
 cypress run --spec ./cypress/integration/single-java-agent/single-java-agent.spec.js
 ``
+<<<<<<< HEAD
 ## For up single java agent with using docker 
+=======
+or
+>>>>>>> 7b0195a (Remove old image browsers, update readme)
 ```
 docker-compose -f docker-compose.admin.yml --env-file docker-compose.admin.env up -d
 docker-compose -f single-java-agent.yml --env-file single-java-agent-build-0.1.0.env up -d
@@ -25,6 +29,7 @@ Registr agent petclinic in drilladmin
 ```
 docker-compose -f single-java-agent-tests.yml up -d
 ```
+<<<<<<< HEAD
 
 ## For up microservice java agent with using docker
 ```
@@ -35,3 +40,5 @@ Registr group in drilladmin
 ```
 docker-compose -f microservice-java-agents-tests.yml up -d
 ```
+=======
+>>>>>>> 7b0195a (Remove old image browsers, update readme)

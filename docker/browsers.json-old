@@ -6,10 +6,14 @@
         "image": "selenoid/vnc:chrome_89.0",
         "port": "4444",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "path": "/"
 =======
         "path": "/wd/hub"
 >>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
+=======
+        "path": "/"
+>>>>>>> 7b0195a (Remove old image browsers, update readme)
       }
     }
   },
