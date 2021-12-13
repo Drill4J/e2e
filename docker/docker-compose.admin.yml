@@ -51,16 +51,15 @@ services:
     image: aerokube/selenoid-ui:latest-release
     container_name: selenoid-ui
     ports:
-<<<<<<< HEAD
       - "7070:8080"
-=======
-      - "8083:8080"
->>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
     networks:
       - drill4j-dev-network
     command: [ "--selenoid-uri", "http://selenoid:4444" ]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> eb0a1e7 (Add download image chrome and firefox)
   chrome:
     image: selenoid/chrome:96.0
     container_name: chrome
@@ -69,8 +68,11 @@ services:
     image: selenoid/firefox:94.0
     container_name: firefox
 
+<<<<<<< HEAD
 =======
 >>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
+=======
+>>>>>>> eb0a1e7 (Add download image chrome and firefox)
 networks:
   drill4j-dev-network:
     external: false
