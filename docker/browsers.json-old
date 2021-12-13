@@ -5,7 +5,11 @@
       "89.0": {
         "image": "selenoid/vnc:chrome_89.0",
         "port": "4444",
+<<<<<<< HEAD
         "path": "/"
+=======
+        "path": "/wd/hub"
+>>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
       }
     }
   },

@@ -2,6 +2,14 @@
   "chrome": {
       "default": "96.0",
       "versions": {
+<<<<<<< HEAD
+=======
+          "95.0": {
+              "image": "selenoid/chrome:95.0",
+              "port": "4444",
+              "path": "/"
+          },
+>>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
           "96.0": {
               "image": "selenoid/chrome:96.0",
               "port": "4444",
@@ -12,11 +20,37 @@
   "firefox": {
       "default": "94.0",
       "versions": {
+<<<<<<< HEAD
+=======
+          "93.0": {
+              "image": "selenoid/firefox:93.0",
+              "port": "4444",
+              "path": "/wd/hub"
+          },
+>>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
           "94.0": {
               "image": "selenoid/firefox:94.0",
               "port": "4444",
               "path": "/wd/hub"
           }
+<<<<<<< HEAD
+=======
+      }
+  },
+  "opera": {
+      "default": "82.0",
+      "versions": {
+          "81.0": {
+              "image": "selenoid/opera:81.0",
+              "port": "4444",
+              "path": "/"
+          },
+          "82.0": {
+              "image": "selenoid/opera:82.0",
+              "port": "4444",
+              "path": "/"
+          }
+>>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
       }
   }
 }

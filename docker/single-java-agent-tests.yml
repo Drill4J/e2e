@@ -2,7 +2,11 @@ version: '3'
 
 services:
   start-petclinic-tests:
+<<<<<<< HEAD
     image: antonpatsev/petclinic-autotests-feature-selenoid:5
+=======
+    image: antonpatsev/petclinic-autotests-feature-selenoid:3
+>>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
     container_name: start-petclinic-tests
     environment:
       - petclinicUrl=http://host.docker.internal:8087
@@ -12,8 +16,6 @@ services:
       - autotestAgentVersion=0.17.7
     networks:
       - drill4j-dev-network
-    depends_on:
-      - selenoid
 
 networks:
   drill4j-dev-network:
