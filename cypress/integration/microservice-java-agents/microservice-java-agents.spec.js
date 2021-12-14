@@ -55,10 +55,10 @@ context("_", () => {
       const initialBuildData = data.builds["0.1.0"];
 
       it("should finishe all scopes after the tests finished executing should", () => {
-        cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 200000 });
+        cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
         cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 
-        cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
+        // cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
         // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
         cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
         cy.get('[data-test="menu:item:finish-all-scopes"]').click();
@@ -368,7 +368,7 @@ context("_", () => {
 
       context("After text executed", () => {
         before(() => {
-          cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 200000 });
+          cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
         });
         it("should finish all scopes after the collcet coverage", () => { // TODO refactor to api request in before hook
           cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
