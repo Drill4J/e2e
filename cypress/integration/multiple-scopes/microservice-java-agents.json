@@ -6,18 +6,16 @@
   },
   "agentsWithCoverage": {
     "customer-service": {
-      "coverage": "15.9"
+      "coverage": "21.7"
     },
     "visits-service": {
-      "coverage": "42.9"
+      "coverage": "16.5"
     },
     "vets-service": {
       "coverage": "28.4"
-    }
-  },
-  "agentWithoutCoverages": {
+    },
     "api-gateway": {
-      "coverage": "0"
+      "coverage": "21.5"
     }
   }
 }
