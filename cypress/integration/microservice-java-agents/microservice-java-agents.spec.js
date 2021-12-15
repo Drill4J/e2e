@@ -22,7 +22,7 @@ context("_", () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
+    // cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
   });
 
   beforeEach(() => {
