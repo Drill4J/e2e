@@ -496,31 +496,31 @@
     },
     "0.2.0": {
       "summary": {
-        "coverage": "10.7",
-        "testsCount": "10",
-        "scopesCount": "3",
+        "coverage": "22.5",
+        "testsCount": "12",
+        "scopesCount": "4",
         "tests2RunBeforeTestsExecuted": "3",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "0"
+        "risksCountAfterTheTestsExecuted": "1"
       },
       "agents": {
         "customer-service": {
-          "coverage": "17.3",
+          "coverage": "23.1",
           "risksCountBeforeTestsExecuted": "3",
           "risksCountAfterTheTestsExecuted": "0",
           "tests2RunBeforeTestsExecuted": "1",
           "testsToRunCountAfterTheTestsExecuted": "0"
         },
         "visits-service": {
-          "coverage": "44.7",
+          "coverage": "16",
           "risksCountBeforeTestsExecuted": "1",
-          "risksCountAfterTheTestsExecuted": "0",
-          "tests2RunBeforeTestsExecuted": "1",
+          "risksCountAfterTheTestsExecuted": "1",
+          "tests2RunBeforeTestsExecuted": "0",
           "testsToRunCountAfterTheTestsExecuted": "0"
         },
         "api-gateway": {
-          "coverage": "0",
+          "coverage": "21.5",
           "risksCountBeforeTestsExecuted": "0",
           "risksCountAfterTheTestsExecuted": "0",
           "tests2RunBeforeTestsExecuted": "0",
@@ -530,7 +530,7 @@
           "coverage": "29.6",
           "risksCountBeforeTestsExecuted": "1",
           "risksCountAfterTheTestsExecuted": "0",
-          "tests2RunBeforeTestsExecuted": "1",
+          "tests2RunBeforeTestsExecuted": "2",
           "testsToRunCountAfterTheTestsExecuted": "0"
         }
       },
@@ -568,7 +568,7 @@
         "visits-service": {
           "risks": {
             "risksCountBeforeTestsExecuted": "1",
-            "risksCountAfterTheTestsExecuted": "0",
+            "risksCountAfterTheTestsExecuted": "1",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
             "modifiedRisksCount": "1",
@@ -577,8 +577,8 @@
               "create": {
                 "packageName": "org/springframework/samples/petclinic/visits/web/VisitResource",
                 "type": "Modified",
-                "coverage": "100",
-                "associatedTestsCount": "1"
+                "coverage": "0",
+                "associatedTestsCount": "0"
               }
             }
           }
@@ -596,7 +596,7 @@
                 "packageName": "org/springframework/samples/petclinic/vets/model/Vet",
                 "type": "Modified",
                 "coverage": "100",
-                "associatedTestsCount": "1"
+                "associatedTestsCount": "2"
               }
             }
           }
@@ -611,7 +611,7 @@
             "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
-              "junit5UpdateOwnerInfoTest.()": {
+              "testNgUpdateOwnerInfoTest.()": {
                 "type": "Auto",
                 "coverage": "17.3",
                 "methodsCovered": "23"
@@ -619,25 +619,17 @@
             }
           }
         },
-        "visits-service": {
-          "testsToRun": {
-            "tests2RunBeforeTestsExecuted": "1",
-            "testsToRunCountAfterTheTestsExecuted": "0",
-            "tests": {
-              "junit5CreateNewVisitTest.()": {
-                "type": "Auto",
-                "coverage": "44.7",
-                "methodsCovered": "8"
-              }
-            }
-          }
-        },
         "vets-service": {
           "testsToRun": {
-            "tests2RunBeforeTestsExecuted": "1",
+            "tests2RunBeforeTestsExecuted": "2",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
-              "junit5GetVetsInfoTest.()": {
+              "testNgCheckPageHeader.(String,String)[3]": {
+                "type": "Auto",
+                "coverage": "29.6",
+                "methodsCovered": "11"
+              },
+              "testNgGetVetsInfoTest.()": {
                 "type": "Auto",
                 "coverage": "29.6",
                 "methodsCovered": "11"
@@ -646,9 +638,7 @@
           }
         }
       },
-      "agentsWithoutTests2Run": [
-        "api-gateway"
-      ]
+      "agentsWithoutTests2Run": []
     }
   }
 }

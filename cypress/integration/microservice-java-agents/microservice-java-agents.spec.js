@@ -22,7 +22,7 @@ context("_", () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    // cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
+    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
   });
 
   beforeEach(() => {
@@ -338,30 +338,6 @@ context("_", () => {
                 });
               });
             });
-
-            context("Agents without tests2run", () => {
-              secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click();
-                });
-
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                });
-                context(`Check ${serviceName} service`, () => {
-                  context("Overview page", () => {
-                    it('should display "-" in the header', () => {
-                      cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
-                    });
-                  });
-                });
-              });
-            });
           });
         });
       });
@@ -430,7 +406,7 @@ context("_", () => {
           });
 
           context("Agent page", () => {
-            context("Agents with risks before running tests", () => { // TODO rename
+            context("Agents with risks", () => { // TODO rename
               Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
                 context(`Check ${serviceName} service`, () => {
                   before(() => {
@@ -550,36 +526,13 @@ context("_", () => {
                     });
 
                     context("Tests to run table", () => {
-                      it("should display suggested tests to run count in the header", () => {
+                      it("should display all suggested tests to run count in the header", () => {
                         cy.getByDataTest("tests-to-run-list:table-title").should("contain", serviceData.testsToRun.tests2RunBeforeTestsExecuted);
                       });
 
                       it("should display tests to run data", () => {
                         cy.testsToRunTableTest(serviceData.testsToRun.tests);
                       });
-                    });
-                  });
-                });
-              });
-            });
-            context("Agents without tests2run", () => {
-              secondBuildData.agentsWithoutTests2Run.forEach((serviceName) => {
-                context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
-                  });
-
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
-                  });
-                  context("Overview page", () => {
-                    it('should display "-" in the header', () => {
-                      cy.getByDataTest("action-section:no-value:tests-to-run").should("exist");
                     });
                   });
                 });
