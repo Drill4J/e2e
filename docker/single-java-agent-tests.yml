@@ -2,15 +2,7 @@ version: '3'
 
 services:
   start-petclinic-tests:
-<<<<<<< HEAD
-<<<<<<< HEAD
     image: antonpatsev/petclinic-autotests-feature-selenoid:5
-=======
-    image: antonpatsev/petclinic-autotests-feature-selenoid:3
->>>>>>> d8d6ebe (Move selenoid to drilladmin, refactored browser.json)
-=======
-    image: antonpatsev/petclinic-autotests-feature-selenoid:5
->>>>>>> 7af41c9 (Change start-petclinic-tests)
     container_name: start-petclinic-tests
     environment:
       - petclinicUrl=http://host.docker.internal:8087
