@@ -2,7 +2,7 @@
   "agentId": "dev-pet-standalone",
   "builds": {
     "0.1.0": {
-      "coverage": "17.1",
+      "coverage": "30",
       "testsCount": "12",
       "packagesCount": "6",
       "packages": {
@@ -14,27 +14,27 @@
         },
         "org/springframework/samples/petclinic/model": {
           "methodsTotal": "13",
-          "coverage": "61.7",
-          "methodsCovered": "9",
-          "associatedTestsCount": "2"
+          "coverage": "70.2",
+          "methodsCovered": "10",
+          "associatedTestsCount": "5"
         },
         "org/springframework/samples/petclinic/owner": {
           "methodsTotal": "55",
-          "coverage": "18",
-          "methodsCovered": "15",
-          "associatedTestsCount": "2"
+          "coverage": "23.3",
+          "methodsCovered": "17",
+          "associatedTestsCount": "4"
         },
         "org/springframework/samples/petclinic/system": {
           "methodsTotal": "8",
-          "coverage": "6.3",
-          "methodsCovered": "1",
-          "associatedTestsCount": "1"
+          "coverage": "21.9",
+          "methodsCovered": "2",
+          "associatedTestsCount": "6"
         },
         "org/springframework/samples/petclinic/vet": {
           "methodsTotal": "12",
-          "coverage": "0",
-          "methodsCovered": "0",
-          "associatedTestsCount": "n/a"
+          "coverage": "65.7",
+          "methodsCovered": "8",
+          "associatedTestsCount": "1"
         },
         "org/springframework/samples/petclinic/visit": {
           "methodsTotal": "7",
@@ -45,26 +45,39 @@
       },
       "packagesWithAssociatedTests": {
         "org/springframework/samples/petclinic/model": {
-          "associatedTestsCount": "2",
+          "associatedTestsCount": "5",
           "associatedTests": [
             "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
+            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
           ]
         },
         "org/springframework/samples/petclinic/owner": {
-          "associatedTestsCount": "2",
+          "associatedTestsCount": "4",
           "associatedTests": [
             "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
+            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
           ]
         },
         "org/springframework/samples/petclinic/system": {
-          "methodsTotal": "8",
-          "coverage": "6.3",
-          "methodsCovered": "1",
+          "associatedTestsCount": "6",
+          "associatedTests": [
+            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]",
+            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+          ]
+        },
+        "org/springframework/samples/petclinic/vet": {
           "associatedTestsCount": "1",
           "associatedTests": [
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]"
+            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
           ]
         }
       },
@@ -89,34 +102,45 @@
           "coverage": "14.9",
           "methodsCovered": "22",
           "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
+        },
+        "testNgCheckPageHeader.(String,String)[1]": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "3.9",
+          "methodsCovered": "7",
+          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]"
+        },
+        "testNgCheckPageHeader.(String,String)[0]": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.2",
+          "methodsCovered": "1",
+          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]"
+        },
+        "testNgCheckPageHeader.(String,String)[2]": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "10.3",
+          "methodsCovered": "15",
+          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
+        },
+        "testNgCheckPageHeader.(String,String)[3]": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.8",
+          "methodsCovered": "2",
+          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]"
+        },
+        "testNgFindOwnersTestSelenide.()": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "13.8",
+          "methodsCovered": "20",
+          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
         }
       },
       "testsWithoutCoveredMethods": {
         "testNgIgnoredTest.()": {
-          "type": "Auto",
-          "expectedStatus": "Skipped",
-          "coverage": "0",
-          "methodsCovered": "0"
-        },
-        "testNgCheckPageHeader.(String,String)[1]": {
-          "type": "Auto",
-          "expectedStatus": "Skipped",
-          "coverage": "0",
-          "methodsCovered": "0"
-        },
-        "testNgCheckPageHeader.(String,String)[0]": {
-          "type": "Auto",
-          "expectedStatus": "Skipped",
-          "coverage": "0",
-          "methodsCovered": "0"
-        },
-        "testNgCheckPageHeader.(String,String)[3]": {
-          "type": "Auto",
-          "expectedStatus": "Skipped",
-          "coverage": "0",
-          "methodsCovered": "0"
-        },
-        "testNgCheckPageHeader.(String,String)[2]": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
@@ -136,24 +160,24 @@
         },
         "testNgUiFailedTest.()": {
           "type": "Auto",
-          "expectedStatus": "Skipped",
+          "expectedStatus": "Failed",
           "coverage": "0",
           "methodsCovered": "0"
         }
       }
     },
     "0.5.0": {
-      "coverage": "17.5",
-      "comparedToTheBaselineBuildCoverage": "+ 0.4",
+      "coverage": "26.4",
+      "comparedToTheBaselineBuildCoverage": "- 3.6",
       "scopesCount": "1",
       "testsCount": "12",
       "risks": {
         "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "4",
+        "risksCountAfterTheTestsExecuted": "2",
         "newRisksCount": "2",
         "newRisksCountAfterTheTestsExecuted": "2",
         "modifiedRisksCount": "3",
-        "modifiedRisksCountAfterTheTestsExecuted": "2",
+        "modifiedRisksCountAfterTheTestsExecuted": "3",
         "methods": {
           "newMethod1": {
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
@@ -170,25 +194,25 @@
           "initFindForm": {
             "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
             "type": "Modified",
-            "coverage": "0",
-            "associatedTestsCount": "0"
+            "coverage": "100",
+            "associatedTestsCount": "2"
           },
           "triggerException": {
             "packageName": "org/springframework/samples/petclinic/system/CrashController",
             "type": "Modified",
-            "coverage": "0",
-            "associatedTestsCount": "0"
+            "coverage": "100",
+            "associatedTestsCount": "1"
           },
           "welcome": {
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "1"
+            "associatedTestsCount": "6"
           }
         }
       },
       "testsToRun": {
-        "tests2RunBeforeTestsExecuted": "1",
+        "tests2RunBeforeTestsExecuted": "6",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
           "testNgGetHomePage.()": {

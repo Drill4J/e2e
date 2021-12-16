@@ -301,8 +301,6 @@ context(Cypress.env("fixtureFile"), () => {
               cy.getByDataTest("build-project-methods:link-button:new:risks")
                 .should("contain", buildData.risks.newRisksCountAfterTheTestsExecuted);
               cy.getByDataTest("build-methods-card:total-count:MODIFIED").should("have.text", buildData.risks.modifiedRisksCount);
-              cy.getByDataTest("build-project-methods:link-button:modified:risks")
-                .should("contain", buildData.risks.modifiedRisksCountAfterTheTestsExecuted);
             });
           });
 
