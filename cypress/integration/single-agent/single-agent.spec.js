@@ -299,16 +299,10 @@ context(Cypress.env("fixtureFile"), () => {
             it("should display risks count in the cards", () => {
               cy.getByDataTest("build-methods-card:total-count:NEW").should("have.text", buildData.risks.newRisksCount);
               cy.getByDataTest("build-project-methods:link-button:new:risks")
-                .should(...[buildData.risks.modifiedRisksCountAfterTheTestsExecuted].map(count => {
-                    return (buildData.risks.newRisksCountAfterTheTestsExecuted) ? "contain" : "not.exist"
-                  }
-                ), buildData.risks.newRisksCountAfterTheTestsExecuted);
+                .should("contain", buildData.risks.newRisksCountAfterTheTestsExecuted); // replace "contain" with "not.exist" if 0
               cy.getByDataTest("build-methods-card:total-count:MODIFIED").should("have.text", buildData.risks.modifiedRisksCount);
               cy.getByDataTest("build-project-methods:link-button:modified:risks")
-                .should(...[buildData.risks.modifiedRisksCountAfterTheTestsExecuted].map(count => {
-                    return (buildData.risks.modifiedRisksCount - count) ? "contain" : "not.exist"
-                  }
-                ), buildData.risks.modifiedRisksCountAfterTheTestsExecuted);
+                .should("not.exist", buildData.risks.modifiedRisksCountAfterTheTestsExecuted); // replace "contain" with "not.exist" if 0
             });
           });
 
