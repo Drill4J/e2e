@@ -31,3 +31,4 @@ volumes:
 
 networks:
   drill4j-dev-network:
+    external: true
