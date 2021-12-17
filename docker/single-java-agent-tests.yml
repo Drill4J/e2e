@@ -9,44 +9,10 @@ services:
       - adminHost=host.docker.internal
       - adminPort=9090
       - agentId=dev-pet-standalone
-      - autotestAgentVersion=0.17.7
+      - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
     networks:
       - drill4j-dev-network
 
 networks:
   drill4j-dev-network:
     external: true
-    # external:
-    #   name: drill4j-dev-network # This assumes network is already created
-
-#  chmod ugo+rwx /selenium/selenium-server-standalone-3.13.0.jar
-#  DISPLAY=:1 xvfb-run java -jar selenium-server-standalone-3.13.0.jar
-#  chmod +rwx selenium-server-standalone-3.141.59.jar
-
-#   selenoid:
-#     image: "aerokube/selenoid:latest"
-#     container_name: selenoid
-#     ports:
-#       - "4445:4444"
-#     networks:
-#       - drill4j-dev-network
-#     volumes:
-#       - ".:/etc/selenoid"
-#       - "./target:/output"
-# #      - "/var/run/docker.sock:/var/run/docker.sock" # for linux
-#       - "//var/run/docker.sock:/var/run/docker.sock" # for windows
-#       - "./target:/opt/selenoid/video"
-#     environment:
-#       - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/target"
-#     command: [ "-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-container-network", "drill4j-dev-network" ]
-
-#   selenoid-ui:
-#     image: "aerokube/selenoid-ui:latest"
-#     container_name: selenoid-ui
-#     links:
-#       - selenoid
-#     ports:
-#       - "8083:8080"
-#     networks:
-#       - drill4j-dev-network
-#     command: [ "--selenoid-uri", "http://selenoid:4444" ]

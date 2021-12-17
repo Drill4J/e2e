@@ -17,7 +17,7 @@
 // TODO add data tests for tables on risks and t2r pages
 import { convertUrl } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
-import singleJavaAgentData from "./single-java-agent.json";
+import singleJavaAgentData from "./single-java-agent-gradle.json";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
@@ -44,7 +44,7 @@ context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 100000 });
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 200000 });
   });
 
   beforeEach(() => {
@@ -77,7 +77,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 200000 });
+        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 300000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
@@ -250,7 +250,7 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 200000 });
+          cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:test2code").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
