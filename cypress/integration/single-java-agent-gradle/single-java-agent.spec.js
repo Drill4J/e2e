@@ -17,7 +17,7 @@
 // TODO add data tests for tables on risks and t2r pages
 import { convertUrl } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
-import singleJavaAgentData from "./single-java-agent-gradle.json";
+import singleJavaAgentData from "./single-java-agent.json";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
