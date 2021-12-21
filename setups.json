@@ -1,5 +1,6 @@
 {
   "single-java-agent-gradle": {
+    "file": "single-java-agent",
     "env": {
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",
@@ -10,6 +11,7 @@
     }
   },
   "single-java-agent-junit4": {
+    "file": "single-java-agent",
     "env": {
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",

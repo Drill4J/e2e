@@ -20,6 +20,7 @@ const axios = require("axios");
 
 try {
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
+  const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
   const [publishedArtifact, version] = Object.entries(JSON.parse(process.env.actionPayload))[0];
 
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
@@ -40,8 +41,12 @@ try {
     const artifactSetups = setups.filter(({ componentIds }) => componentIds.includes(publishedArtifact));
 
     artifactSetups.forEach(async ({ id }) => {
+      const { env, file } = setupsConfig[id];
+      const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
       try {
-        await promisifiedExec(`cypress run  --spec 'cypress/integration/${id}/${id}.spec.js'`);
+        console.log(`Successfully started setup ${id}`);
+        await promisifiedExec(`cypress run --env ${parsedEnv}  --spec 'cypress/integration/${file}/*.spec.js'`);
+        console.log(`Successfully finished setup ${id}`);
       } catch (e) {
         console.log(`Failed ${id}`, e.message);
       }
