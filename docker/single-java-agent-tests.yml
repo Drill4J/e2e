@@ -5,12 +5,12 @@ services:
     image: drill4j/petclinic-autotests-execute:0.3.0
     container_name: start-petclinic-tests
     environment:
-      - petclinicUrl=http://host.docker.internal:8087
-      - adminHost=host.docker.internal
-      - adminPort=9090
+      - petclinicUrl=http://spring-petclinic-sample:8080
+      - adminHost=drill-admin
+      - adminPort=8090
       - agentId=dev-pet-standalone
       - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
-      - runner=:testng:test -Dtestng.dtd.http=true
+      - runner=${RUNNER}
     networks:
       - drill4j-dev-network
 

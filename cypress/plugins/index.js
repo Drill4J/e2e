@@ -112,8 +112,8 @@ module.exports = (on) => {
       console.log("petclinic tests container exited");
       return null;
     },
-    async startPetclinicAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up");
+    async startPetclinicAutoTests({ runner = ":testng:test -Dtestng.dtd.http=true" }) {
+      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up", { env: { RUNNER: runner } });
       console.log(log);
       console.log("petclinic tests container exited");
       return null;
