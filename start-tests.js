@@ -22,7 +22,7 @@ try {
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
   const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
   const [publishedArtifact, version] = Object.entries(JSON.parse(process.env.actionPayload))[0];
-
+  console.log(`Published artifact: ${publishedArtifact} - ${version}`);
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
     const { setups } = ledgerData;
 
