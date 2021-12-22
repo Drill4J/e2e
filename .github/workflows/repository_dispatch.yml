@@ -18,10 +18,9 @@ jobs:
           node-version: '12'
       - run: npm install
 
-      - uses: actions/checkout@v2
       - name: Run tests
         id: run_tests
-        uses: "./"
+        uses: "./.github/actions"
 
       - name: Archive cypress videos results
         uses: actions/upload-artifact@v2

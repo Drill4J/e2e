@@ -21,9 +21,10 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
+  console.log(github.context.payload);
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
   const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-  const [publishedArtifactId, version] = Object.entries(JSON.parse(github.context.payload))[0];
+  const [publishedArtifactId, version] = Object.entries(JSON.parse(github.context.payload.client_payload))[0];
   console.log(`Published artifact: ${publishedArtifactId} - ${version}`);
 
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
