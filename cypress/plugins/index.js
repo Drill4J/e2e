@@ -79,9 +79,9 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
-      const log = await dockerComposeUp(
-        "./docker/microservice-java-agents.yml",
-        `./docker/microservice-java-agents-build-${build}.env`,
+      const log = await promisifiedExec(
+        "docker-compose -f ./docker/microservice-java-agents.yml --env-file ./docker/.env up -d",
+        { env: { PET_MCR_BUILD: build } },
       );
       console.log(log);
       try {
@@ -113,13 +113,14 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicAutoTests({ runner = ":testng:test -Dtestng.dtd.http=true" }) {
-      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up", { env: { RUNNER: runner } });
+      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
+        { env: { RUNNER: runner } });
       console.log(log);
       console.log("petclinic tests container exited");
       return null;
     },
     async startPetclinicMicroserviceAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml up");
+      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml --env-file ./docker/.env up");
       console.log(log);
       return null;
     },
