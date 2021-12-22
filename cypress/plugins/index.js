@@ -26,6 +26,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -59,17 +60,18 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinic({ build = "0.1.0" }) {
-      const log = await dockerComposeUp(
-        "./docker/single-java-agent.yml",
-        `./docker/single-java-agent-build-${build}.env`,
+      const log = await promisifiedExec(
+        "docker-compose -f ./docker/single-java-agent.yml --env-file ./docker/.env up -d",
+        { env: { PET_STANDALONE_BUILD: build } },
       );
-      console.log(log);
-      try {
-        await ping("http://localhost:8087");
-        console.log("Petclinic is available");
-      } catch (e) {
-        console.log("Petclinic is not available");
-      }
+      console.log("petclinic container started", log);
+      // TODO for 0.5.0 build it never return result
+      // try {
+      //   await ping("http://localhost:8087");
+      //   console.log("Petclinic is available");
+      // } catch (e) {
+      //   console.log("Petclinic is not available");
+      // }
       return null;
     },
     async stopPetclinic() {
@@ -77,9 +79,9 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicMicroservice({ build = "0.1.0" }) {
-      const log = await dockerComposeUp(
-        "./docker/microservice-java-agents.yml",
-        `./docker/microservice-java-agents-build-${build}.env`,
+      const log = await promisifiedExec(
+        "docker-compose -f ./docker/microservice-java-agents.yml --env-file ./docker/.env up -d",
+        { env: { PET_MCR_BUILD: build } },
       );
       console.log(log);
       try {
@@ -110,21 +112,22 @@ module.exports = (on) => {
       console.log("petclinic tests container exited");
       return null;
     },
-    async startPetclinicAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml up");
+    async startPetclinicAutoTests({ runner = ":testng:test -Dtestng.dtd.http=true" }) {
+      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
+        { env: { RUNNER: runner } });
       console.log(log);
       console.log("petclinic tests container exited");
       return null;
     },
     async startPetclinicMicroserviceAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml up");
+      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml --env-file ./docker/.env up");
       console.log(log);
       return null;
     },
     async stopPetclinicMicroservice() {
       const containersName = ["api-gateway", "config-server", "tracing-server",
         "discovery-server", "vets-service", "visits-service", "customers-service", "agent-files"];
-        // eslint-disable-next-line no-restricted-syntax
+      // eslint-disable-next-line no-restricted-syntax
       for (const name of containersName) { // TODO make it parallel
         // eslint-disable-next-line no-await-in-loop
         await dockerStopAndRmService(name);
@@ -134,9 +137,9 @@ module.exports = (on) => {
   });
 };
 
-function promisifiedExec(command) {
+function promisifiedExec(command, options = {}) {
   return new Promise((resolve, reject) => {
-    exec(command, {}, (err, out) => {
+    exec(command, options, (err, out) => {
       if (err) {
         reject(err);
         return;
@@ -146,16 +149,12 @@ function promisifiedExec(command) {
   });
 }
 
-async function dockerComposeUp(composePath, envFilePath) {
-  return promisifiedExec(`docker-compose -f ${composePath} --env-file ${envFilePath} up -d`);
+async function dockerComposeUp(composePath) {
+  return promisifiedExec(`docker-compose -f ${composePath} --env-file ./docker/.env up -d`);
 }
 
 async function dockerStopAndRmService(serviceName) {
   return promisifiedExec(`docker stop ${serviceName} && docker rm ${serviceName}`);
-}
-
-async function dockerStopService(serviceName) {
-  return promisifiedExec(`docker stop ${serviceName}`);
 }
 
 async function ping(url) {

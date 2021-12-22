@@ -1,0 +1,26 @@
+{
+  "admin-ui-root-config": {
+    "env": "ADMIN_UI_ROOT_CONFIG_VERSION"
+  },
+  "test2code-plugin": {
+    "env": "TEST2CODE_PLUGIN_VERSION"
+  },
+  "admin": {
+    "env": "ADMIN_VERSION"
+  },
+  "java-agent": {
+    "env": "JAVA_AGENT_VERSION"
+  },
+  "autotest-agent": {
+    "env": "AUTOTEST_AGENT_VERSION"
+  },
+  "browser-proxy": {
+    "env": "BROWSER_PROXY_VERSION"
+  },
+  "agent-runner": {
+    "env": "AGENT_RUNNER_VERSION"
+  },
+  "test2code-ui": {
+    "env": "TEST2CODE_UI_VERSION"
+  }
+}

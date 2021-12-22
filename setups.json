@@ -1,0 +1,24 @@
+{
+  "single-java-agent-gradle": {
+    "file": "single-java-agent",
+    "env": {
+      "startApplicationTaskName": "startPetclinic",
+      "initialApplicationBuildVersion": "0.1.0",
+      "secondApplicationBuildVersion": "0.5.0",
+      "startApplicationTestsTaskName": "startPetclinicAutoTests",
+      "fixtureFile": "single-java-agent",
+      "runner": ":testng:test -Dtestng.dtd.http=true"
+    }
+  },
+  "single-java-agent-junit4": {
+    "file": "single-java-agent",
+    "env": {
+      "startApplicationTaskName": "startPetclinic",
+      "initialApplicationBuildVersion": "0.1.0",
+      "secondApplicationBuildVersion": "0.5.0",
+      "startApplicationTestsTaskName": "startPetclinicAutoTests",
+      "fixtureFile": "single-java-agent",
+      "runner": ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*"
+    }
+  }
+}

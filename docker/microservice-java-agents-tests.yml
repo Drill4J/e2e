@@ -9,4 +9,7 @@ services:
       - adminHost=host.docker.internal
       - adminPort=9090
       - groupId=dev-pet-mcr
-      - autotestAgentVersion=0.17.7
+      - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
+networks:
+  drill4j-dev-network:
+    external: true

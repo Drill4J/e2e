@@ -9,12 +9,13 @@ To launch the development environment, follow these steps:
 1.  open console from the project root
 2.  run the command `npm install`
 3.  run the command `cypress open`
-4.  enjoy the development.
+4.  start docker  
+6.  enjoy the development.
 
 ## For start single java agent tests
 
 ``
-cypress run --spec ./cypress/integration/single-java-agent/single-java-agent.spec.js
+cypress run --spec ./cypress/integration/single-java-agent/single-java-agent-gradle.spec.js
 ``
 ## For up single java agent with using docker 
 ```
