@@ -21,10 +21,9 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
-  console.log(github.context.payload);
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
   const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-  const [publishedArtifactId, version] = Object.entries(JSON.parse(github.context.payload.client_payload))[0];
+  const [publishedArtifactId, version] = Object.entries(github.context.payload.client_payload)[0];
   console.log(`Published artifact: ${publishedArtifactId} - ${version}`);
 
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
@@ -54,7 +53,7 @@ try {
       const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
       console.log(`Successfully started setup ${id}`);
       // eslint-disable-next-line no-await-in-loop
-      await promisifiedExec(`cypress run --env ${parsedEnv}  --spec 'cypress/integration/${file}/*.spec.js'`);
+      await promisifiedExec(`$(npm bin)/cypress run --env ${parsedEnv}  --spec ./cypress/integration/${file}/*`);
       console.log(`Successfully finished setup ${id}`);
     }
   });
