@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const core = require("@actions/core");
+const github = require("@actions/github");
 const fs = require("fs");
 const { exec } = require("child_process");
 const semver = require("semver");
@@ -21,39 +23,41 @@ const axios = require("axios");
 try {
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
   const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-  const [publishedArtifact, version] = Object.entries(JSON.parse(process.env.actionPayload))[0];
-  console.log(`Published artifact: ${publishedArtifact} - ${version}`);
+  const [publishedArtifactId, version] = Object.entries(JSON.parse(github.context.payload))[0];
+  console.log(`Published artifact: ${publishedArtifactId} - ${version}`);
+
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
     const { setups } = ledgerData;
 
     const versions = getLatestVersions(ledgerData).map(({ componentId, tag }) => {
-      if (componentId === publishedArtifact) {
-        return { tag: version.replace("v", ""), componentId };
+      if (componentId === publishedArtifactId) {
+        return { tag: version.replace(/^v/, ""), componentId };
       }
-      return { tag: tag.replace("v", ""), componentId };
+      return { tag: tag.replace(/^v/, ""), componentId };
     });
+
+    core.setOutput("env", JSON.stringify(
+      versions.reduce((acc, { componentId, tag }) => ({ [componentId]: tag }), {}),
+    ));
 
     versions.forEach(({ componentId, tag }) => {
       const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
       const { env } = artifacts[componentId];
       fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag}`, { flag: "a" });
     });
-    const artifactSetups = setups.filter(({ componentIds }) => componentIds.includes(publishedArtifact));
+    const artifactSetups = setups.filter(({ componentIds }) => componentIds.includes(publishedArtifactId));
 
-    artifactSetups.forEach(async ({ id }) => {
-      const { env, file } = setupsConfig[id];
-      const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
-      try {
+    for (const {id} of artifactSetups) {
+        const { env, file } = setupsConfig[id];
+        const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
         console.log(`Successfully started setup ${id}`);
         await promisifiedExec(`cypress run --env ${parsedEnv}  --spec 'cypress/integration/${file}/*.spec.js'`);
         console.log(`Successfully finished setup ${id}`);
-      } catch (e) {
-        console.log(`Failed ${id}`, e.message);
-      }
-    });
+    }
   });
 } catch (err) {
-  console.error(err);
+  console.log(err.message);
+  core.setOutput("status", "failed");
 }
 
 // actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js

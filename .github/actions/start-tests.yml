@@ -1,0 +1,4 @@
+name: 'Start tests'
+runs:
+  using: 'node12'
+  main: './.github/actions/start-tests.js'
