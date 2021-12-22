@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const core = require("@actions/core");
-const github = require("@actions/github");
 const fs = require("fs");
 const { exec } = require("child_process");
 const semver = require("semver");
 const axios = require("axios");
+const core = require("@actions/core");
+const github = require("@actions/github");
 
 try {
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
@@ -47,12 +47,14 @@ try {
     });
     const artifactSetups = setups.filter(({ componentIds }) => componentIds.includes(publishedArtifactId));
 
-    for (const {id} of artifactSetups) {
-        const { env, file } = setupsConfig[id];
-        const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
-        console.log(`Successfully started setup ${id}`);
-        await promisifiedExec(`cypress run --env ${parsedEnv}  --spec 'cypress/integration/${file}/*.spec.js'`);
-        console.log(`Successfully finished setup ${id}`);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const { id } of artifactSetups) {
+      const { env, file } = setupsConfig[id];
+      const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
+      console.log(`Successfully started setup ${id}`);
+      // eslint-disable-next-line no-await-in-loop
+      await promisifiedExec(`cypress run --env ${parsedEnv}  --spec 'cypress/integration/${file}/*.spec.js'`);
+      console.log(`Successfully finished setup ${id}`);
     }
   });
 } catch (err) {
