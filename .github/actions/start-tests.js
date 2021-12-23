@@ -25,6 +25,7 @@ try {
     const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
     const [publishedArtifactId, publishedVersion] = Object.entries(github.context.payload.client_payload)[0];
     console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
+    core.setOutput('description', `${publishedArtifactId}: ${publishedVersion}`)
 
     axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({data: ledgerData}) => {
         const {setups} = ledgerData;
