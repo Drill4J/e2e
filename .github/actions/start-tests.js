@@ -23,18 +23,20 @@ const github = require("@actions/github");
 try {
   const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
   const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-  const [publishedArtifactId, version] = Object.entries(github.context.payload.client_payload)[0];
-  console.log(`Published artifact: ${publishedArtifactId} - ${version}`);
+  const [publishedArtifactId, publishedVersion] = Object.entries(github.context.payload.client_payload)[0];
+  console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
 
   axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({ data: ledgerData }) => {
     const { setups } = ledgerData;
 
-    const versions = getLatestVersions(ledgerData).map(({ componentId, tag }) => {
-      if (componentId === publishedArtifactId) {
-        return { tag: version.replace(/^v/, ""), componentId };
+    const versions = getLatestVersions(ledgerData).map((version) => {
+      if (version.componentId === publishedArtifactId) {
+        return { tag: publishedVersion, componentId: publishedArtifactId };
       }
-      return { tag: tag.replace(/^v/, ""), componentId };
+      return version;
     });
+
+
     core.setOutput("env", JSON.stringify(
       versions.reduce((acc, { componentId, tag }) => ({ ...acc, [componentId]: tag }), {}),
     ));
@@ -42,7 +44,7 @@ try {
     versions.forEach(({ componentId, tag }) => {
       const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
       const { env } = artifacts[componentId];
-      fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag}`, { flag: "a" });
+      fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag.replace(/^v/, "")}`, { flag: "a" });
     });
     const artifactSetups = setups.filter(({ componentIds }) => componentIds.includes(publishedArtifactId));
 
