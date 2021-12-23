@@ -17,5 +17,5 @@
 
 before("Start admin", () => {
   cy.task("removeContainers");
-  cy.task("startAdmin", {}, { timeout: 100000 });
+  cy.task("startAdmin", {}, { timeout: 300000 });
 });

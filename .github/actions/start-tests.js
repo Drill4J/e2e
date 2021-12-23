@@ -35,9 +35,8 @@ try {
       }
       return { tag: tag.replace(/^v/, ""), componentId };
     });
-
     core.setOutput("env", JSON.stringify(
-      versions.reduce((acc, { componentId, tag }) => ({ [componentId]: tag }), {}),
+      versions.reduce((acc, { componentId, tag }) => ({ ...acc, [componentId]: tag }), {}),
     ));
 
     versions.forEach(({ componentId, tag }) => {
@@ -51,27 +50,39 @@ try {
     for (const { id } of artifactSetups) {
       const { env, file } = setupsConfig[id];
       const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
+      const runTestsCommand = `$(npm bin)/cypress run --env ${parsedEnv}  --spec './cypress/integration/${file}/*'`
+      console.log(`Run tests command: ${runTestsCommand}`)
       console.log(`Successfully started setup ${id}`);
       // eslint-disable-next-line no-await-in-loop
-      await promisifiedExec(`$(npm bin)/cypress run --env ${parsedEnv}  --spec ./cypress/integration/${file}/*`);
+      await promisifiedExec(runTestsCommand);
       console.log(`Successfully finished setup ${id}`);
     }
+    core.setOutput("status", "passed");
   });
 } catch (err) {
   console.log(err.message);
   core.setOutput("status", "failed");
+  core.setFailed(error.message);
 }
-
-// actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js
 
 function promisifiedExec(command) {
   return new Promise((resolve, reject) => {
-    exec(command, {}, (err, out) => {
+    const ls  = exec(command, {}, (err, out) => {
       if (err) {
         reject(err);
         return;
       }
       resolve(out);
+    });
+    ls.stdout.on('data', (data) => {
+        console.log(data);
+    });
+    ls.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+    });
+
+    ls.on('exit', (code) => {
+        console.log(`child process exited with code ${code}`);
     });
   });
 }
@@ -80,3 +91,4 @@ function getLatestVersions(ledgerData) {
   return ledgerData.components.map(x => x.id).map((componentId) => ledgerData.versions
     .filter(x => x.componentId === componentId).sort((a, b) => semver.compare(b.tag, a.tag))[0]);
 }
+// actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js

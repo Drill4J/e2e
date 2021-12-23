@@ -44,7 +44,7 @@ context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 100000 });
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 300000 });
   });
 
   beforeEach(() => {

@@ -49,7 +49,7 @@ module.exports = (on) => {
       return null;
     },
     async startAdmin() {
-      const log = await dockerComposeUp("./docker/docker-compose.admin.yml", "./docker/docker-compose.admin.env");
+      const log = await promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml --env-file ./docker/.env up -d");
       console.log(log);
       try {
         await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
@@ -62,16 +62,16 @@ module.exports = (on) => {
     async startPetclinic({ build = "0.1.0" }) {
       const log = await promisifiedExec(
         "docker-compose -f ./docker/single-java-agent.yml --env-file ./docker/.env up -d",
-        { env: { PET_STANDALONE_BUILD: build } },
+        { env: { ...process.env, PET_STANDALONE_BUILD: build } },
       );
       console.log("petclinic container started", log);
-      // TODO for 0.5.0 build it never return result
-      // try {
-      //   await ping("http://localhost:8087");
-      //   console.log("Petclinic is available");
-      // } catch (e) {
-      //   console.log("Petclinic is not available");
-      // }
+
+      try {
+        await ping("http://localhost:8087");
+        console.log("Petclinic is available");
+      } catch (e) {
+        console.log("Petclinic is not available");
+      }
       return null;
     },
     async stopPetclinic() {
@@ -81,7 +81,7 @@ module.exports = (on) => {
     async startPetclinicMicroservice({ build = "0.1.0" }) {
       const log = await promisifiedExec(
         "docker-compose -f ./docker/microservice-java-agents.yml --env-file ./docker/.env up -d",
-        { env: { PET_MCR_BUILD: build } },
+        { env: { ...process.env, PET_MCR_BUILD: build } },
       );
       console.log(log);
       try {
@@ -114,7 +114,7 @@ module.exports = (on) => {
     },
     async startPetclinicAutoTests({ runner = ":testng:test -Dtestng.dtd.http=true" }) {
       const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
-        { env: { RUNNER: runner } });
+        { env: { ...process.env, RUNNER: runner } });
       console.log(log);
       console.log("petclinic tests container exited");
       return null;

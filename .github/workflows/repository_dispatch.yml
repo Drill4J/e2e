@@ -42,7 +42,7 @@ jobs:
           ledger-repo-url: 'https://github.com/Drill4J/vee-ledger'
           ledger-repo-owner: 'Drill4J'
           ledger-repo-name: 'vee-ledger'
-          test-setup-id: ${{ github.event.repository.name }}
+          test-setup-id: "single-java-agent-gradle"
           # leave everything "as-is"
 
           # steps.run_tests is your test step name (defined above)
