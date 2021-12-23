@@ -54,12 +54,14 @@ try {
       const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
       const runTestsCommand = `$(npm bin)/cypress run --env ${parsedEnv}  --spec './cypress/integration/${file}/*'`
       console.log(`Run tests command: ${runTestsCommand}`)
-      console.log(`Successfully started setup ${id}`);
       // eslint-disable-next-line no-await-in-loop
-      await promisifiedExec(runTestsCommand);
-      console.log(`Successfully finished setup ${id}`);
+      const testResult  = await promisifiedExec(runTestsCommand);
+      if(testResult.indexOf("All specs passed") === -1) {
+          core.setOutput("status", "failed");
+      } else {
+          core.setOutput("status", "passed");
+      }
     }
-    core.setOutput("status", "passed");
   });
 } catch (err) {
   console.log(err.message);
