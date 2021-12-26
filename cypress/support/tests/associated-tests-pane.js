@@ -30,12 +30,12 @@ Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTest
       .contains('[data-test="coverage-details:associated-tests-count"] a', packageData.associatedTestsCount)
       .click({ force: true }); // this element is detached from the DOM when tests are run
 
-    cy.getByDataTest("associated-test-pane:package-name").should("have.text", packageName);
+    cy.getByDataTest("associated-tests:package-name").should("have.text", packageName);
 
-    cy.getByDataTest("associated-tests-list:item:test-name").each(($testName) => { // TODO need it simplify
+    cy.getByDataTest("associated-tests:test:name").each(($testName) => { // TODO need it simplify
       expect(packageData.associatedTests.includes($testName.text())).to.be.true;
     });
 
-    cy.getByDataTest("modal:close-button").click();
+    cy.getByDataTest("popup:close-button").click();
   }));
 });

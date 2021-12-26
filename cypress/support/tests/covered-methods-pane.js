@@ -26,16 +26,16 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
       .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
       .click({ force: true }); // this element is detached from the DOM when tests are run
 
-    cy.getByDataTest("covered-methods-by-test-sidebar:test-name").should("have.text", testData.fullTestName);
+    cy.getByDataTest("covered-methods-modal:test-name").should("have.text", testData.fullTestName);
 
-    cy.getByDataTest("covered-methods-by-test-sidebar:test-type").should("have.text", testData.type);
+    cy.contains("data-test=[covered-methods-modal:test-type]", testData.type).should("exist", { matchCase: false });
 
-    cy.getByDataTest("covered-methods-by-test-sidebar:methods-count").should("have.text", testData.methodsCovered);
+    cy.getByDataTest("covered-methods-modal:methods-count").should("have.text", testData.methodsCovered);
 
     // TODO failed because we use virtualization
     // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
-    cy.getByDataTest("covered-methods-list:item").should("not.have.length", 0);
+    cy.getByDataTest("covered-methods-modal:list:methods:name").should("not.have.length", 0);
 
-    cy.getByDataTest("modal:close-button").click();
+    cy.getByDataTest("popup:close-button").click();
   }));
 });
