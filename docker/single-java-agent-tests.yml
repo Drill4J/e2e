@@ -9,7 +9,7 @@ services:
       - adminHost=drill-admin
       - adminPort=8090
       - agentId=dev-pet-standalone
-      - autotestAgentVersion=0.18.0
+      - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
       - runner=:testng:test -Dtestng.dtd.http=true
     networks:
       - drill4j-dev-network

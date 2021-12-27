@@ -28,7 +28,7 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
 
     cy.getByDataTest("covered-methods-modal:test-name").should("have.text", testData.fullTestName);
 
-    cy.contains("data-test=[covered-methods-modal:test-type]", testData.type).should("exist", { matchCase: false });
+    cy.contains('[data-test="covered-methods-modal:test-type"]', testData.type, { matchCase: false }).should("exist");
 
     cy.getByDataTest("covered-methods-modal:methods-count").should("have.text", testData.methodsCovered);
 
