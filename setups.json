@@ -1,7 +1,7 @@
 {
   "single-java-agent-gradle": {
     "file": "single-java-agent",
-    "env": {
+    "cypressEnv": {
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",
       "secondApplicationBuildVersion": "0.5.0",

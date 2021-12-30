@@ -16,57 +16,43 @@
 const fs = require("fs");
 const {exec} = require("child_process");
 const semver = require("semver");
-const axios = require("axios");
 const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
     const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
-    const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-    const [publishedArtifactId, publishedVersion] = Object.entries(github.context.payload.client_payload)[0];
+    const {params, cypressEnv, versions, specFile, publishedArtifactId, publishedVersion} = github.context.payload.client_payload;
     console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
+    console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
+
     core.setOutput('description', `
     ${publishedArtifactId}: ${publishedVersion}
     Link to run: https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}
+    Params: ${JSON.stringify(params)}
     `)
 
-    axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({data: ledgerData}) => {
-        const {setups} = ledgerData;
+    core.setOutput("env", JSON.stringify(
+        versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
+    ));
 
-        const versions = getLatestVersions(ledgerData).map((version) => {
-            if (version.componentId === publishedArtifactId) {
-                return {tag: publishedVersion, componentId: publishedArtifactId};
-            }
-            return version;
-        });
-
-
-        core.setOutput("env", JSON.stringify(
-            versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
-        ));
-
-        versions.forEach(({componentId, tag}) => {
-            const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
-            const {env} = artifacts[componentId];
-            fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag.replace(/^v/, "")}`, {flag: "a"});
-        });
-        const artifactSetups = setups.filter(({componentIds}) => componentIds.includes(publishedArtifactId));
-
-        // eslint-disable-next-line no-restricted-syntax
-        try {
-            for (const {id} of artifactSetups) {
-                const {env, file} = setupsConfig[id];
-                const parsedEnv = Object.entries(env).reduce((acc, [key, value]) => (acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`), "");
-                const runTestsCommand = `$(npm bin)/cypress run --env ${parsedEnv}  --spec './cypress/integration/${file}/*'`
-                console.log(`Run tests command: ${runTestsCommand}`)
-                // eslint-disable-next-line no-await-in-loop
-                await promisifiedExec(runTestsCommand);
-            }
-            core.setOutput("status", "passed");
-        } catch (e) {
-            core.setOutput("status", "failed");
-        }
+    versions.forEach(({componentId, tag}) => {
+        const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
+        const {env} = artifacts[componentId];
+        fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag.replace(/^v/, "")}`, {flag: "a"});
     });
+
+    // eslint-disable-next-line no-restricted-syntax
+    try {
+        const parsedCypressEnv = Object.entries(cypressEnv).reduce(parseCypressEnv, "");
+        const parsedCypressEnvWithParams = Object.entries(params).reduce(parseCypressEnv, parsedCypressEnv);
+        const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnvWithParams}  --spec './cypress/integration/${specFile}/${specFile}*'`
+        console.log(`Run tests command: ${runTestsCommand}`)
+        // eslint-disable-next-line no-await-in-loop
+        await promisifiedExec(runTestsCommand);
+        core.setOutput("status", "passed");
+    } catch (e) {
+        core.setOutput("status", "failed");
+    }
 } catch (err) {
     console.log(err.message);
     core.setOutput("status", "failed");
@@ -94,9 +80,8 @@ function promisifiedExec(command) {
     });
 }
 
-function getLatestVersions(ledgerData) {
-    return ledgerData.components.map(x => x.id).map((componentId) => ledgerData.versions
-        .filter(x => x.componentId === componentId).sort((a, b) => semver.compare(b.tag, a.tag))[0]);
+function parseCypressEnv(acc, [key, value]) {
+    return acc ? `${acc},"${key}"="${value}"` : `"${key}"="${value}"`
 }
 
 // actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js

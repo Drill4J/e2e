@@ -40,19 +40,21 @@ try {
             versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
         ));
 
-        core.setOutput("published_artifact", `${publishedArtifactId}: ${publishedVersion}`);
 
         const artifactSetups = setups.filter(({componentIds}) => componentIds.includes(publishedArtifactId));
 
         for (const artifact of artifactSetups) {
-            const {params, env, file} = setupsConfig[artifact.id];
+            const {params, cypressEnv, file} = setupsConfig[artifact.id];
 
             await axios.post("https://api.github.com/repos/Drill4J/e2e/dispatches", {
                 event_type: "run_setup",
                 client_payload: {
-                    specFile: file,
                     params,
-                    env
+                    cypressEnv,
+                    versions,
+                    specFile: file,
+                    publishedArtifactId,
+                    publishedVersion
                 }
             }, {
                 headers: {
@@ -65,28 +67,6 @@ try {
 } catch (err) {
     console.log(err.message);
     core.setOutput("status", "failed");
-}
-
-function promisifiedExec(command) {
-    return new Promise((resolve, reject) => {
-        const ls = exec(command, {}, (err, out) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(out);
-        });
-        ls.stdout.on('data', (data) => {
-            console.log(data);
-        });
-        ls.on('close', (code) => {
-            console.log(`child process close all stdio with code ${code}`);
-        });
-
-        ls.on('exit', (code) => {
-            console.log(`child process exited with code ${code}`);
-        });
-    });
 }
 
 function getLatestVersions(ledgerData) {

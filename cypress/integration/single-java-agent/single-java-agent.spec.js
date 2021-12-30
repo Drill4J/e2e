@@ -37,6 +37,7 @@ const dataObject = {
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
 // Cypress.env("fixtureFile", "single-java-agent-testNG");
+Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
@@ -79,7 +80,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 300000 });
+        cy.task(Cypress.env("startApplicationTestsTaskName"), { autotestsParams: Cypress.env("autotestsParams") }, { timeout: 300000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
@@ -252,7 +253,7 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), {}, { timeout: 300000 });
+          cy.task(Cypress.env("startApplicationTestsTaskName"), { autotestsParams: Cypress.env("autotestsParams") }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:test2code").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
