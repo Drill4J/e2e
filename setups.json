@@ -5,10 +5,12 @@
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",
       "secondApplicationBuildVersion": "0.5.0",
-      "startApplicationTestsTaskName": "startPetclinicAutoTests",
-      "fixtureFile": "single-java-agent",
-      "runner": ":testng:test -Dtestng.dtd.http=true"
-    }
+      "startApplicationTestsTaskName": "startPetclinicAutoTests"
+    },
+    "params": [
+      { "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true", "fixtureFile": "single-java-agent-testNG" },
+      { "autotestsParams": ":junit4:test -Djunit4Version=4.13.2", "fixtureFile": "single-java-agent-junit4" }
+    ]
   },
   "single-java-agent-junit4": {
     "file": "single-java-agent",

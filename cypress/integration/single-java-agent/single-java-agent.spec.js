@@ -17,11 +17,13 @@
 // TODO add data tests for tables on risks and t2r pages
 import { convertUrl } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
-import singleJavaAgentData from "./single-java-agent.json";
+import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
+import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
-  "single-java-agent": singleJavaAgentData,
+  "single-java-agent-testNG": singleJavaAgentTestNGData,
+  "single-java-agent-junit4": singleJavaAgentJunit4Data,
 };
 // Multiinstances
 // Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
@@ -34,7 +36,7 @@ const dataObject = {
 // Cypress.env("initialApplicationBuildVersion", "0.1.0");
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
-// Cypress.env("fixtureFile", "single-java-agent");
+// Cypress.env("fixtureFile", "single-java-agent-testNG");
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
