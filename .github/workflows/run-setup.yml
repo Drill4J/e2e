@@ -20,7 +20,7 @@ jobs:
 
       - name: Run tests
         id: run_tests
-        uses: "./.github/actions"
+        uses: "./.github/run-setup"
 
       - name: Archive cypress videos results
         uses: actions/upload-artifact@v2
