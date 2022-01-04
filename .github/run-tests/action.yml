@@ -1,10 +1,9 @@
 name: 'Start setups'
 description: "Start setups"
-outputs:
-  status:
-    description: "Tests run result"
-  env:
-    description: "Tests run env"
+inputs:
+  access_token:
+    description: 'GitHub personal access token'
+    required: true
 runs:
   using: 'node12'
   main: './run-tests.js'

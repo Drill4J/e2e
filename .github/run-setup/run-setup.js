@@ -15,44 +15,45 @@
  */
 const fs = require("fs");
 const {exec} = require("child_process");
-const semver = require("semver");
 const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
-    const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
-    const {params, cypressEnv, versions, specFile, publishedArtifactId, publishedVersion} = github.context.payload.client_payload;
-    console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
-    console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
+    (async () => {
+        const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
+        const {params, cypressEnv, versions, specFile, publishedArtifactId, publishedVersion} = github.context.payload.client_payload;
+        console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
+        console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
 
-    core.setOutput('description', `
+        core.setOutput('description', `
     ${publishedArtifactId}: ${publishedVersion}
     Link to run: https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}
     Params: ${JSON.stringify(params)}
     `)
 
-    core.setOutput("env", JSON.stringify(
-        versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
-    ));
+        core.setOutput("env", JSON.stringify(
+            versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
+        ));
 
-    versions.forEach(({componentId, tag}) => {
-        const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
-        const {env} = artifacts[componentId];
-        fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag.replace(/^v/, "")}`, {flag: "a"});
-    });
+        versions.forEach(({componentId, tag}) => {
+            const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
+            const {env} = artifacts[componentId];
+            fs.writeFileSync("./docker/.env", `${newLineChar}${env}=${tag.replace(/^v/, "")}`, {flag: "a"});
+        });
 
-    // eslint-disable-next-line no-restricted-syntax
-    try {
-        const parsedCypressEnv = Object.entries(cypressEnv).reduce(parseCypressEnv, "");
-        const parsedCypressEnvWithParams = Object.entries(params).reduce(parseCypressEnv, parsedCypressEnv);
-        const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnvWithParams}  --spec './cypress/integration/${specFile}/${specFile}*'`
-        console.log(`Run tests command: ${runTestsCommand}`)
-        // eslint-disable-next-line no-await-in-loop
-        await promisifiedExec(runTestsCommand);
-        core.setOutput("status", "passed");
-    } catch (e) {
-        core.setOutput("status", "failed");
-    }
+        // eslint-disable-next-line no-restricted-syntax
+        try {
+            const parsedCypressEnv = Object.entries(cypressEnv).reduce(parseCypressEnv, "");
+            const parsedCypressEnvWithParams = Object.entries(params).reduce(parseCypressEnv, parsedCypressEnv);
+            const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnvWithParams}  --spec './cypress/integration/${specFile}/${specFile}*'`
+            console.log(`Run tests command: ${runTestsCommand}`)
+            // eslint-disable-next-line no-await-in-loop
+            await promisifiedExec(runTestsCommand);
+            core.setOutput("status", "passed");
+        } catch (e) {
+            core.setOutput("status", "failed");
+        }
+    })()
 } catch (err) {
     console.log(err.message);
     core.setOutput("status", "failed");

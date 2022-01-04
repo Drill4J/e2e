@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 const fs = require("fs");
-const {exec} = require("child_process");
 const semver = require("semver");
 const axios = require("axios");
 const core = require("@actions/core");
@@ -44,23 +43,25 @@ try {
         const artifactSetups = setups.filter(({componentIds}) => componentIds.includes(publishedArtifactId));
 
         for (const artifact of artifactSetups) {
-            const {params, cypressEnv, file} = setupsConfig[artifact.id];
+            const {params = [], cypressEnv, file} = setupsConfig[artifact.id];
 
-            await axios.post("https://api.github.com/repos/Drill4J/e2e/dispatches", {
-                event_type: "run_setup",
-                client_payload: {
-                    params,
-                    cypressEnv,
-                    versions,
-                    specFile: file,
-                    publishedArtifactId,
-                    publishedVersion
-                }
-            }, {
-                headers: {
-                    "Authorization": `Bearer ${core.getInput('access_token')}`
-                }
-            })
+            for(const param of params) {
+                await axios.post("https://api.github.com/repos/Drill4J/e2e/dispatches", {
+                    event_type: "run_setup",
+                    client_payload: {
+                        params: param,
+                        cypressEnv,
+                        versions,
+                        specFile: file,
+                        publishedArtifactId,
+                        publishedVersion
+                    }
+                }, {
+                    headers: {
+                        "Authorization": `Bearer ${core.getInput('access_token')}`
+                    }
+                })
+            }
         }
 
     });
