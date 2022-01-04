@@ -1,5 +1,5 @@
-name: 'Start tests'
-description: "Running tests"
+name: 'Start setups'
+description: "Start setups"
 outputs:
   status:
     description: "Tests run result"
@@ -7,4 +7,4 @@ outputs:
     description: "Tests run env"
 runs:
   using: 'node12'
-  main: './start-tests.js'
+  main: './run-tests.js'

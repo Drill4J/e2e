@@ -1,0 +1,10 @@
+name: 'Start setup'
+description: "Start setup with env variables"
+outputs:
+  status:
+    description: "Tests run result"
+  env:
+    description: "Tests run env"
+runs:
+  using: 'node12'
+  main: './run-setup.js'

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   start-petclinic-tests:
-    image: drill4j/petclinic-autotests-execute:0.3.0
+    image: drill4j/petclinic-autotests-execute:0.3.1
     container_name: start-petclinic-tests
     environment:
       - petclinicUrl=http://spring-petclinic-sample:8080
@@ -10,7 +10,8 @@ services:
       - adminPort=8090
       - agentId=dev-pet-standalone
       - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
-      - runner=:testng:test -Dtestng.dtd.http=true
+      - agentRunnerVersion=${AGENT_RUNNER_VERSION}
+      - params=${AUTOTESTS_PARAMS}
     networks:
       - drill4j-dev-network
 

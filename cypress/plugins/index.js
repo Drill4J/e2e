@@ -30,54 +30,17 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line no-unused-vars
-const { exec } = require("child_process");
-const axios = require("axios");
+
+const {
+  dockerStopAndRmService, ping, promisifiedExec, dockerComposeUp,
+} = require("./utils");
+const adminScripts = require("./admin");
+const singleAgentScripts = require("./single-agent");
 
 module.exports = (on) => {
   on("task", {
-    async removeContainers() {
-      const containersIds = await promisifiedExec("docker ps -aq");
-      if (containersIds) {
-        const stoppedIds = await promisifiedExec(`docker stop ${containersIds.replaceAll(/\s+/g, " ")}`);
-        console.log(`Stopped containers: ${stoppedIds}`);
-        const removedIds = await promisifiedExec(`docker rm ${containersIds.replaceAll(/\s+/g, " ")}`);
-        console.log(`Removed containers: ${removedIds}`);
-        await promisifiedExec("docker volume prune -f");
-        await promisifiedExec("docker network prune -f");
-      }
-      return null;
-    },
-    async startAdmin() {
-      const log = await promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml --env-file ./docker/.env up -d");
-      console.log(log);
-      try {
-        await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
-        console.log("BE is available");
-      } catch (e) {
-        console.log("BE is not available");
-      }
-      return null;
-    },
-    async startPetclinic({ build = "0.1.0" }) {
-      const log = await promisifiedExec(
-        "docker-compose -f ./docker/single-java-agent.yml --env-file ./docker/.env up -d",
-        { env: { ...process.env, PET_STANDALONE_BUILD: build } },
-      );
-      console.log("petclinic container started", log);
-
-      try {
-        await ping("http://localhost:8087");
-        console.log("Petclinic is available");
-      } catch (e) {
-        console.log("Petclinic is not available");
-      }
-      return null;
-    },
-    async stopPetclinic() {
-      await dockerStopAndRmService("spring-petclinic-sample");
-      return null;
-    },
+    ...adminScripts,
+    ...singleAgentScripts,
     async startPetclinicMicroservice({ build = "0.1.0" }) {
       const log = await promisifiedExec(
         "docker-compose -f ./docker/microservice-java-agents.yml --env-file ./docker/.env up -d",
@@ -112,13 +75,6 @@ module.exports = (on) => {
       console.log("petclinic tests container exited");
       return null;
     },
-    async startPetclinicAutoTests({ runner = ":testng:test -Dtestng.dtd.http=true" }) {
-      const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
-        { env: { ...process.env, RUNNER: runner } });
-      console.log(log);
-      console.log("petclinic tests container exited");
-      return null;
-    },
     async startPetclinicMicroserviceAutoTests() {
       const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml --env-file ./docker/.env up");
       console.log(log);
@@ -136,44 +92,3 @@ module.exports = (on) => {
     },
   });
 };
-
-function promisifiedExec(command, options = {}) {
-  return new Promise((resolve, reject) => {
-    exec(command, options, (err, out) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(out);
-    });
-  });
-}
-
-async function dockerComposeUp(composePath) {
-  return promisifiedExec(`docker-compose -f ${composePath} --env-file ./docker/.env up -d`);
-}
-
-async function dockerStopAndRmService(serviceName) {
-  return promisifiedExec(`docker stop ${serviceName} && docker rm ${serviceName}`);
-}
-
-async function ping(url) {
-  return new Promise((resolve, reject) => {
-    let count = 0;
-    const intervalId = setInterval(async () => {
-      count += 1;
-      try {
-        const res = await axios.get(url);
-        if (res.status === 200) {
-          clearInterval(intervalId);
-          resolve();
-        }
-      } catch (e) {
-        if (count > 40) {
-          clearInterval(intervalId);
-          reject();
-        }
-      }
-    }, 3000);
-  });
-}
