@@ -677,7 +677,7 @@
             "tests2RunBeforeTestsExecuted": "1",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
-              "testNgUpdateOwnerInfoTest.()": {
+              "testNgUpdateOwnerInfoTest()": {
                 "type": "Auto",
                 "coverage": "17.3",
                 "methodsCovered": "23"
@@ -690,12 +690,12 @@
             "tests2RunBeforeTestsExecuted": "2",
             "testsToRunCountAfterTheTestsExecuted": "0",
             "tests": {
-              "testNgCheckPageHeader.(String,String)[3]": {
+              "testNgCheckPageHeader(String,String)[3]": {
                 "type": "Auto",
                 "coverage": "29.6",
                 "methodsCovered": "11"
               },
-              "testNgGetVetsInfoTest.()": {
+              "testNgGetVetsInfoTest()": {
                 "type": "Auto",
                 "coverage": "29.6",
                 "methodsCovered": "11"
