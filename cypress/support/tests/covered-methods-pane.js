@@ -17,7 +17,10 @@
 
 // "engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]": {
 //     "type": "Auto",
-//     "methodsCovered": "1"
+//           "expectedStatus": "Passed",
+//           "coverage": "0.2",
+//           "methodsCovered": "1",
+//           "path": "",
 // }
 
 Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) => {
@@ -26,7 +29,9 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
       .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
       .click({ force: true }); // this element is detached from the DOM when tests are run
 
-    cy.getByDataTest("covered-methods-modal:test-name").should("have.text", testData.fullTestName);
+    cy.getByDataTest("covered-methods-modal:test-name").should("have.text", testName);
+
+    cy.getByDataTest("covered-methods-modal:test-path").should("have.text", testData.path);
 
     cy.contains('[data-test="covered-methods-modal:test-type"]', testData.type, { matchCase: false }).should("exist");
 
@@ -34,7 +39,7 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
 
     // TODO failed because we use virtualization
     // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
-    cy.getByDataTest("covered-methods-modal:list:methods:name").should("not.have.length", 0);
+    cy.getByDataTest("covered-methods-modal:list:method:name").should("not.have.length", 0);
 
     cy.getByDataTest("popup:close-button").click();
   }));
