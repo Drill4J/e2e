@@ -19,9 +19,10 @@
 // "org/springframework/samples/petclinic/model": {
 //     "associatedTestsCount": "2",
 //     "associatedTests": [
-//     "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
-//     "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
-//     ]
+//     {
+//               "name": "testNgGetOwner4EditPage()",
+//               "path": "api.standalone.StandaloneApiTest"
+//     }]
 // }
 
 Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTests) => {
@@ -32,8 +33,12 @@ Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTest
 
     cy.getByDataTest("associated-tests:package-name").should("have.text", packageName);
 
-    cy.getByDataTest("associated-tests:test:name").each(($testName) => { // TODO need it simplify
-      expect(packageData.associatedTests.includes($testName.text())).to.be.true;
+    packageData.associatedTests.forEach(({ name = "", path = "" }) => {
+      cy.contains('[data-test="associated-tests-table"] div[role="row"]', name)
+        .find('[data-test="associated-tests:test:name"]').should("have.text", name);
+
+      cy.contains('[data-test="associated-tests-table"] div[role="row"]', name)
+        .find('[data-test="associated-tests:test:path"]').should("have.text", path);
     });
 
     cy.getByDataTest("popup:close-button").click();

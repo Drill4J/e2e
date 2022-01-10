@@ -47,118 +47,168 @@
         "org/springframework/samples/petclinic/model": {
           "associatedTestsCount": "5",
           "associatedTests": [
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+            {
+              "name": "testNgGetOwner4EditPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "testNgGetOwner4InfoPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[1]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[2]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgFindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
           ]
         },
         "org/springframework/samples/petclinic/owner": {
           "associatedTestsCount": "4",
           "associatedTests": [
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]",
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+            {
+              "name": "testNgGetOwner4EditPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "testNgGetOwner4InfoPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[1]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgFindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
           ]
         },
         "org/springframework/samples/petclinic/system": {
           "associatedTestsCount": "6",
           "associatedTests": [
-            "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]",
-            "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+            {
+              "name": "testNgGetHomePage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[0]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[1]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[2]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgCheckPageHeader(String,String)[3]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "testNgFindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
           ]
         },
         "org/springframework/samples/petclinic/vet": {
           "associatedTestsCount": "1",
           "associatedTests": [
-            "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
+            {
+              "name": "testNgCheckPageHeader(String,String)[2]",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            }
           ]
         }
       },
       "testsWithCoveredMethods": {
-        "testNgGetHomePage.()": {
+        "testNgGetHomePage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
-          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetHomePage()]"
+          "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgGetOwner4EditPage.()": {
+        "testNgGetOwner4EditPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "7.7",
           "methodsCovered": "14",
-          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4EditPage()]"
+          "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgGetOwner4InfoPage.()": {
+        "testNgGetOwner4InfoPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "14.9",
           "methodsCovered": "22",
-          "fullTestName": "[engine:testng]/[class:api.standalone.StandaloneApiTest]/[method:testNgGetOwner4InfoPage()]"
+          "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgCheckPageHeader.(String,String)[1]": {
+        "testNgCheckPageHeader(String,String)[1]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "3.9",
           "methodsCovered": "7",
-          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]"
+          "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "testNgCheckPageHeader.(String,String)[0]": {
+        "testNgCheckPageHeader(String,String)[0]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
-          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]"
+          "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "testNgCheckPageHeader.(String,String)[2]": {
+        "testNgCheckPageHeader(String,String)[2]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "10.3",
           "methodsCovered": "15",
-          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
+          "path": "ui.standalone.StandaloneChromeUITest"
+
         },
-        "testNgCheckPageHeader.(String,String)[3]": {
+        "testNgCheckPageHeader(String,String)[3]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.8",
           "methodsCovered": "2",
-          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]"
+          "path": "ui.standalone.StandaloneChromeUITest"
+
         },
-        "testNgFindOwnersTestSelenide.()": {
+        "testNgFindOwnersTestSelenide()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "13.8",
           "methodsCovered": "20",
-          "fullTestName": "[engine:testng]/[class:ui.standalone.StandaloneFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+          "path": "ui.standalone.StandaloneFireFoxUITest"
         }
       },
       "testsWithoutCoveredMethods": {
-        "testNgIgnoredTest.()": {
+        "testNgIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgFailedTest.()": {
+        "testNgFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgUiIgnoredTest.()": {
+        "testNgUiIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgUiFailedTest.()": {
+        "testNgUiFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
@@ -215,7 +265,7 @@
         "tests2RunBeforeTestsExecuted": "6",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "testNgGetHomePage.()": {
+          "testNgGetHomePage()": {
             "type": "Auto",
             "coverage": "0.2",
             "methodsCovered": "1"
