@@ -35,96 +35,120 @@
             "org/springframework/samples/petclinic/customers/model": {
               "associatedTestsCount": "4",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgUpdateOwnerInfoTest()]",
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
-                "[engine:testng]/[class:ui.microservices.McrFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+                {
+                  "name": "testNgUpdateOwnerInfoTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[1]",
+                  "path": "ui.microservices.McrChromeUITest"
+                },
+                {
+                  "name": "testNgFindOwnersTestSelenide()",
+                  "path": "ui.microservices.McrFireFoxUITest"
+                }
               ]
             },
             "org/springframework/samples/petclinic/customers/web": {
               "associatedTestsCount": "4",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgUpdateOwnerInfoTest()]",
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]",
-                "[engine:testng]/[class:ui.microservices.McrFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+                {
+                  "name": "testNgUpdateOwnerInfoTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[1]",
+                  "path": "ui.microservices.McrChromeUITest"
+                },
+                {
+                  "name": "testNgFindOwnersTestSelenide()",
+                  "path": "ui.microservices.McrFireFoxUITest"
+                }
               ]
             }
           },
           "testsWithCoveredMethods": {
-            "testNgUpdateOwnerInfoTest.()": {
+            "testNgUpdateOwnerInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "15.9",
               "methodsCovered": "21",
-              "fullTestName": "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgUpdateOwnerInfoTest()]"
+              "path": "api.microservices.McrApiTest"
             },
-            "testNgCheckPageHeader.(String,String)[1]": {
+            "testNgCheckPageHeader(String,String)[1]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "8.2",
               "methodsCovered": "18",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[1]]"
+              "path": "ui.microservices.McrChromeUITest"
             },
-            "testNgFindOwnersTestSelenide.()": {
+            "testNgFindOwnersTestSelenide()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "8.2",
               "methodsCovered": "18",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+              "path": "ui.microservices.McrFireFoxUITest"
             },
-            "testOwnerDetailes.()": {
+            "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "8.5",
               "methodsCovered": "18",
-              "fullTestName": "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]"
+              "path": "api.microservices.McrApiTest"
             }
           },
           "testsWithoutCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[4]": {
+            "testNgCheckPageHeader(String,String)[4]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[3]": {
+            "testNgCheckPageHeader(String,String)[3]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgGetVetsInfoTest.()": {
+            "testNgGetVetsInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCreateNewVisitTest.()": {
+            "testNgCreateNewVisitTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIFailedTest.()": {
+            "testNgUiIFailedTest()": {
               "type": "Auto",
               "expectedStatus": "Failed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[0]": {
+            "testNgCheckPageHeader(String,String)[0]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[2]": {
+            "testNgCheckPageHeader(String,String)[2]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIgnoredTest.()": {
+            "testNgUiIgnoredTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
@@ -160,65 +184,71 @@
             "org/springframework/samples/petclinic/visits/web": {
               "associatedTestsCount": "2",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[2]",
+                  "path": "ui.microservices.McrChromeUITest"
+                }
               ]
             }
           },
           "testsWithCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[2]": {
+            "testNgCheckPageHeader(String,String)[2]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "5.5",
               "methodsCovered": "1",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[2]]"
+              "path": "ui.microservices.McrChromeUITest"
             },
-            "testOwnerDetailes.()": {
+            "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "11",
               "methodsCovered": "1",
-              "fullTestName": "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]"
+              "path": "api.microservices.McrApiTest"
             }
           },
           "testsWithoutCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[4]": {
+            "testNgCheckPageHeader(String,String)[4]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[3]": {
+            "testNgCheckPageHeader(String,String)[3]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgGetVetsInfoTest.()": {
+            "testNgGetVetsInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIgnoredTest.()": {
+            "testNgUiIgnoredTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCreateNewVisitTest.()": {
+            "testNgCreateNewVisitTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIFailedTest.()": {
+            "testNgUiIFailedTest()": {
               "type": "Auto",
               "expectedStatus": "Failed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[0]": {
+            "testNgCheckPageHeader(String,String)[0]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
@@ -260,106 +290,130 @@
             "org/springframework/samples/petclinic/api": {
               "associatedTestsCount": "3",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]",
-                "[engine:testng]/[class:ui.microservices.McrFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[0]",
+                  "path": "ui.microservices.McrChromeUITest"
+                },
+                {
+                  "name": "testNgFindOwnersTestSelenide()",
+                  "path": "ui.microservices.McrFireFoxUITest"
+                }
               ]
             },
             "org/springframework/samples/petclinic/api/application": {
               "associatedTestsCount": "2",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[4]]"
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[4]",
+                  "path": "ui.microservices.McrChromeUITest"
+                }
               ]
             },
             "org/springframework/samples/petclinic/api/boundary/web": {
               "associatedTestsCount": "2",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[4]]"
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[4]",
+                  "path": "ui.microservices.McrChromeUITest"
+                }
               ]
             },
             "org/springframework/samples/petclinic/api/dto": {
               "associatedTestsCount": "1",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]"
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
+                }
               ]
             }
           },
           "testsWithCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[4]": {
+            "testNgCheckPageHeader(String,String)[4]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "2.1",
               "methodsCovered": "2",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[4]]"
+              "path": "ui.microservices.McrChromeUITest"
             },
-            "testNgCheckPageHeader.(String,String)[0]": {
+            "testNgCheckPageHeader(String,String)[0]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0.6",
               "methodsCovered": "1",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[0]]"
+              "path": "ui.microservices.McrChromeUITest"
             },
-            "testNgFindOwnersTestSelenide.()": {
+            "testNgFindOwnersTestSelenide()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0.6",
               "methodsCovered": "1",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrFireFoxUITest]/[method:testNgFindOwnersTestSelenide()]"
+              "path": "ui.microservices.McrFireFoxUITest"
             },
-            "testOwnerDetailes.()": {
+            "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "20.9",
               "methodsCovered": "40",
-              "fullTestName": "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testOwnerDetailes()]"
+              "path": "api.microservices.McrApiTest"
             }
           },
           "testsWithoutCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[3]": {
+            "testNgCheckPageHeader(String,String)[3]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgGetVetsInfoTest.()": {
+            "testNgGetVetsInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUpdateOwnerInfoTest.()": {
+            "testNgUpdateOwnerInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCreateNewVisitTest.()": {
+            "testNgCreateNewVisitTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIgnoredTest.()": {
+            "testNgUiIgnoredTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIFailedTest.()": {
+            "testNgUiIFailedTest()": {
               "type": "Auto",
               "expectedStatus": "Failed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[1]": {
+            "testNgCheckPageHeader(String,String)[1]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[2]": {
+            "testNgCheckPageHeader(String,String)[2]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
@@ -401,90 +455,102 @@
             "org/springframework/samples/petclinic/vets/model": {
               "associatedTestsCount": "2",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgGetVetsInfoTest()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]"
+                {
+                  "name": "testNgGetVetsInfoTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[3]",
+                  "path": "ui.microservices.McrChromeUITest"
+                }
               ]
             },
             "org/springframework/samples/petclinic/vets/web": {
               "associatedTestsCount": "2",
               "associatedTests": [
-                "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgGetVetsInfoTest()]",
-                "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]"
+                {
+                  "name": "testNgGetVetsInfoTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testNgCheckPageHeader(String,String)[3]",
+                  "path": "ui.microservices.McrChromeUITest"
+                }
               ]
             }
           },
           "testsWithCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[3]": {
+            "testNgCheckPageHeader(String,String)[3]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "28.4",
               "methodsCovered": "11",
-              "fullTestName": "[engine:testng]/[class:ui.microservices.McrChromeUITest]/[method:testNgCheckPageHeader(String,String)[3]]"
+              "path": "ui.microservices.McrChromeUITest"
             },
-            "testNgGetVetsInfoTest.()": {
+            "testNgGetVetsInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "28.4",
               "methodsCovered": "11",
-              "fullTestName": "[engine:testng]/[class:api.microservices.McrApiTest]/[method:testNgGetVetsInfoTest()]"
+              "path": "api.microservices.McrApiTest"
             }
           },
           "testsWithoutCoveredMethods": {
-            "testNgCheckPageHeader.(String,String)[4]": {
+            "testNgCheckPageHeader(String,String)[4]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUpdateOwnerInfoTest.()": {
+            "testNgUpdateOwnerInfoTest()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIgnoredTest.()": {
+            "testNgUiIgnoredTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCreateNewVisitTest.()": {
+            "testNgCreateNewVisitTest()": {
               "type": "Auto",
               "expectedStatus": "Skipped",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgUiIFailedTest.()": {
+            "testNgUiIFailedTest()": {
               "type": "Auto",
               "expectedStatus": "Failed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[1]": {
+            "testNgCheckPageHeader(String,String)[1]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[0]": {
+            "testNgCheckPageHeader(String,String)[0]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCheckPageHeader.(String,String)[2]": {
+            "testNgCheckPageHeader(String,String)[2]": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgFindOwnersTestSelenide.()": {
+            "testNgFindOwnersTestSelenide()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testOwnerDetailes.()": {
+            "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "0",
