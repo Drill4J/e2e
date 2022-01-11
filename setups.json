@@ -9,7 +9,8 @@
     },
     "params": [
       { "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true", "fixtureFile": "single-java-agent-testNG" },
-      { "autotestsParams": ":junit4:test -Djunit4Version=4.13.2", "fixtureFile": "single-java-agent-junit4" }
+      { "autotestsParams": ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*", "fixtureFile": "single-java-agent-junit4" },
+      { "autotestsParams": ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*", "fixtureFile": "single-java-agent-junit5" }
     ]
   },
   "single-java-agent-junit4": {
