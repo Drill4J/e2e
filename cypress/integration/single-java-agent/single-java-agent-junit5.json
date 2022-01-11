@@ -28,7 +28,7 @@
           "methodsTotal": "8",
           "coverage": "21.9",
           "methodsCovered": "2",
-          "associatedTestsCount": "6"
+          "associatedTestsCount": "7"
         },
         "org/springframework/samples/petclinic/vet": {
           "methodsTotal": "12",
@@ -48,23 +48,23 @@
           "associatedTestsCount": "5",
           "associatedTests": [
             {
-              "name": "junit4GetOwner4EditPage()",
+              "name": "junit5GetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit4GetOwner4InfoPage()",
+              "name": "junit5GetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit4CheckPageHeader[1]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4CheckPageHeader[2]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4FindOwnersTestSelenide()",
+              "name": "junit5FindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -73,48 +73,52 @@
           "associatedTestsCount": "4",
           "associatedTests": [
             {
-              "name": "junit4GetOwner4EditPage()",
+              "name": "junit5GetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit4GetOwner4InfoPage()",
+              "name": "junit5GetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit4CheckPageHeader[1]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4FindOwnersTestSelenide()",
+              "name": "junit5FindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
         },
         "org/springframework/samples/petclinic/system": {
-          "associatedTestsCount": "6",
+          "associatedTestsCount": "7",
           "associatedTests": [
             {
-              "name": "junit4GetHomePage()",
+              "name": "junit5GetHomePage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit4CheckPageHeader[0]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4CheckPageHeader[1]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4CheckPageHeader[2]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4CheckPageHeader[3]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit4FindOwnersTestSelenide()",
+              "name": "junit5FindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            },
+            {
+              "name": "junit5UiFailedTest()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -123,65 +127,63 @@
           "associatedTestsCount": "1",
           "associatedTests": [
             {
-              "name": "junit4CheckPageHeader[2]()",
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
               "path": "ui.standalone.StandaloneChromeUITest"
             }
           ]
         }
       },
       "testsWithCoveredMethods": {
-        "junit4GetHomePage()": {
+        "junit5GetHomePage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit4GetOwner4EditPage()": {
+        "junit5GetOwner4EditPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "7.7",
           "methodsCovered": "14",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit4GetOwner4InfoPage()": {
+        "junit5GetOwner4InfoPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "14.9",
           "methodsCovered": "22",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit4CheckPageHeader[1]()": {
-          "type": "Auto",
-          "expectedStatus": "Passed",
-          "coverage": "3.9",
-          "methodsCovered": "7",
-          "path": "ui.standalone.StandaloneChromeUITest"
-        },
-        "junit4CheckPageHeader[0]()": {
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
           "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "junit4CheckPageHeader[2]()": {
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "3.9",
+          "methodsCovered": "7",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "10.3",
           "methodsCovered": "15",
           "path": "ui.standalone.StandaloneChromeUITest"
-
         },
-        "junit4CheckPageHeader[3]()": {
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.8",
           "methodsCovered": "2",
           "path": "ui.standalone.StandaloneChromeUITest"
-
         },
-        "junit4FindOwnersTestSelenide()": {
+        "junit5FindOwnersTestSelenide()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "13.8",
@@ -190,29 +192,29 @@
         }
       },
       "testsWithoutCoveredMethods": {
-        "junit4IgnoredTest()": {
+        "junit5IgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit4FailedTest()": {
+        "junit5FailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit4UiIgnoredTest()": {
+        "junit5UiIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit4UiIFailedTest()": {
+        "junit5UiFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
-          "coverage": "0",
-          "methodsCovered": "0"
+          "coverage": "0.2",
+          "methodsCovered": "1"
         }
       }
     },
@@ -257,15 +259,15 @@
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "6"
+            "associatedTestsCount": "7"
           }
         }
       },
       "testsToRun": {
-        "tests2RunBeforeTestsExecuted": "6",
+        "tests2RunBeforeTestsExecuted": "7",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "junit4GetHomePage()": {
+          "junit5GetHomePage()": {
             "type": "Auto",
             "coverage": "0.2",
             "methodsCovered": "1"
