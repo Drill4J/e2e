@@ -53,8 +53,8 @@ try {
                         cypressEnv,
                         versions,
                         specFile: file,
-                        publishedArtifactId,
-                        publishedVersion,
+                        componentId: publishedArtifactId,
+                        componentVersion: publishedVersion,
                         setupId: setup.id
                     }
                 }, {

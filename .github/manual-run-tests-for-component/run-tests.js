@@ -45,8 +45,8 @@ try {
                         cypressEnv,
                         versions,
                         specFile: file,
-                        publishedArtifactId: componentId,
-                        publishedVersion: versions[componentId]
+                        componentId,
+                        componentVersion: versions[componentId]
                     }
                 }, {
                     headers: {

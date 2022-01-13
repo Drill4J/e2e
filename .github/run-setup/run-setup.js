@@ -21,8 +21,8 @@ const github = require("@actions/github");
 try {
     (async () => {
         const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
-        const {params, cypressEnv, versions, specFile, publishedArtifactId, publishedVersion, setupId} = github.context.payload.client_payload;
-        console.log(`Published artifact: ${publishedArtifactId} - ${publishedVersion}`);
+        const {params, cypressEnv, versions, specFile, componentId, componentVersion, setupId} = github.context.payload.client_payload;
+        console.log(`Published artifact: ${componentId} - ${componentVersion}`);
         console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
 
         core.setOutput('description', `
