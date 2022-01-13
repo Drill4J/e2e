@@ -32,29 +32,17 @@
  */
 
 const {
-  dockerStopAndRmService, ping, promisifiedExec, dockerComposeUp,
+  ping, promisifiedExec, dockerComposeUp,
 } = require("./utils");
 const adminScripts = require("./admin");
-const singleAgentScripts = require("./single-agent");
+const singlejavaAgentScripts = require("./single-java-agent");
+const microserviceJavaAgentsScripts = require("./microservice-java-agents");
 
 module.exports = (on) => {
   on("task", {
     ...adminScripts,
-    ...singleAgentScripts,
-    async startPetclinicMicroservice({ build = "0.1.0" }) {
-      const log = await promisifiedExec(
-        "docker-compose -f ./docker/microservice-java-agents.yml --env-file ./docker/.env up -d",
-        { env: { ...process.env, PET_MCR_BUILD: build } },
-      );
-      console.log(log);
-      try {
-        await ping("http://localhost:8080/#!/welcome");
-        console.log("Petclinic is available");
-      } catch (e) {
-        console.log("Petclinic is not available");
-      }
-      return null;
-    },
+    ...singlejavaAgentScripts,
+    ...microserviceJavaAgentsScripts,
     async startPetclinicMultinstaces({ build = "0.1.0" }) {
       const log = await dockerComposeUp(
         "./docker/multinstances-single-java-agent.yml",
@@ -73,21 +61,6 @@ module.exports = (on) => {
       const log = await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
       console.log(log);
       console.log("petclinic tests container exited");
-      return null;
-    },
-    async startPetclinicMicroserviceAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/microservice-java-agents-tests.yml --env-file ./docker/.env up");
-      console.log(log);
-      return null;
-    },
-    async stopPetclinicMicroservice() {
-      const containersName = ["api-gateway", "config-server", "tracing-server",
-        "discovery-server", "vets-service", "visits-service", "customers-service", "agent-files"];
-      // eslint-disable-next-line no-restricted-syntax
-      for (const name of containersName) { // TODO make it parallel
-        // eslint-disable-next-line no-await-in-loop
-        await dockerStopAndRmService(name);
-      }
       return null;
     },
   });

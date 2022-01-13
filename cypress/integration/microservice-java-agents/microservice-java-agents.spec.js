@@ -16,13 +16,21 @@
 /// <reference types="cypress" />
 import { JAVA_GROUP_NAME } from "../../fixtures/constants";
 import { convertUrl } from "../../utils";
-import data from "./java-mcr.json";
+import testNg from "./java-mcr.json";
 
-context("_", () => {
+// Cypress.env("fixtureFile", "microservice-java-agents-testNG");
+
+const dataObject = {
+  "microservice-java-agents-testNG": testNg,
+};
+
+const data = dataObject[Cypress.env("fixtureFile")];
+
+context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
+    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 300000 });
   });
 
   beforeEach(() => {
