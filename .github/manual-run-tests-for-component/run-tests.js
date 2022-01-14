@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 const fs = require("fs");
-const semver = require("semver");
 const axios = require("axios");
 const core = require("@actions/core");
 const github = require("@actions/github");
@@ -61,10 +60,3 @@ try {
     console.log(err.message);
     core.setOutput("status", "failed");
 }
-
-function getLatestVersions(ledgerData) {
-    return ledgerData.components.map(x => x.id).map((componentId) => ledgerData.versions
-        .filter(x => x.componentId === componentId).sort((a, b) => semver.compare(b.tag, a.tag))[0]);
-}
-
-// actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js
