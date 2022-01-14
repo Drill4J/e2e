@@ -5,6 +5,8 @@ outputs:
     description: "Tests run result"
   env:
     description: "Tests run env"
+  setupId:
+    description: "Setup id"
 runs:
   using: 'node12'
   main: './run-setup.js'

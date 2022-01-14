@@ -42,9 +42,9 @@ try {
 
         const artifactSetups = setups.filter(({componentIds}) => componentIds.includes(publishedArtifactId));
 
-        for (const artifact of artifactSetups) {
-            const {params = [], cypressEnv, file} = setupsConfig[artifact.id];
-
+        for (const setup of artifactSetups) {
+            const {params = [], cypressEnv, file} = setupsConfig[setup.id];
+            console.log(`Start setup: ${setup.id}`);
             for(const param of params) {
                 await axios.post("https://api.github.com/repos/Drill4J/e2e/dispatches", {
                     event_type: "run_setup",
@@ -54,7 +54,8 @@ try {
                         versions,
                         specFile: file,
                         publishedArtifactId,
-                        publishedVersion
+                        publishedVersion,
+                        setupId: setup.id
                     }
                 }, {
                     headers: {

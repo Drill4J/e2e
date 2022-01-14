@@ -19,7 +19,7 @@ jobs:
       - run: npm install
 
       - name: Run setup
-        id: run_tests
+        id: run_setup
         uses: "./.github/run-setup"
 
       - name: Archive cypress videos results
@@ -42,13 +42,13 @@ jobs:
           ledger-repo-url: 'https://github.com/Drill4J/vee-ledger'
           ledger-repo-owner: 'Drill4J'
           ledger-repo-name: 'vee-ledger'
-          test-setup-id: "single-java-agent-gradle"
+          test-setup-id: ${{ steps.run_setup.outputs.setupId }}
           # leave everything "as-is"
 
-          # steps.run_tests is your test step name (defined above)
-          test-status: ${{ steps.run_tests.outputs.status }} # 1. Pass test status (any string)
-          test-component-version-map: ${{ steps.run_tests.outputs.env }}
-          test-description: ${{ steps.run_tests.outputs.description }}
+          # steps.run_setup is your test step name (defined above)
+          test-status: ${{ steps.run_setup.outputs.status }} # 1. Pass test status (any string)
+          test-component-version-map: ${{ steps.run_setup.outputs.env }}
+          test-description: ${{ steps.run_setup.outputs.description }}
 
 # Generate Personal Github token with workflow scopes.
 # Run action
