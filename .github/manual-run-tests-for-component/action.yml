@@ -1,0 +1,9 @@
+name: 'Manual start tests for component'
+description: "Manual start tests for component"
+inputs:
+  access_token:
+    description: 'GitHub personal access token'
+    required: true
+runs:
+  using: 'node12'
+  main: './run-tests.js'
