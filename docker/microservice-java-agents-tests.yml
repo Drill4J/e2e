@@ -6,8 +6,8 @@ services:
     container_name: start-petclinic-microservice-tests
     environment:
       - petclinicUrl=http://api-gateway:8080
-      - adminHost=host.docker.internal
-      - adminPort=9090
+      - adminHost=drill-admin
+      - adminPort=8090
       - groupId=dev-pet-mcr
       - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
       - agentRunnerVersion=${AGENT_RUNNER_VERSION}
