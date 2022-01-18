@@ -8,16 +8,46 @@
       "startApplicationTestsTaskName": "startPetclinicAutoTests"
     },
     "params": [
-      { "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true", "fixtureFile": "single-java-agent-testNG" },
-      { "autotestsParams": ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*", "fixtureFile": "single-java-agent-junit4" },
-      { "autotestsParams": ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*", "fixtureFile": "single-java-agent-junit5" }
+      {
+        "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true",
+        "fixtureFile": "single-java-agent-testNG",
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.1"
+      },
+      {
+        "autotestsParams": ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*",
+        "fixtureFile": "single-java-agent-junit5",
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.1"
+      },
+      {
+        "autotestsParams": ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*",
+        "fixtureFile": "single-java-agent-junit4",
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.1"
+      }
+    ]
+  },
+  "single-java-agent-maven": {
+    "file": "single-java-agent",
+    "cypressEnv": {
+      "startApplicationTaskName": "startPetclinic",
+      "initialApplicationBuildVersion": "0.1.0",
+      "secondApplicationBuildVersion": "0.5.0",
+      "startApplicationTestsTaskName": "startPetclinicAutoTests"
+    },
+    "params": [
+      {
+        "autotestsParams": "-DtestNG.version=7.3.0",
+        "fixtureFile": "single-java-agent-testNG",
+        "autotestsImage": "drill4j/petclinic-maven-autotests-execute:0.1.0"
+      }
     ]
   },
   "microservice-java-agents": {
     "file": "microservice-java-agents",
     "cypressEnv": {},
     "params": [
-      { "fixtureFile": "microservice-java-agents-testNG" }
+      {
+        "fixtureFile": "microservice-java-agents-testNG"
+      }
     ]
   }
 }

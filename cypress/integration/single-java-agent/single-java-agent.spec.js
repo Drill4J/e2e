@@ -48,6 +48,10 @@ const dataObject = {
 // Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
+// Autotests image
+// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.1");
+// Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
+
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[Cypress.env("fixtureFile")];
 
@@ -89,7 +93,10 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), { autotestsParams: Cypress.env("autotestsParams") }, { timeout: 300000 });
+        cy.task(Cypress.env("startApplicationTestsTaskName"), {
+          autotestsParams: Cypress.env("autotestsParams"),
+          AUTOTESTS_IMAGE: Cypress.env("autotestsImage"),
+        }, { timeout: 300000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
@@ -262,7 +269,10 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), { autotestsParams: Cypress.env("autotestsParams") }, { timeout: 300000 });
+          cy.task(Cypress.env("startApplicationTestsTaskName"), {
+            autotestsParams: Cypress.env("autotestsParams"),
+            AUTOTESTS_IMAGE: Cypress.env("autotestsImage"),
+          }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:test2code").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();

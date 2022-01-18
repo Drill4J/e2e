@@ -36,9 +36,12 @@ exports.stopPetclinic = async () => {
   return null;
 };
 
-exports.startPetclinicAutoTests = async ({ autotestsParams = ":testng:test -Dtestng.dtd.http=true" }) => {
+exports.startPetclinicAutoTests = async ({
+  autotestsParams = ":testng:test -Dtestng.dtd.http=true",
+  autotestsImage = "drill4j/petclinic-autotests-execute:0.3.1",
+}) => {
   const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
-    { env: { ...process.env, AUTOTESTS_PARAMS: autotestsParams } });
+    { env: { ...process.env, AUTOTESTS_PARAMS: autotestsParams, AUTOTESTS_IMAGE: autotestsImage } });
   console.log(log);
   console.log("petclinic tests container exited");
   return null;
