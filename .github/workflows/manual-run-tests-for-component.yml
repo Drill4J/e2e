@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run setup for component
 
 on:
   repository_dispatch:

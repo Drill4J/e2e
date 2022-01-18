@@ -1,4 +1,4 @@
-name: Run Repository_Dispatch
+name: Run setup
 
 on:
   repository_dispatch:
