@@ -31,7 +31,7 @@ Cypress.Commands.add("methodsTableTest", { }, (packages, packagesCount) => {
       .find('[data-test="name-cell:content:package"]').should("have.text", packageName);
 
     cy.contains('[data-test="methods-table"] table tbody tr', packageName)
-      .find('[data-test="coverage-cell:coverage"]').should("have.text", `${packageData.coverage}%`);
+      .find('[data-test="td-row-cell-coverage"]').should("contain", packageData.coverage);
 
     cy.contains('[data-test="methods-table"] table tbody tr', packageName)
       .find('[data-test="td-row-cell-totalMethodsCount"]').should("have.text", packageData.methodsTotal);

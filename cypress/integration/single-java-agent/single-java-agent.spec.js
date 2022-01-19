@@ -27,6 +27,8 @@ const dataObject = {
   "single-java-agent-junit4": singleJavaAgentJunit4Data,
   "single-java-agent-junit5": singleJavaAgentJunit5Data,
 };
+// Check setups.json file with examples of cypress env combination
+
 // Multiinstances
 // Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
 // Cypress.env("initialApplicationBuildVersion", "0.1.0");
@@ -95,7 +97,7 @@ context(Cypress.env("fixtureFile"), () => {
       before(() => {
         cy.task(Cypress.env("startApplicationTestsTaskName"), {
           autotestsParams: Cypress.env("autotestsParams"),
-          AUTOTESTS_IMAGE: Cypress.env("autotestsImage"),
+          autotestsImage: Cypress.env("autotestsImage"),
         }, { timeout: 300000 });
       });
 
@@ -271,7 +273,7 @@ context(Cypress.env("fixtureFile"), () => {
         before(() => {
           cy.task(Cypress.env("startApplicationTestsTaskName"), {
             autotestsParams: Cypress.env("autotestsParams"),
-            AUTOTESTS_IMAGE: Cypress.env("autotestsImage"),
+            autotestsImage: Cypress.env("autotestsImage"),
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:test2code").click();
