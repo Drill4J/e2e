@@ -41,6 +41,6 @@ Cypress.Commands.add("associatedTestsPaneTest", { }, (packagesWithAssociatedTest
         .find('[data-test="associated-tests:test:path"]').should("have.text", path);
     });
 
-    cy.getByDataTest("popup:close-button").click();
+    cy.getByDataTest("modal:close-button").click();
   }));
 });

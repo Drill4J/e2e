@@ -41,6 +41,6 @@ Cypress.Commands.add("coveredMethodsPaneTest", { }, (testsWithCoveredMethods) =>
     // cy.getByDataTest("covered-methods-list:item").should("have.length", testData.methodsCovered);
     cy.getByDataTest("covered-methods-modal:list:method:name").should("not.have.length", 0);
 
-    cy.getByDataTest("popup:close-button").click();
+    cy.getByDataTest("modal:close-button").click();
   }));
 });
