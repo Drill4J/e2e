@@ -8,5 +8,5 @@
   },
   "testFiles": "**/*.spec.js",
   "pluginsFile": "cypress/plugins/index.js",
-  "videoCompression": false
+  "videoCompression": 1
 }
