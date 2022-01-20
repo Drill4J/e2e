@@ -52,6 +52,7 @@ const dataObject = {
 
 // Autotests image
 // Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.1");
+
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
 // eslint-disable-next-line import/no-dynamic-require
