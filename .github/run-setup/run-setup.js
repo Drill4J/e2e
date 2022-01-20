@@ -21,16 +21,18 @@ const github = require("@actions/github");
 try {
     (async () => {
         const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
-        const {params, cypressEnv, versions, specFile, setupId} = github.context.payload.client_payload;
+        const {params, cypressEnv, versions, specFile, setupId, componentId: publishedComponentId, componentVersion: publishedComponentVersion} = github.context.payload.client_payload;
+        let publishedArtifact = publishedComponentId && publishedComponentVersion
+            ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
 
-        if (github.context.payload.client_payload.componentId && github.context.payload.client_payload.componentVersion) {
-            console.log(`Published artifact: ${github.context.payload.client_payload.componentId} - ${github.context.payload.client_payload.componentVersion}`);
+        if (publishedArtifact) {
+            console.log(`Published artifact: ${publishedArtifact}`);
         }
 
         console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
 
         core.setOutput('description', `
-        ${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}
+        ${publishedArtifact}
         Link to run: https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}
         Params: ${JSON.stringify(params)}
         `)
