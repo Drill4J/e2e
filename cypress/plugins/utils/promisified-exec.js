@@ -15,12 +15,16 @@
  */
 const { exec } = require("child_process");
 
-exports.promisifiedExec = (command, options = {}) => new Promise((resolve, reject) => {
-  exec(command, options, (err, out) => {
+exports.promisifiedExec = (command, options = {}, onData) => new Promise((resolve, reject) => {
+  const ls = exec(command, options, (err, out) => {
     if (err) {
       reject(err);
       return;
     }
     resolve(out);
   });
+
+  if (onData) {
+    ls.stdout.on("data", onData);
+  }
 });

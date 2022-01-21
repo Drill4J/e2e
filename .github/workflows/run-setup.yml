@@ -33,6 +33,11 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+      - name: Archive admin logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: admin-logs
+          path: ./admin-logs
 
       - uses: Drill4J/vee-table@0.0.0
         with:
