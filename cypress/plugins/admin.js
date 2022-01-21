@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const fs = require("fs");
 const { promisifiedExec, ping } = require("./utils");
 
 exports.removeContainers = async () => {
@@ -28,8 +29,11 @@ exports.removeContainers = async () => {
   return null;
 };
 exports.startAdmin = async () => {
-  const log = await promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml --env-file ./docker/.env up -d");
-  console.log(log);
+  promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml --env-file ./docker/.env up ", {}, async (data) => {
+    await fs.writeFile("./admin-logs", data, { flag: "a+" }, (err) => {
+      if (err) return console.log(err);
+    });
+  });
   try {
     await ping("http://localhost:9090/apidocs/index.html?url=./openapi.json");
     console.log("BE is available");
