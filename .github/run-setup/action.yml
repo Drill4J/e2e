@@ -3,10 +3,18 @@ description: "Start setup with env variables"
 outputs:
   status:
     description: "Tests run result"
-  env:
-    description: "Tests run env"
+  versions:
+    description: 'Stringified JSON object that contains key-values for each "componentId":"versionTag". It must be exhaustive'
   setupId:
     description: "Setup id"
+  released-component:
+    description: 'Stringified JSON object that contains componentId and tag'
+  initiator:
+    description: 'Stringified JSON object that contains userName of initiator and reason'
+  link-to-run:
+    description: 'Link to tests run in github'
+  test-params:
+    description: 'Autotest params in the setup'
 runs:
   using: 'node12'
   main: './run-setup.js'

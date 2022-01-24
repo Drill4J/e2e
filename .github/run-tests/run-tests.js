@@ -55,7 +55,11 @@ try {
                         specFile: file,
                         componentId: publishedArtifactId,
                         componentVersion: publishedVersion,
-                        setupId: setup.id
+                        setupId: setup.id,
+                        initiator: {
+                            userName: null,
+                            reason: "Publish artifact"
+                        }
                     }
                 }, {
                     headers: {

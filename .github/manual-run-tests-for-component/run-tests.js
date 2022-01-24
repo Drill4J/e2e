@@ -20,7 +20,7 @@ const github = require("@actions/github");
 
 try {
     const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-    const {componentId, versions} = github.context.payload.client_payload;
+    const { componentId, versions, initiator } = github.context.payload.client_payload;
     console.log(`ComponentId: ${componentId} `);
 
     axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({data: ledgerData}) => {
@@ -46,7 +46,8 @@ try {
                         specFile: file,
                         componentId,
                         componentVersion: versions[componentId],
-                        setupId: setup.id
+                        setupId: setup.id,
+                        initiator
                     }
                 }, {
                     headers: {

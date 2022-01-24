@@ -20,7 +20,7 @@ const github = require("@actions/github");
 
 try {
     const setupsConfig = JSON.parse(fs.readFileSync("./setups.json", "utf8"));
-    const { versions } = github.context.payload.client_payload;
+    const { versions, initiator } = github.context.payload.client_payload;
 
     axios.get("https://raw.githubusercontent.com/Drill4J/vee-ledger/main/ledger.json").then(async ({data: ledgerData}) => {
         const {setups} = ledgerData;
@@ -40,7 +40,8 @@ try {
                         cypressEnv,
                         versions,
                         specFile: file,
-                        setupId: setup.id
+                        setupId: setup.id,
+                        initiator
                     }
                 }, {
                     headers: {
