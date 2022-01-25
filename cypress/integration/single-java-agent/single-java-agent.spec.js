@@ -63,7 +63,7 @@ context(Cypress.env("fixtureFile"), () => {
   before(() => {
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 300000 });
+    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
   });
 
   beforeEach(() => {
@@ -159,7 +159,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Second build", () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 200000 });
+        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 600000 });
         cy.restoreLocalStorage();
         cy.getByDataTest("crumb:builds").click();
         cy.contains('[data-test="builds-table:buildVersion"]', "0.5.0").click({ force: true });

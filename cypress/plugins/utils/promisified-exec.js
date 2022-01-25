@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const { kMaxLength } = require("buffer");
 const { exec } = require("child_process");
 
 exports.promisifiedExec = (command, options = {}, onData) => new Promise((resolve, reject) => {
-  const ls = exec(command, options, (err, out) => {
+  const ls = exec(command, { maxBuffer: kMaxLength, ...options }, (err, out) => {
     if (err) {
       reject(err);
       return;

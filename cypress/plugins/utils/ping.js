@@ -26,10 +26,10 @@ exports.ping = async (url) => new Promise((resolve, reject) => {
         resolve();
       }
     } catch (e) {
-      if (count > 60) {
+      if (count > 45) {
         clearInterval(intervalId);
         reject();
       }
     }
-  }, 6000);
+  }, 3000);
 });

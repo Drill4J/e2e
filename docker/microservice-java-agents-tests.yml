@@ -11,6 +11,9 @@ services:
       - groupId=dev-pet-mcr
       - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
       - agentRunnerVersion=${AGENT_RUNNER_VERSION}
+    networks:
+      - drill4j-dev-network
+
 networks:
   drill4j-dev-network:
     external: true
