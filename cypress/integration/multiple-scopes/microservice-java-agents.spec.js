@@ -19,7 +19,7 @@ import data from "./microservice-java-agents.json";
 
 Cypress.env("scopesCount", "3");
 
-context("single-java-agent-with-multiple-scopes", () => {
+context("mcr-java-agents-with-multiple-scopes", () => {
   before(() => {
     cy.login();
     cy.visit(convertUrl("/"));

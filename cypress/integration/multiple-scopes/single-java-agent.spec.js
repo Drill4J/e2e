@@ -17,7 +17,9 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-Cypress.env("scopesCount", 3);
+Cypress.env("scopesCount", 1);
+
+Cypress.config("viewportHeight", 2000); // display all covered methods
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -53,11 +55,14 @@ context("single-java-agent-with-multiple-scopes", () => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
           cy.restoreLocalStorage();
-          cy.task("stopPetclinic");
+          cy.task("stopPetclinic"); // clear petclinic cache
           cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
         });
         it("should collect coverage to scope after autotests executed", () => {
-          cy.task("startPetclinicAutoTests", {}, { timeout: 300000 });
+          cy.task("startPetclinicAutoTests", {
+            autotestsParams: ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true",
+            autotestsImage: "drill4j/petclinic-autotests-execute:0.3.1",
+          }, { timeout: 300000 });
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${data.coverage}%`);
         });
 
@@ -80,6 +85,32 @@ context("single-java-agent-with-multiple-scopes", () => {
         it(`should display ${data.coverage}% for New Scope ${scopeNumber + 1}`, () => {
           cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('[data-test="scopes-list:coverage"]')
             .should("contain", data.coverage);
+        });
+      });
+    });
+    (new Array(Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+      context(`New Scope ${scopeNumber}`, () => {
+      // we on all scopes page
+        context("Should display the same coverage in tests table", () => {
+          before(() => {
+            cy.restoreLocalStorage();
+            cy.contains("table tr", `New Scope ${scopeNumber + 1}`).click();
+            cy.contains("div", "scope tests", { matchCase: false }).click();
+          });
+
+          after(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("crumb:scopes").click();
+          });
+
+          it("should display tests data in the table", () => {
+            cy.testsTableTest(data.testsWithCoveredMethods, data.testsCount);
+            cy.testsTableTest(data.testsWithoutCoveredMethods, data.testsCount);
+          });
+
+          it('should display "Covered methods pane" for tests', () => {
+            cy.coveredMethodsPaneTest(data.testsWithCoveredMethods);
+          });
         });
       });
     });

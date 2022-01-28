@@ -1,4 +1,91 @@
 {
   "agentId": "dev-pet-standalone",
-  "coverage": "30"
+  "coverage": "30",
+  "testsWithCoveredMethods": {
+    "testNgGetHomePage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.2",
+      "methodsCovered": "1",
+      "path": "api.standalone.StandaloneApiTest"
+    },
+    "testNgGetOwner4EditPage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "7.7",
+      "methodsCovered": "14",
+      "path": "api.standalone.StandaloneApiTest"
+    },
+    "testNgGetOwner4InfoPage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "14.9",
+      "methodsCovered": "22",
+      "path": "api.standalone.StandaloneApiTest"
+    },
+    "testNgCheckPageHeader(String,String)[1]": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "3.9",
+      "methodsCovered": "7",
+      "path": "ui.standalone.StandaloneChromeUITest"
+    },
+    "testNgCheckPageHeader(String,String)[0]": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.2",
+      "methodsCovered": "1",
+      "path": "ui.standalone.StandaloneChromeUITest"
+    },
+    "testNgCheckPageHeader(String,String)[2]": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "10.3",
+      "methodsCovered": "15",
+      "path": "ui.standalone.StandaloneChromeUITest"
+
+    },
+    "testNgCheckPageHeader(String,String)[3]": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.8",
+      "methodsCovered": "2",
+      "path": "ui.standalone.StandaloneChromeUITest"
+
+    },
+    "testNgFindOwnersTestSelenide()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "13.8",
+      "methodsCovered": "20",
+      "path": "ui.standalone.StandaloneFireFoxUITest"
+    }
+  },
+  "testsWithoutCoveredMethods": {
+    "testNgIgnoredTest()": {
+      "type": "Auto",
+      "expectedStatus": "Skipped",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "testNgFailedTest()": {
+      "type": "Auto",
+      "expectedStatus": "Failed",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "testNgUiIgnoredTest()": {
+      "type": "Auto",
+      "expectedStatus": "Skipped",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "testNgUiFailedTest()": {
+      "type": "Auto",
+      "expectedStatus": "Failed",
+      "coverage": "0",
+      "methodsCovered": "0"
+    }
+  },
+  "testsCount": "12"
 }

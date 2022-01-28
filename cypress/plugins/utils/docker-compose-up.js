@@ -15,4 +15,4 @@
  */
 const { promisifiedExec } = require("./promisified-exec");
 
-exports.dockerComposeUp = (composePath) => promisifiedExec(`docker-compose -f ${composePath} --env-file ./docker/.env up -d`);
+exports.dockerComposeUp = (composePath) => promisifiedExec(`docker-compose -f ${composePath} --env-file ./docker/.env up -d --shm-size=1gb`);
