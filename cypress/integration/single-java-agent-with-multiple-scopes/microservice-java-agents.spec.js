@@ -75,7 +75,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
 
           cy.wait("@finish-all-scopes", { timeout: 30000 });
 
-          cy.getByDataTest("message-panel:text").should("exist");
+          cy.getByDataTest("system-alert:title").should("exist");
         });
       });
     });

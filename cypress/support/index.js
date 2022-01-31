@@ -23,5 +23,6 @@ import "./tests/risks-count-in-the-cards";
 import "./tests/risks-table";
 import "./tests/tests-to-run-table";
 import "./start-admin";
+import "./tests/covered-methods-pane-with-methods-check";
 
 register(Cypress, cy, localStorage);

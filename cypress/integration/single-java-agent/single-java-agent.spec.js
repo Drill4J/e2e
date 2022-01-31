@@ -36,13 +36,13 @@ const dataObject = {
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
 // Single java agent
-// Cypress.env("startApplicationTaskName", "startPetclinic");
-// Cypress.env("initialApplicationBuildVersion", "0.1.0");
-// Cypress.env("secondApplicationBuildVersion", "0.5.0");
-// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+Cypress.env("startApplicationTaskName", "startPetclinic");
+Cypress.env("initialApplicationBuildVersion", "0.1.0");
+Cypress.env("secondApplicationBuildVersion", "0.5.0");
+Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
 // Autotests params
-// Cypress.env("fixtureFile", "single-java-agent-testNG");
-// Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
+Cypress.env("fixtureFile", "single-java-agent-testNG");
+Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
@@ -51,7 +51,7 @@ const dataObject = {
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
 // Autotests image
-// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.1");
+Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.1");
 
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
@@ -111,7 +111,7 @@ context(Cypress.env("fixtureFile"), () => {
         cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
 
         cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-        cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
+        cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");

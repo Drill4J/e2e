@@ -38,6 +38,11 @@ jobs:
         with:
           name: admin-logs
           path: ./admin-logs
+      - name: Archive petclinic autotests log
+        uses: actions/upload-artifact@v2
+        with:
+          name: admin-logs
+          path: ./autotests-log
 
       - uses: Drill4J/vee-table@0.0.0
         with:

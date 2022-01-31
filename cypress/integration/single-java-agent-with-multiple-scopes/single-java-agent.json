@@ -1,0 +1,187 @@
+{
+  "agentId": "dev-pet-standalone",
+  "coverage": "30",
+  "testsWithCoveredMethods": {
+    "junit4GetHomePage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.2",
+      "methodsCovered": "1",
+      "path": "api.standalone.StandaloneApiTest",
+      "coveredMethods": [
+        {"name": "welcome", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4GetOwner4EditPage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "7.7",
+      "methodsCovered": "14",
+      "path": "api.standalone.StandaloneApiTest",
+      "coveredMethods": [
+        {"name": "isNew", "type": "unaffected", "coverage": "71.4"},
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "NamedEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "getFirstName", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "Owner", "type": "unaffected", "coverage": "100"},
+        {"name": "getAddress", "type": "unaffected", "coverage": "100"},
+        {"name": "getCity", "type": "unaffected", "coverage": "100"},
+        {"name": "getTelephone", "type": "unaffected", "coverage": "100"},
+        {"name": "initUpdateOwnerForm", "type": "unaffected", "coverage": "100"},
+        {"name": "setAllowedFields", "type": "unaffected","coverage": "100"},
+        {"name": "Pet", "type": "unaffected", "coverage": "100"},
+        {"name": "PetType", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4GetOwner4InfoPage()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "14.9",
+      "methodsCovered": "22",
+      "path": "api.standalone.StandaloneApiTest",
+      "coveredMethods": [
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getId", "type": "unaffected", "coverage": "100"},
+        {"name": "NamedEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getName", "type": "unaffected", "coverage": "100"},
+        {"name": "toString", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "getFirstName", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "Owner", "type": "unaffected", "coverage": "100"},
+        {"name": "getAddress", "type": "unaffected", "coverage": "100"},
+        {"name": "getCity", "type": "unaffected", "coverage": "100"},
+        {"name": "getPets", "type": "unaffected", "coverage": "100"},
+        {"name": "getPetsInternal", "type": "unaffected", "coverage": "54.5"},
+        {"name": "getTelephone", "type": "unaffected", "coverage": "100"},
+        {"name": "setAllowedFields", "type": "unaffected", "coverage": "100"},
+        {"name": "showOwner", "type": "unaffected", "coverage": "100"},
+        {"name": "Pet", "type": "unaffected", "coverage": "100"},
+        {"name": "getBirthDate", "type": "unaffected", "coverage": "100"},
+        {"name": "getType", "type": "unaffected", "coverage": "100"},
+        {"name": "getVisits", "type": "unaffected", "coverage": "100"},
+        {"name": "getVisitsInternal", "type": "unaffected", "coverage": "54.5"},
+        {"name": "PetType", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4CheckPageHeader[1]()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "3.9",
+      "methodsCovered": "7",
+      "path": "ui.standalone.StandaloneChromeUITest",
+      "coveredMethods": [
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "Owner", "type": "unaffected", "coverage": "100"},
+        {"name": "initFindForm", "type": "unaffected", "coverage": "100"},
+        {"name": "setAllowedFields", "type": "unaffected", "coverage": "100"},
+        {"name": "welcome", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4CheckPageHeader[0]()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.2",
+      "methodsCovered": "1",
+      "path": "ui.standalone.StandaloneChromeUITest",
+      "coveredMethods": [
+        {"name": "welcome", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4CheckPageHeader[2]()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "10.3",
+      "methodsCovered": "15",
+      "path": "ui.standalone.StandaloneChromeUITest",
+      "coveredMethods": [
+        {"name": "getName", "type": "unaffected", "coverage": "100"},
+        {"name": "getFirstName", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "welcome", "type": "unaffected", "coverage": "100"},
+        {"name": "getNrOfSpecialties", "type": "unaffected", "coverage": "100"},
+        {"name": "getSpecialties", "type": "unaffected", "coverage": "100"},
+        {"name": "getSpecialtiesInternal", "type": "unaffected", "coverage": "54.5"},
+        {"name": "showVetList", "type": "unaffected", "coverage": "100"},
+        {"name": "Vets", "type": "unaffected", "coverage": "100"},
+        {"name": "getVetList", "type": "unaffected", "coverage": "100"},
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "NamedEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "Specialty", "type": "unaffected", "coverage": "100"},
+        {"name": "Vet", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4CheckPageHeader[3]()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "0.8",
+      "methodsCovered": "2",
+      "path": "ui.standalone.StandaloneChromeUITest",
+      "coveredMethods": [
+        {"name": "triggerException", "type": "unaffected", "coverage": "100"},
+        {"name": "welcome", "type": "unaffected", "coverage": "100"}
+      ]
+    },
+    "junit4FindOwnersTestSelenide()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "13.8",
+      "methodsCovered": "20",
+      "path": "ui.standalone.StandaloneFireFoxUITest",
+      "coveredMethods": [
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getId", "type": "unaffected", "coverage": "100"},
+        {"name": "NamedEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getName", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "getFirstName", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "setLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "Owner", "type": "unaffected", "coverage": "100"},
+        {"name": "getAddress", "type": "unaffected", "coverage": "100"},
+        {"name": "getCity", "type": "unaffected", "coverage": "100"},
+        {"name": "getPets", "type": "unaffected", "coverage": "100"},
+        {"name": "getPetsInternal", "type": "unaffected", "coverage": "54.5"},
+        {"name": "getTelephone", "type": "unaffected", "coverage": "100"},
+        {"name": "initFindForm", "type": "unaffected", "coverage": "100"},
+        {"name": "processFindForm", "type": "unaffected", "coverage": "47.9"},
+        {"name": "Pet", "type": "unaffected", "coverage": "100"},
+        {"name": "PetType", "type": "unaffected", "coverage": "100"},
+        {"name": "welcome", "type": "unaffected", "coverage": "100"},
+        {"name": "setAllowedFields", "type": "unaffected", "coverage": "100"}
+      ]
+    }
+  },
+  "testsWithoutCoveredMethods": {
+    "junit4IgnoredTest()": {
+      "type": "Auto",
+      "expectedStatus": "Skipped",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "junit4FailedTest()": {
+      "type": "Auto",
+      "expectedStatus": "Failed",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "junit4UiIgnoredTest()": {
+      "type": "Auto",
+      "expectedStatus": "Skipped",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "junit4UiIFailedTest()": {
+      "type": "Auto",
+      "expectedStatus": "Failed",
+      "coverage": "0",
+      "methodsCovered": "0"
+    }
+  },
+  "testsCount": "12"
+}
