@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const fs = require("fs");
 const { promisifiedExec, ping, dockerStopAndRmService } = require("./utils");
 
 exports.startPetclinic = async ({ build = "0.1.0" }) => {
@@ -33,6 +34,7 @@ exports.startPetclinic = async ({ build = "0.1.0" }) => {
 
 exports.stopPetclinic = async () => {
   await dockerStopAndRmService("spring-petclinic-sample");
+  console.log("petclinic container stopped");
   return null;
 };
 
@@ -40,9 +42,15 @@ exports.startPetclinicAutoTests = async ({
   autotestsParams = ":testng:test -Dtestng.dtd.http=true",
   autotestsImage = "drill4j/petclinic-autotests-execute:0.3.1",
 }) => {
-  const log = await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
-    { env: { ...process.env, AUTOTESTS_PARAMS: autotestsParams, AUTOTESTS_IMAGE: autotestsImage } });
-  console.log(log);
+  await fs.writeFile("./autotests-log", "Autotests started", { flag: "a+" }, (err) => {
+    if (err) return console.log(err);
+  });
+  await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
+    { env: { ...process.env, AUTOTESTS_PARAMS: autotestsParams, AUTOTESTS_IMAGE: autotestsImage } }, async (data) => {
+      await fs.writeFile("./autotests-log", data, { flag: "a+" }, (err) => {
+        if (err) return console.log(err);
+      });
+    });
   console.log("petclinic tests container exited");
   return null;
 };

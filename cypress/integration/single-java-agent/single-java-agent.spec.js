@@ -111,7 +111,7 @@ context(Cypress.env("fixtureFile"), () => {
         cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
 
         cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-        cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
+        cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");

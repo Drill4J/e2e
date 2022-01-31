@@ -126,7 +126,7 @@
             },
             "testNgCreateNewVisitTest()": {
               "type": "Auto",
-              "expectedStatus": "Skipped",
+              "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
@@ -206,9 +206,15 @@
             "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
-              "coverage": "11",
-              "methodsCovered": "1",
+              "coverage": "35.2",
+              "methodsCovered": "7",
               "path": "api.microservices.McrApiTest"
+            },
+            "testNgCreateNewVisitTest()": {
+              "type": "Auto",
+              "expectedStatus": "Passed",
+              "coverage": "42.9",
+              "methodsCovered": "8"
             }
           },
           "testsWithoutCoveredMethods": {
@@ -236,12 +242,6 @@
               "coverage": "0",
               "methodsCovered": "0"
             },
-            "testNgCreateNewVisitTest()": {
-              "type": "Auto",
-              "expectedStatus": "Skipped",
-              "coverage": "0",
-              "methodsCovered": "0"
-            },
             "testNgUiIFailedTest()": {
               "type": "Auto",
               "expectedStatus": "Failed",
@@ -257,7 +257,7 @@
           }
         },
         "api-gateway": {
-          "coverage": "21.5",
+          "coverage": "26",
           "testsCount": "12",
           "packagesCount": "4",
           "packages": {
@@ -365,8 +365,8 @@
             "testOwnerDetailes()": {
               "type": "Auto",
               "expectedStatus": "Passed",
-              "coverage": "20.9",
-              "methodsCovered": "40",
+              "coverage": "25.4",
+              "methodsCovered": "50",
               "path": "api.microservices.McrApiTest"
             }
           },
@@ -391,7 +391,7 @@
             },
             "testNgCreateNewVisitTest()": {
               "type": "Auto",
-              "expectedStatus": "Skipped",
+              "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },
@@ -516,7 +516,7 @@
             },
             "testNgCreateNewVisitTest()": {
               "type": "Auto",
-              "expectedStatus": "Skipped",
+              "expectedStatus": "Passed",
               "coverage": "0",
               "methodsCovered": "0"
             },

@@ -16,5 +16,5 @@
 /// <reference types="cypress" />
 
 export const checkSystemMessage = (text) => {
-  cy.get('[data-test="message-panel:text"]').should("have.text", text);
+  cy.get('[data-test="system-alert:title"]').should("have.text", text);
 };

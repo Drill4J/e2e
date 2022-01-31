@@ -74,7 +74,7 @@ context(Cypress.env("fixtureFile"), () => {
 
         cy.wait("@finish-all-scopes", { timeout: 30000 });
 
-        cy.getByDataTest("message-panel:text").should("exist");
+        cy.getByDataTest("system-alert:title").should("exist");
       });
 
       context("_", () => { // need to save order of execution
@@ -362,7 +362,7 @@ context(Cypress.env("fixtureFile"), () => {
           cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
 
           cy.wait("@finish-all-scopes", { timeout: 30000 });
-          cy.getByDataTest("message-panel:text").should("exist");
+          cy.getByDataTest("system-alert:title").should("exist");
         });
 
         context("Dashboard", () => {

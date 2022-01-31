@@ -17,12 +17,12 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-Cypress.env("scopesCount", 3);
+// Cypress.env("scopesCount", "1");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
-    cy.login();
     cy.visit(convertUrl("/"));
+    cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
   });
 
@@ -49,22 +49,28 @@ context("single-java-agent-with-multiple-scopes", () => {
   });
 
   context("Test2Code part", () => {
-    (new Array(Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+    (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
           cy.restoreLocalStorage();
-          cy.task("stopPetclinic");
+          cy.task("stopPetclinic"); // clear petclinic cache
           cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
         });
         it("should collect coverage to scope after autotests executed", () => {
-          cy.task("startPetclinicAutoTests", {}, { timeout: 300000 });
+          cy.task("startPetclinicAutoTests", {
+            autotestsParams: ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*",
+            autotestsImage: "drill4j/petclinic-autotests-execute:0.3.1",
+          }, { timeout: 300000 });
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${data.coverage}%`);
         });
 
         it("should finish scope", () => {
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
           cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-          cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
+          cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+        });
+
+        it("should display 0% coverage in active scope block", () => {
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
         });
       });
@@ -76,10 +82,36 @@ context("single-java-agent-with-multiple-scopes", () => {
         cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
       });
 
-      (new Array(Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+      (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
         it(`should display ${data.coverage}% for New Scope ${scopeNumber + 1}`, () => {
           cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('[data-test="scopes-list:coverage"]')
             .should("contain", data.coverage);
+        });
+      });
+    });
+    (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+      context(`New Scope ${scopeNumber + 1}`, () => {
+      // we on all scopes page
+        context("Should display the same coverage in tests table", () => {
+          before(() => {
+            cy.restoreLocalStorage();
+            cy.contains("table tr", `New Scope ${scopeNumber + 1}`).click();
+            cy.contains("div", "scope tests", { matchCase: false }).click();
+          });
+
+          after(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("crumb:scopes").click();
+          });
+
+          it("should display tests data in the table", () => {
+            cy.testsTableTest(data.testsWithCoveredMethods, data.testsCount);
+            cy.testsTableTest(data.testsWithoutCoveredMethods, data.testsCount);
+          });
+
+          it('should display "Covered methods pane" for tests', () => {
+            cy.coveredMethodsPaneWithMethodsCheckTest(data.testsWithCoveredMethods);
+          });
         });
       });
     });

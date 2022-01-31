@@ -49,5 +49,15 @@
         "fixtureFile": "microservice-java-agents-testNG"
       }
     ]
+  },
+  "single-java-agent-with-multiple-scopes": {
+    "file": "single-java-agent-with-multiple-scopes",
+    "cypressEnv": {},
+    "params": [
+      {
+        "scopesCount": "3",
+        "fixtureFile": "single-java-agent.json"
+      }
+    ]
   }
 }
