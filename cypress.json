@@ -8,12 +8,5 @@
   },
   "testFiles": "**/*.spec.js",
   "pluginsFile": "cypress/plugins/index.js",
-  "videoCompression": 1,
-  "reporter": "@reportportal/agent-js-cypress",
-  "reporterOptions": {
-    "endpoint": "https://reportportal.epam.com/api/v1",
-    "launch": "ilia_solovev1_TEST_EXAMPLE",
-    "project": "epm-d4j",
-    "description": "LAUNCH_DESCRIPTION"
-  }
+  "videoCompression": 1
 }

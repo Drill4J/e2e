@@ -39,14 +39,7 @@ const adminScripts = require("./admin");
 const singlejavaAgentScripts = require("./single-java-agent");
 const microserviceJavaAgentsScripts = require("./microservice-java-agents");
 
-module.exports = (on, config) => {
-  registerReportPortalPlugin(on, {
-    ...config,
-    reporterOptions: {
-      ...config.reporterOptions,
-      token: process.env.REPORT_PORTAL_TOKEN,
-    },
-  });
+module.exports = (on) => {
   on("task", {
     ...adminScripts,
     ...singlejavaAgentScripts,

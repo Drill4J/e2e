@@ -58,5 +58,3 @@ Cypress.Commands.add("login", { }, () => {
 });
 
 Cypress.Commands.add("getByDataTest", (selector, ...args) => cy.get(`[data-test="${selector}"]`, ...args));
-
-require("@reportportal/agent-js-cypress/lib/commands/reportPortalCommands");
