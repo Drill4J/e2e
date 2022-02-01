@@ -17,7 +17,7 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-// Cypress.env("scopesCount", "1");
+Cypress.env("scopesCount", "1");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -99,11 +99,6 @@ context("single-java-agent-with-multiple-scopes", () => {
             cy.contains("div", "scope tests", { matchCase: false }).click();
           });
 
-          after(() => {
-            cy.restoreLocalStorage();
-            cy.getByDataTest("crumb:scopes").click();
-          });
-
           it("should display tests data in the table", () => {
             cy.testsTableTest(data.testsWithCoveredMethods, data.testsCount);
             cy.testsTableTest(data.testsWithoutCoveredMethods, data.testsCount);
@@ -111,6 +106,11 @@ context("single-java-agent-with-multiple-scopes", () => {
 
           it('should display "Covered methods pane" for tests', () => {
             cy.coveredMethodsPaneWithMethodsCheckTest(data.testsWithCoveredMethods);
+          });
+
+          it("should open all scopes page", () => {
+            cy.getByDataTest("crumb:scopes").click();
+            cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
           });
         });
       });
