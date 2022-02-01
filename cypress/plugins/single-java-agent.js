@@ -40,13 +40,21 @@ exports.stopPetclinic = async () => {
 
 exports.startPetclinicAutoTests = async ({
   autotestsParams = ":testng:test -Dtestng.dtd.http=true",
-  autotestsImage = "drill4j/petclinic-autotests-execute:0.3.1",
+  autotestsImage = "drill4j/petclinic-autotests-execute:0.3.2",
+  withProxy = "true",
 }) => {
   await fs.writeFile("./autotests-log", "Autotests started", { flag: "a+" }, (err) => {
     if (err) return console.log(err);
   });
   await promisifiedExec("docker-compose -f ./docker/single-java-agent-tests.yml --env-file ./docker/.env up",
-    { env: { ...process.env, AUTOTESTS_PARAMS: autotestsParams, AUTOTESTS_IMAGE: autotestsImage } }, async (data) => {
+    {
+      env: {
+        ...process.env,
+        AUTOTESTS_PARAMS: autotestsParams,
+        AUTOTESTS_IMAGE: autotestsImage,
+        WITH_PROXY: withProxy,
+      },
+    }, async (data) => {
       await fs.writeFile("./autotests-log", data, { flag: "a+" }, (err) => {
         if (err) return console.log(err);
       });

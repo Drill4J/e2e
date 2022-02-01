@@ -51,7 +51,7 @@ const dataObject = {
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
 // Autotests image
-// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.1");
+// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
 
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 

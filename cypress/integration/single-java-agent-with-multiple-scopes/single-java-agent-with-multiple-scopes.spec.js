@@ -17,7 +17,7 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-Cypress.env("scopesCount", "1");
+// Cypress.env("scopesCount", "1");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -58,8 +58,14 @@ context("single-java-agent-with-multiple-scopes", () => {
         });
         it("should collect coverage to scope after autotests executed", () => {
           cy.task("startPetclinicAutoTests", {
-            autotestsParams: ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*",
-            autotestsImage: "drill4j/petclinic-autotests-execute:0.3.1",
+            autotestsParams: ":junit4:test -Djunit4Version=4.13.2 --tests ui.standalone.StandaloneChromeUITest",
+            autotestsImage: "drill4j/petclinic-autotests-execute:0.3.2",
+            withProxy: false,
+          }, { timeout: 300000 });
+          cy.task("startPetclinicAutoTests", {
+            autotestsParams: ":junit4:test -Djunit4Version=4.13.2 --tests api.standalone.StandaloneApiTest",
+            autotestsImage: "drill4j/petclinic-autotests-execute:0.3.2",
+            withProxy: false,
           }, { timeout: 300000 });
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${data.coverage}%`);
         });
@@ -92,25 +98,92 @@ context("single-java-agent-with-multiple-scopes", () => {
     (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`New Scope ${scopeNumber + 1}`, () => {
       // we on all scopes page
-        context("Should display the same coverage in tests table", () => {
+        context("Should display tests table", () => {
           before(() => {
             cy.restoreLocalStorage();
             cy.contains("table tr", `New Scope ${scopeNumber + 1}`).click();
             cy.contains("div", "scope tests", { matchCase: false }).click();
           });
 
-          it("should display tests data in the table", () => {
-            cy.testsTableTest(data.testsWithCoveredMethods, data.testsCount);
-            cy.testsTableTest(data.testsWithoutCoveredMethods, data.testsCount);
+          Object.entries(data.testsWithCoveredMethods).forEach(([testName, testData]) => {
+            context(`${testName} row`, () => {
+              it(`should display ${testName} name`, () => {
+                cy.contains("table tbody tr", testName)
+                  .find('[data-test="td-row-cell-overview.details.name"]').should("have.text", testName);
+              });
+
+              it(`should display ${testName} type`, () => {
+                cy.contains("table tbody tr", testName)
+                  .find('[data-test="td-row-cell-type"]').should("have.text", testData.type);
+              });
+
+              it(`should display ${testName} status`, () => {
+                cy.contains("table tbody tr", testName)
+                  .find('[data-test="td-row-cell-overview.result"]').should("have.text", testData.expectedStatus);
+              });
+
+              it(`should display ${testName} coverage`, () => {
+                cy.contains("table tbody tr", testName)
+                  .find('[data-test="td-row-cell-coverage.percentage"]').should("have.text", testData.coverage);
+              });
+
+              it(`should display ${testName} methods covered count`, () => {
+                cy.contains("table tbody tr", testName)
+                  .find('[data-test="test-actions:view-curl:id"]').should("have.text", testData.methodsCovered);
+              });
+            });
           });
 
-          it('should display "Covered methods pane" for tests', () => {
-            cy.coveredMethodsPaneWithMethodsCheckTest(data.testsWithCoveredMethods);
-          });
+          Object.entries(data.testsWithCoveredMethods).forEach((([testName, testData]) => {
+            context(`${testName} covered methods`, () => {
+              it(`should open modal for ${testName}`, () => {
+                cy.contains('[data-test="test-details:table-wrapper"] table tbody tr', testName)
+                  .contains('[data-test="test-actions:view-curl:id"] a', testData.methodsCovered)
+                  .click({ force: true }); // this element is detached from the DOM when tests are run
+              });
 
-          it("should open all scopes page", () => {
-            cy.getByDataTest("crumb:scopes").click();
-            cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
+              it("should enable input in name column", () => {
+                cy.get("#modal [data-test='search-input:enable-input']").click();
+                cy.getByDataTest("name:search-input").should("exist");
+              });
+
+              testData.coveredMethods.forEach(({ name, type, coverage }) => {
+                context(`${name} method`, () => {
+                  it(`should type ${name} in search`, () => {
+                    cy.getByDataTest("name:search-input").type(name);
+                  });
+
+                  it(`should display ${name} in name column`, () => {
+                    cy.getByDataTest("covered-methods-modal:list:method:name").should("contain", name);
+                  });
+
+                  it("should display method type", () => {
+                    cy.contains('[data-test="coverage-methods:method:type"]', type, { matchCase: false }).should("exist");
+                  });
+
+                  it("should display method coverage", () => {
+                    cy.getByDataTest("coverage-methods:method:coverage").should("contain", coverage);
+                  });
+
+                  it("should clear search", () => {
+                    cy.getByDataTest("search-input:clear-icon").click();
+                  });
+                });
+              });
+
+              context("Close modal", () => {
+                it("should close modal", () => {
+                  cy.getByDataTest("modal:close-button").click();
+                });
+              });
+            });
+          }));
+
+          context("all scopes page", () => {
+            it("should open all scopes page", () => {
+              cy.getByDataTest("crumb:scopes").click();
+              cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
+            });
           });
         });
       });

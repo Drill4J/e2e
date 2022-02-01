@@ -1,6 +1,6 @@
 {
   "agentId": "dev-pet-standalone",
-  "coverage": "26.7",
+  "coverage": "30",
   "testsWithCoveredMethods": {
     "junit4GetHomePage()": {
       "type": "Auto",
@@ -126,6 +126,35 @@
         {"name": "triggerException", "type": "unaffected", "coverage": "100"},
         {"name": "welcome", "type": "unaffected", "coverage": "100"}
       ]
+    },
+    "junit4FindOwnersTestSelenide()": {
+      "type": "Auto",
+      "expectedStatus": "Passed",
+      "coverage": "13.8",
+      "methodsCovered": "20",
+      "path": "ui.standalone.StandaloneFireFoxUITest",
+      "coveredMethods": [
+        {"name": "BaseEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getId", "type": "unaffected", "coverage": "100"},
+        {"name": "NamedEntity", "type": "unaffected", "coverage": "100"},
+        {"name": "getName", "type": "unaffected", "coverage": "100"},
+        {"name": "Person", "type": "unaffected", "coverage": "100"},
+        {"name": "getFirstName", "type": "unaffected", "coverage": "100"},
+        {"name": "getLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "setLastName", "type": "unaffected", "coverage": "100"},
+        {"name": "Owner", "type": "unaffected", "coverage": "100"},
+        {"name": "getAddress", "type": "unaffected", "coverage": "100"},
+        {"name": "getCity", "type": "unaffected", "coverage": "100"},
+        {"name": "getPets", "type": "unaffected", "coverage": "100"},
+        {"name": "getPetsInternal", "type": "unaffected", "coverage": "54.5"},
+        {"name": "getTelephone", "type": "unaffected", "coverage": "100"},
+        {"name": "initFindForm", "type": "unaffected", "coverage": "100"},
+        {"name": "processFindForm", "type": "unaffected", "coverage": "47.9"},
+        {"name": "Pet", "type": "unaffected", "coverage": "100"},
+        {"name": "PetType", "type": "unaffected", "coverage": "100"},
+        {"name": "welcome", "type": "unaffected", "coverage": "100"},
+        {"name": "setAllowedFields", "type": "unaffected", "coverage": "100"}
+      ]
     }
   },
   "testsWithoutCoveredMethods": {
@@ -140,7 +169,19 @@
       "expectedStatus": "Failed",
       "coverage": "0",
       "methodsCovered": "0"
+    },
+    "junit4UiIgnoredTest()": {
+      "type": "Auto",
+      "expectedStatus": "Skipped",
+      "coverage": "0",
+      "methodsCovered": "0"
+    },
+    "junit4UiIFailedTest()": {
+      "type": "Auto",
+      "expectedStatus": "Failed",
+      "coverage": "0",
+      "methodsCovered": "0"
     }
   },
-  "testsCount": "9"
+  "testsCount": "12"
 }

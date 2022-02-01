@@ -31,6 +31,7 @@
  * @type {Cypress.PluginConfig}
  */
 
+const registerReportPortalPlugin = require("@reportportal/agent-js-cypress/lib/plugin");
 const {
   ping, promisifiedExec, dockerComposeUp,
 } = require("./utils");
@@ -38,7 +39,14 @@ const adminScripts = require("./admin");
 const singlejavaAgentScripts = require("./single-java-agent");
 const microserviceJavaAgentsScripts = require("./microservice-java-agents");
 
-module.exports = (on) => {
+module.exports = (on, config) => {
+  registerReportPortalPlugin(on, {
+    ...config,
+    reporterOptions: {
+      ...config.reporterOptions,
+      token: process.env.REPORT_PORTAL_TOKEN,
+    },
+  });
   on("task", {
     ...adminScripts,
     ...singlejavaAgentScripts,
