@@ -18,7 +18,7 @@ import { JAVA_GROUP_NAME } from "../../fixtures/constants";
 import { convertUrl } from "../../utils";
 import testNg from "./java-mcr.json";
 
-// Cypress.env("fixtureFile", "microservice-java-agents-testNG");
+Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
 const dataObject = {
   "microservice-java-agents-testNG": testNg,
