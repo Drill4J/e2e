@@ -48,6 +48,9 @@ services:
       - UI_PLUGINS_URLS=test2code#http://localhost:7087/Drill4J-test-to-code.js
     ports:
       - 9091:8080
+    depends_on:
+      drill-admin:
+        condition: service_started
     networks:
       - drill4j-dev-network
 

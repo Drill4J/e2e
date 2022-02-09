@@ -291,7 +291,7 @@ context(Cypress.env("fixtureFile"), () => {
             autotestsImage: Cypress.env("autotestsImage"),
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
-          cy.getByDataTest("crumb:test2code").click();
+          cy.getByDataTest("navigation:open-test2code-plugin").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
           cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
         });
