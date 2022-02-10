@@ -17,7 +17,7 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-// Cypress.env("scopesCount", "1");
+// Cypress.env("scopesCount", "3");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -35,20 +35,42 @@ context("single-java-agent-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    it("should login", () => {
+      cy.visit(convertUrl("/"));
+      cy.getByDataTest("login-button:continue-as-guest").click();
+      cy.url().should("eq", convertUrl("/"));
+    });
+
+    it('should open "Add agent" panel', () => {
+      cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
+
+      cy.contains('[data-test="panel"]', "Add Agent", { matchCase: false }).should("exist");
+    });
+
     it("should register agent", () => {
-      cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
+      cy.contains('[data-test="add-agent-panel:agent-row"]', data.agentId)
+        .find('button[data-test="add-agent-panel:agent-row:register"]').click();
 
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 2
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 3
+      cy.getByDataTest("wizard:next-step").click();
+      cy.getByDataTest("wizard:next-step").click();
+      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
 
-      cy.get('[data-test="wizard:finishng-button"]').click();
+      cy.getByDataTest("wizard:finish").click();
 
-      cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
+      cy.contains('[data-test="select-agent-panel:registering-agent-row"]', data.agentId).should("exist");
+
+      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId, { timeout: 60000 }).should("exist");
     });
   });
 
   context("Test2Code part", () => {
+    it("should open Test2Code plugin page", () => {
+      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId).click();
+      cy.getByDataTest("navigation:open-test2code-plugin").click();
+
+      cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
+    });
     (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
@@ -182,7 +204,7 @@ context("single-java-agent-with-multiple-scopes", () => {
           context("all scopes page", () => {
             it("should open all scopes page", () => {
               cy.getByDataTest("crumb:scopes").click();
-              cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
+              cy.url().should("contain", "/agents/dev-pet-standalone/plugins/test2code/builds/0.1.0/scopes");
             });
           });
         });
