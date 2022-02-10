@@ -367,6 +367,7 @@ context(Cypress.env("fixtureFile"), () => {
 
         context("Tests2run", () => {
           before(() => {
+            cy.restoreLocalStorage();
             cy.getByDataTest("crumb:selected-build").click();
           });
 

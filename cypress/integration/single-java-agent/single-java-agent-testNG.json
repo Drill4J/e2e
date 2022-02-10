@@ -176,8 +176,8 @@
         "testNgCheckPageHeader(String,String)[3]": {
           "type": "Auto",
           "expectedStatus": "Passed",
-          "coverage": "0.8",
-          "methodsCovered": "2",
+          "coverage": "0.6",
+          "methodsCovered": "1",
           "path": "ui.standalone.StandaloneChromeUITest"
 
         },
@@ -257,7 +257,7 @@
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "6"
+            "associatedTestsCount": "5"
           }
         }
       },
