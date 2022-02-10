@@ -42,10 +42,10 @@ services:
       - drill4j-dev-network
 
   admin-ui:
-    image: local-admin-ui
+    image: drill4j/admin-ui-root-config:${ADMIN_UI_ROOT_CONFIG_VERSION}
     container_name: admin-ui
     environment:
-      - UI_PLUGINS_URLS=test2code#http://localhost:7087/Drill4J-test-to-code.js
+      - UI_PLUGINS_URLS=test2code#https://cdn.jsdelivr.net/npm/@drill4j/test2code-ui@${TEST2CODE_UI_VERSION}/dist/Drill4J-test-to-code.js
     ports:
       - 9091:8080
     depends_on:
