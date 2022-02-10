@@ -36,13 +36,13 @@ const dataObject = {
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
 // Single java agent
-Cypress.env("startApplicationTaskName", "startPetclinic");
-Cypress.env("initialApplicationBuildVersion", "0.1.0");
-Cypress.env("secondApplicationBuildVersion", "0.5.0");
-Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+// Cypress.env("startApplicationTaskName", "startPetclinic");
+// Cypress.env("initialApplicationBuildVersion", "0.1.0");
+// Cypress.env("secondApplicationBuildVersion", "0.5.0");
+// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
 // Autotests params
-Cypress.env("fixtureFile", "single-java-agent-testNG");
-Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
+// Cypress.env("fixtureFile", "single-java-agent-testNG");
+// Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
@@ -51,7 +51,7 @@ Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
 // Autotests image
-Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
+// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
 
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
@@ -291,7 +291,7 @@ context(Cypress.env("fixtureFile"), () => {
             autotestsImage: Cypress.env("autotestsImage"),
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
-          cy.getByDataTest("navigation:open-test2code-plugin").click();
+          cy.getByDataTest("crumb:selected-build").click();
           cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
           cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
         });
@@ -299,7 +299,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click();
+            cy.getByDataTest("navigation:open-dashboard").click(); 
           });
 
           it(`should display ${buildData.coverage}% in coverage block`, () => {
@@ -349,10 +349,6 @@ context(Cypress.env("fixtureFile"), () => {
               cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountAfterTheTestsExecuted).click();
             });
 
-            after(() => {
-              cy.getByDataTest("crumb:selected-build").click();
-            });
-
             it("should display not covered risks count in the page header", () => {
               cy.getByDataTest("risks-list:title").should("contain", buildData.risks.risksCountAfterTheTestsExecuted);
             });
@@ -370,6 +366,10 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Tests2run", () => {
+          before(() => {
+            cy.getByDataTest("crumb:selected-build").click();
+          });
+
           context("Overview page", () => {
             it("should display suggested tests2run count in the header", () => {
               cy.getByDataTest("action-section:count:tests-to-run")

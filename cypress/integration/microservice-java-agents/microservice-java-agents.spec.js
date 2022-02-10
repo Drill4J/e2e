@@ -112,7 +112,7 @@ context(Cypress.env("fixtureFile"), () => {
             it("should open group test2code page", () => {
               openTest2CodePluginForGroup();
               cy.contains("Test2Code", { matchCase: false }).should("exist");
-              cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+              cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
             });
             it(`should open ${serviceName} test2code page`, () => {
               cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -225,7 +225,7 @@ context(Cypress.env("fixtureFile"), () => {
                   it("should open group test2code page", () => {
                     openTest2CodePluginForGroup();
                     cy.contains("Test2Code", { matchCase: false }).should("exist");
-                    cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
                   it(`should open ${serviceName} test2code page`, () => {
                     cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -268,7 +268,7 @@ context(Cypress.env("fixtureFile"), () => {
                 it("should open group test2code page", () => {
                   openTest2CodePluginForGroup();
                   cy.contains("Test2Code", { matchCase: false }).should("exist");
-                  cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                  cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                 });
                 it(`should open ${serviceName} test2code page`, () => {
                   cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -311,7 +311,7 @@ context(Cypress.env("fixtureFile"), () => {
                   it("should open group test2code page", () => {
                     openTest2CodePluginForGroup();
                     cy.contains("Test2Code", { matchCase: false }).should("exist");
-                    cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
                   it(`should open ${serviceName} test2code page`, () => {
                     cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -431,7 +431,7 @@ context(Cypress.env("fixtureFile"), () => {
                   it("should open group test2code page", () => {
                     openTest2CodePluginForGroup();
                     cy.contains("Test2Code", { matchCase: false }).should("exist");
-                    cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
                   it(`should open ${serviceName} test2code page`, () => {
                     cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -475,7 +475,7 @@ context(Cypress.env("fixtureFile"), () => {
                   it("should open group test2code page", () => {
                     openTest2CodePluginForGroup();
                     cy.contains("Test2Code", { matchCase: false }).should("exist");
-                    cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
                   it(`should open ${serviceName} test2code page`, () => {
                     cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -516,7 +516,7 @@ context(Cypress.env("fixtureFile"), () => {
                   it("should open group test2code page", () => {
                     openTest2CodePluginForGroup();
                     cy.contains("Test2Code", { matchCase: false }).should("exist");
-                    cy.contains(`Online Agents ${agentsCount}`, { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
                   it(`should open ${serviceName} test2code page`, () => {
                     cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
@@ -563,6 +563,6 @@ context(Cypress.env("fixtureFile"), () => {
 
 function openTest2CodePluginForGroup() {
   cy.getByDataTest("navigation:open-select-agent-panel").click();
-  cy.contains('[data-test="add-agent-panel:group-row"]', data.groupId).click();
+  cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
   cy.getByDataTest("navigation:open-test2code-plugin").click();
 }
