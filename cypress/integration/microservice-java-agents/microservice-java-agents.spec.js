@@ -166,6 +166,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Second build", () => {
       const secondBuildData = data.builds["0.2.0"];
       before(() => {
+        cy.restoreLocalStorage();
         cy.task("stopPetclinicMicroservice", {}, { timeout: 120000 });
         cy.task("startPetclinicMicroservice", { build: "0.2.0" }, { timeout: 200000 });
       });
@@ -183,30 +184,33 @@ context(Cypress.env("fixtureFile"), () => {
           });
 
           it("should display 0% in coverage block", () => {
-            cy.getByDataTest("dashboard:build-coverage:main-info").should("contain", "0%");
+            cy.getByDataTest("dashboard:build-coverage:main-info", {timeout: 60000}).should("contain", "0%");
           });
 
           it("should display 0 tests count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:main-info").should("have.text", "0");
+            cy.getByDataTest("dashboard:tests:main-info", {timeout: 60000}).should("have.text", "0");
           });
 
           it("should display 0 scopes count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:additional-info").should("contain", "0");
+            cy.getByDataTest("dashboard:tests:additional-info", {timeout: 60000}).should("contain", "0");
           });
 
           it(`should display ${secondBuildData.summary.risksCountBeforeTestsExecuted} risks count in risks block`, () => {
-            cy.getByDataTest("dashboard:risks:main-info").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:risks:main-info", {timeout: 60000})
+            .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
           });
 
           it(`should display ${secondBuildData.summary.tests2RunBeforeTestsExecuted} tests2run count in tests2run block`, () => {
-            cy.getByDataTest("dashboard:tests-to-run:main-info").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:tests-to-run:main-info", {timeout: 60000})
+            .should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
           });
         });
 
         context("Risks", () => {
           context("Service group page", () => {
             it("should display summary risks count in the header", () => {
-              cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+              cy.getByDataTest("dashboard-header-cell:risks:value")
+                .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
             });
 
             it("should display risks count for every service", () => {
