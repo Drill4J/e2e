@@ -58,7 +58,7 @@ try {
                         setupId: setup.id,
                         initiator: {
                             userName: null,
-                            reason: "Publish artifact"
+                            reason: `Published ${publishedArtifactId}: ${publishedVersion}`
                         }
                     }
                 }, {

@@ -58,3 +58,8 @@ jobs:
           initiator: ${{ steps.run_setup.outputs.initiator }}
           link-to-run: ${{ steps.run_setup.outputs.linkToRun }}
           test-params: ${{ steps.run_setup.outputs.testParams }}
+      - name: Handle tests status
+        id: handle_status
+        uses: "./.github/handle-status"
+        with:
+          tests_status: '${{ steps.run_setup.outputs.status }}'

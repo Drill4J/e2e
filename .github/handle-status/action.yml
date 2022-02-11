@@ -1,0 +1,9 @@
+name: 'Handle status'
+description: "Handle result of running tests"
+inputs:
+  tests_status:
+    description: 'Result of running tests'
+    required: true
+runs:
+  using: 'node12'
+  main: './handle-status.js'
