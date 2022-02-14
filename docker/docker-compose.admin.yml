@@ -1,6 +1,23 @@
 version: '3'
 
 services:
+  postgres:
+    image: postgres:14.1
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - drill4j-dev-network
+
   drill-admin:
     image: drill4j/admin:${ADMIN_VERSION}
     container_name: drill-admin
@@ -24,22 +41,31 @@ services:
     networks:
       - drill4j-dev-network
 
-  postgres:
-    image: postgres:14.1
-    container_name: postgres
+  js-agent:
+    image: drill4j/js-agent:${JS_AGENT_VERSION}
+    container_name: js-agent
     ports:
-      - '5432:5432'
+      - '8092:8080'
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_DB: ${POSTGRES_DB}
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      # RECEIVED_PATH_OMIT_PREFIX: "webpack:///"
+      RECEIVED_PATH_APPEND_PREFIX: 'js/'
+      DRILL_ADMIN_HOST: ${ADMIN_ADDRESS}
+      DRILL_ADMIN_PROTOCOL: 'http'
+      DEBUG_PROBES_ENABLED: 'true'
+      PERF_MEASUREMENT_ENABLED: 'true'
+      PERF_DIFFS_ENABLED: 'true'
+      DEBUG_AGENT_SERVICE_CONNECTION: 'true'
+      DEBUG_AGENT_SERVICE_CONNECTION_MAX_ARGS_LENGTH: '400'
+      WAIT_HOSTS: ${ADMIN_ADDRESS}
+    volumes:
+      - drill-data-js-agent:/usr/src/app/js-agent-data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - drill4j-dev-network
+    depends_on:
+      drill-admin:
+        condition: service_started
 
   admin-ui:
     image: drill4j/admin-ui-root-config:${ADMIN_UI_ROOT_CONFIG_VERSION}
@@ -62,6 +88,19 @@ services:
     networks:
       - drill4j-dev-network
 
+  devtools-proxy:
+    container_name: devtools-proxy
+    image: drill4j/devtools-proxy:${DEVTOOLS_PROXY_VERSION}
+    ports:
+      - 8093:8080
+    environment:
+      DEBUG: 'drill:*'
+      DEBUG_COLORS: 'true'
+      FORCE_COLOR: '3'
+      DEBUG_LOG_LEVEL: '2'
+    networks:
+      - drill4j-dev-network
+
   selenoid:
     image: aerokube/selenoid:latest-release
     container_name: selenoid
@@ -74,15 +113,14 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-container-network", "drill4j-dev-network"]
 
-
-  selenoid-ui:
-    image: aerokube/selenoid-ui:latest-release
-    container_name: selenoid-ui
-    ports:
-      - "7070:8080"
-    networks:
-      - drill4j-dev-network
-    command: [ "--selenoid-uri", "http://selenoid:4444" ]
+#  selenoid-ui:
+#    image: aerokube/selenoid-ui:latest-release
+#    container_name: selenoid-ui
+#    ports:
+#      - "7070:8080"
+#    networks:
+#      - drill4j-dev-network
+#    command: [ "--selenoid-uri", "http://selenoid:4444" ]
 
   chrome:
     image: selenoid/chrome:96.0
@@ -92,7 +130,20 @@ services:
     image: selenoid/firefox:94.0
     container_name: firefox
 
+  selenium-chrome:
+    container_name: selenium-chrome
+    image: selenium/standalone-chrome:latest
+    ports:
+      - '9222:9222' # devtools
+      - '4444:4444' # webdriver
+    shm_size: '2gb'
+    networks:
+      - drill4j-dev-network
+
 networks:
   drill4j-dev-network:
     external: false
     name: drill4j-dev-network
+
+volumes:
+  drill-data-js-agent:

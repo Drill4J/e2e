@@ -1,0 +1,347 @@
+{
+  "agentId": "todomvc-typescript-angular",
+  "systemSettings": {
+    "targetHost": "http://localhost:6072"
+  },
+  "builds": {
+    "0.1.0": {
+      "coverage": "69.8",
+      "testsCount": "10",
+      "packagesCount": "4",
+      "packages": {
+        "js/controllers": {
+          "methodsTotal": "14",
+          "coverage": "68",
+          "methodsCovered": "11",
+          "associatedTestsCount": "10"
+        },
+        "js/directives": {
+          "methodsTotal": "12",
+          "coverage": "64.3",
+          "methodsCovered": "9",
+          "associatedTestsCount": "10"
+        },
+        "js/models": {
+          "methodsTotal": "1",
+          "coverage": "100",
+          "methodsCovered": "1",
+          "associatedTestsCount": "9"
+        },
+        "js/services": {
+          "methodsTotal": "2",
+          "coverage": "100",
+          "methodsCovered": "2",
+          "associatedTestsCount": "10"
+        }
+      },
+      "packagesWithAssociatedTests": {
+        "js/controllers": {
+          "associatedTestsCount": "10",
+          "associatedTests": [
+            {
+              "name": "create Parameterized suite with param \"value1\" value case with param \"value1\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value1\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value case with param \"value2\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can create",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can't add empty todo (white spaces only)",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create name with regex-specific characters: ()[]",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "delete can delete one",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "delete nested suite can delete all",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "edit can complete",
+              "path": "/specs/edit.spec.ts"
+            }
+          ]
+        },
+        "js/directives": {
+          "associatedTestsCount": "10",
+          "associatedTests": [
+            {
+              "name": "create Parameterized suite with param \"value1\" value case with param \"value1\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value1\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value case with param \"value2\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can create",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can't add empty todo (white spaces only)",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create name with regex-specific characters: ()[]",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "delete can delete one",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "delete nested suite can delete all",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "edit can complete",
+              "path": "/specs/edit.spec.ts"
+            }
+          ]
+        },
+        "js/models": {
+          "associatedTestsCount": "9",
+          "associatedTests": [
+            {
+              "name": "create Parameterized suite with param \"value1\" value case with param \"value1\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value1\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value case with param \"value2\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can create",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create name with regex-specific characters: ()[]",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "delete can delete one",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "delete nested suite can delete all",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "edit can complete",
+              "path": "/specs/edit.spec.ts"
+            }
+          ]
+        },
+        "js/services": {
+          "associatedTestsCount": "10",
+          "associatedTests": [
+            {
+              "name": "create Parameterized suite with param \"value1\" value case with param \"value1\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value1\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value case with param \"value2\"",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create Parameterized suite with param \"value2\" value create message",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can create",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create can't add empty todo (white spaces only)",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "create name with regex-specific characters: ()[]",
+              "path": "/specs/create.spec.ts"
+            },
+            {
+              "name": "delete can delete one",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "delete nested suite can delete all",
+              "path": "/specs/delete.spec.ts"
+            },
+            {
+              "name": "edit can complete",
+              "path": "/specs/edit.spec.ts"
+            }
+          ]
+        }
+      },
+      "testsWithCoveredMethods": {
+        "create Parameterized suite with param \"value1\" value create message": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "create can't add empty todo (white spaces only)": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "46.5",
+          "methodsCovered": "15",
+          "path": "/specs/create.spec.ts"
+        },
+        "delete nested suite can delete all": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "62.8",
+          "methodsCovered": "22",
+          "path": "/specs/create.spec.ts"
+        },
+        "delete can delete one": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "55.8",
+          "methodsCovered": "19",
+          "path": "/specs/create.spec.ts"
+        },
+        "create name with regex-specific characters: ()[]": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "edit can complete": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "create Parameterized suite with param \"value2\" value case with param \"value2\"": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "create Parameterized suite with param \"value2\" value create message": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "create can create": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "51.2\n",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        },
+        "create Parameterized suite with param \"value1\" value case with param \"value1\"": {
+          "type": "E2e",
+          "expectedStatus": "Passed",
+          "coverage": "48.8",
+          "methodsCovered": "16",
+          "path": "/specs/create.spec.ts"
+        }
+      },
+      "testsWithoutCoveredMethods": {}
+    },
+    "0.5.0": {
+      "coverage": "26.4",
+      "comparedToTheBaselineBuildCoverage": "- 3.6",
+      "scopesCount": "1",
+      "testsCount": "12",
+      "risks": {
+        "risksCountBeforeTestsExecuted": "5",
+        "risksCountAfterTheTestsExecuted": "2",
+        "newRisksCount": "2",
+        "newRisksCountAfterTheTestsExecuted": "2",
+        "modifiedRisksCount": "3",
+        "modifiedRisksCountAfterTheTestsExecuted": "3",
+        "methods": {
+          "newMethod1": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "newMethod2": {
+            "packageName": "org/springframework/samples/petclinic/vet/VetController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "initFindForm": {
+            "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "2"
+          },
+          "triggerException": {
+            "packageName": "org/springframework/samples/petclinic/system/CrashController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "1"
+          },
+          "welcome": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "6"
+          }
+        }
+      },
+      "testsToRun": {
+        "tests2RunBeforeTestsExecuted": "6",
+        "testsToRunCountAfterTheTestsExecuted": "0",
+        "tests": {
+          "junit4GetHomePage()": {
+            "type": "Auto",
+            "coverage": "0.2",
+            "methodsCovered": "1"
+          }
+        }
+      }
+    }
+  }
+}

@@ -19,12 +19,14 @@ import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
 import singleJavaAgentJunit5Data from "./single-java-agent-junit5.json";
+import singleJsAgentData from "./single-js-agent.json";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
   "single-java-agent-testNG": singleJavaAgentTestNGData,
   "single-java-agent-junit4": singleJavaAgentJunit4Data,
   "single-java-agent-junit5": singleJavaAgentJunit5Data,
+  "single-js-agent": singleJsAgentData,
 };
 // Check setups.json file with examples of cypress env combination
 
@@ -53,6 +55,13 @@ const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNG
 // Autotests image
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
+
+// Single js Agent
+// Cypress.env("startApplicationTaskName", "startToDoMVC");
+// Cypress.env("initialApplicationBuildVersion", "1.0.0");
+// Cypress.env("secondApplicationBuildVersion", "2.0.0");
+// Cypress.env("startApplicationTestsTaskName", "startToDoMVCAutotests");
+// Cypress.env("fixtureFile", "single-js-agent");
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[fixtureFile];
@@ -84,7 +93,24 @@ context(fixtureFile, () => {
     });
 
     it("should register agent", () => {
-      cy.registerAgent(data.agentId);
+      cy.contains('[data-test="add-agent-panel:agent-row"]', data.agentId)
+        .find('button[data-test="add-agent-panel:agent-row:register"]').click();
+
+      cy.getByDataTest("wizard:next-step").click();
+
+      Object.entries(data.systemSettings).forEach(([name, value]) => {
+        cy.get(`input[name="systemSettings.${name}"]`).type(value);
+      });
+
+      cy.getByDataTest("wizard:next-step").click();
+      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
+
+      cy.getByDataTest("wizard:finish").click();
+
+      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
+      cy.contains('[data-test="select-agent-panel:registering-agent-row"]', data.agentId).should("exist");
+
+      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId, { timeout: 60000 }).should("exist");
     });
   });
 
