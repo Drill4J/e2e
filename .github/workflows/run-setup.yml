@@ -57,12 +57,14 @@ jobs:
 
           # steps.run_setup is your test step name (defined above)
           test-status: ${{ steps.run_setup.outputs.status }} # 1. Pass test status (any string)
-          test-component-version-map: ${{ steps.run_setup.outputs.env }}
+          test-component-version-map: ${{ steps.run_setup.outputs.versions }}
           test-description: ${{ steps.run_setup.outputs.description }}
-
-# Generate Personal Github token with workflow scopes.
-# Run action
-# curl -H "Authorization: token xxx" \
-#    -H 'Accept: application/vnd.github.everest-preview+json' \
-#    "https://api.github.com/repos/Drill4J/e2e/dispatches" \
-#    -d '{ "event_type": "run_test", "client_payload": {"admin_version": "1.0.58"}}'
+          released-component: ${{ steps.run_setup.outputs.releasedComponent }}
+          initiator: ${{ steps.run_setup.outputs.initiator }}
+          link-to-run: ${{ steps.run_setup.outputs.linkToRun }}
+          test-params: ${{ steps.run_setup.outputs.testParams }}
+      - name: Handle tests status
+        id: handle_status
+        uses: "./.github/handle-status"
+        with:
+          tests_status: '${{ steps.run_setup.outputs.status }}'

@@ -21,25 +21,27 @@ const github = require("@actions/github");
 try {
     (async () => {
         const artifacts = JSON.parse(fs.readFileSync("./artifact.json", "utf8"));
-        const {params, cypressEnv, versions, specFile, setupId, componentId: publishedComponentId, componentVersion: publishedComponentVersion} = github.context.payload.client_payload;
+        const {
+            params, cypressEnv, versions, specFile, setupId, initiator,
+            componentId: publishedComponentId, componentVersion: publishedComponentVersion
+        } = github.context.payload.client_payload;
+
         let publishedArtifact = publishedComponentId && publishedComponentVersion
             ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
 
         if (publishedArtifact) {
             console.log(`Published artifact: ${publishedArtifact}`);
+            core.setOutput("releasedComponent", JSON.stringify({componentId: publishedComponentId, tag: publishedComponentVersion}));
         }
-
-        console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
-
-        core.setOutput('description', `
-        ${publishedArtifact}
-        Link to run: https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}
-        Params: ${JSON.stringify(params)}
-        `)
+        core.setOutput('linkToRun', `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`)
+        core.setOutput('testParams', JSON.stringify(params))
         core.setOutput("setupId", setupId);
-        core.setOutput("env", JSON.stringify(
+        core.setOutput("versions", JSON.stringify(
             versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
         ));
+        core.setOutput("initiator", JSON.stringify(initiator));
+
+        console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
 
         versions.forEach(({componentId, tag}) => {
             const newLineChar = process.platform === "win32" ? "\r\n" : "\n";
