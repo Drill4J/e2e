@@ -15,8 +15,6 @@
  */
 /// <reference types="cypress" />
 
-import data from "../integration/single-java-agent-with-multiple-scopes/microservice-java-agents.json";
-
 export const finishAllScopes = (groupId, agentsCount) => {
   cy.intercept("POST", `/api/groups/${groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 

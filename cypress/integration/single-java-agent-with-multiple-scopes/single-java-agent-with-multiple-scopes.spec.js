@@ -17,6 +17,7 @@
 import { registerAgent } from "../../utils";
 import data from "./single-java-agent.json";
 import { login } from "../../utils/login";
+import { finishScope } from "../../utils/finish-scope";
 
 Cypress.env("scopesCount", "3");
 
@@ -78,9 +79,7 @@ context("single-java-agent-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-          cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+          finishScope();
         });
 
         it("should display 0% coverage in active scope block", () => {

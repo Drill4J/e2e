@@ -21,6 +21,7 @@ import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
 import singleJavaAgentJunit5Data from "./single-java-agent-junit5.json";
 import { login } from "../../utils/login";
+import { finishScope } from "../../utils/finish-scope";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
@@ -109,13 +110,10 @@ context(Cypress.env("fixtureFile"), () => {
       it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
 
-        cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-
-        cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
-        cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
-
-        cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-        cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+        finishScope(() => {
+          cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
+          cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
+        });
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
@@ -282,8 +280,7 @@ context(Cypress.env("fixtureFile"), () => {
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:selected-build").click();
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+          finishScope();
         });
 
         context("Dashboard", () => {
