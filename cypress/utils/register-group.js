@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AGENT_NAME } from "../fixtures/constants";
-
-export const registerAgent = (agentId = AGENT_NAME) => {
-  cy.contains('[data-test="add-agent-panel:agent-row"]', agentId)
-    .find('button[data-test="add-agent-panel:agent-row:register"]').click();
+export const registerGroup = (groupId, agentsCount) => {
+  cy.contains('[data-test="add-agent-panel:group-row"]', groupId)
+    .find('button[data-test="add-agent-panel:group-row:register"]').click();
 
   cy.getByDataTest("wizard:next-step").click();
   cy.getByDataTest("wizard:next-step").click();
@@ -26,7 +24,7 @@ export const registerAgent = (agentId = AGENT_NAME) => {
   cy.getByDataTest("wizard:finish").click();
 
   cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
-  cy.contains('[data-test="select-agent-panel:registering-agent-row"]', agentId).should("exist");
+  cy.get('[data-test="select-agent-panel:registering-agent-row"]').should("exist", agentsCount);
 
-  cy.contains('[data-test="select-agent-panel:agent-row"]', agentId, { timeout: 60000 }).should("exist");
+  cy.get('[data-test="select-agent-panel:agent-row"]', { timeout: 90000 }).should("have.length", agentsCount);
 };

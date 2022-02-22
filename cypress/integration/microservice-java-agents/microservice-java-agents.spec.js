@@ -17,6 +17,7 @@
 import { JAVA_GROUP_NAME } from "../../fixtures/constants";
 import { convertUrl } from "../../utils";
 import testNg from "./java-mcr.json";
+import { registerGroup } from "../../utils/register-group";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
@@ -50,19 +51,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should register group", () => {
-      cy.contains('[data-test="add-agent-panel:group-row"]', data.groupId)
-        .find('button[data-test="add-agent-panel:group-row:register"]').click();
-
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
-
-      cy.getByDataTest("wizard:finish").click();
-
-      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
-      cy.get('[data-test="select-agent-panel:registering-agent-row"]').should("exist", 4);
-
-      cy.get('[data-test="select-agent-panel:agent-row"]', { timeout: 90000 }).should("have.length", 4);
+      registerGroup(data.groupId, 4);
     });
   });
 

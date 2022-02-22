@@ -15,7 +15,7 @@
  */
 /// <reference types="cypress" />
 // TODO add data tests for tables on risks and t2r pages
-import { convertUrl } from "../../utils";
+import { convertUrl, registerAgent } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
@@ -36,13 +36,13 @@ const dataObject = {
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
 // Single java agent
-// Cypress.env("startApplicationTaskName", "startPetclinic");
-// Cypress.env("initialApplicationBuildVersion", "0.1.0");
-// Cypress.env("secondApplicationBuildVersion", "0.5.0");
-// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+Cypress.env("startApplicationTaskName", "startPetclinic");
+Cypress.env("initialApplicationBuildVersion", "0.1.0");
+Cypress.env("secondApplicationBuildVersion", "0.5.0");
+Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
 // Autotests params
-// Cypress.env("fixtureFile", "single-java-agent-testNG");
-// Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
+Cypress.env("fixtureFile", "single-java-agent-testNG");
+Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
@@ -51,7 +51,7 @@ const dataObject = {
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
 // Autotests image
-// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
+Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
 
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
@@ -83,19 +83,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should register agent", () => {
-      cy.contains('[data-test="add-agent-panel:agent-row"]', data.agentId)
-        .find('button[data-test="add-agent-panel:agent-row:register"]').click();
-
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
-
-      cy.getByDataTest("wizard:finish").click();
-
-      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
-      cy.contains('[data-test="select-agent-panel:registering-agent-row"]', data.agentId).should("exist");
-
-      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId, { timeout: 60000 }).should("exist");
+      registerAgent(data.agentId);
     });
   });
 
@@ -299,7 +287,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click(); 
+            cy.getByDataTest("navigation:open-dashboard").click();
           });
 
           it(`should display ${buildData.coverage}% in coverage block`, () => {
