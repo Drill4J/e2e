@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { convertUrl } from "../../utils";
 import data from "./microservice-java-agents.json";
 import { registerGroup } from "../../utils/register-group";
+import { login } from "../../utils/login";
 
 Cypress.env("scopesCount", "3");
 
 context("mcr-java-agents-with-multiple-scopes", () => {
-  before(() => {
-    cy.login();
-    cy.visit(convertUrl("/"));
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -36,6 +30,14 @@ context("mcr-java-agents-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
+    });
+
+    it("should login", () => {
+      login();
+    });
+
     it('should open "Add agent" panel', () => {
       cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
 

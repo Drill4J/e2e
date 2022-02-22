@@ -15,11 +15,12 @@
  */
 /// <reference types="cypress" />
 // TODO add data tests for tables on risks and t2r pages
-import { convertUrl, registerAgent } from "../../utils";
+import { registerAgent } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
 import singleJavaAgentJunit5Data from "./single-java-agent-junit5.json";
+import { login } from "../../utils/login";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
@@ -69,11 +70,12 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Admin part", () => {
-    it("should login", () => {
-      cy.visit(convertUrl("/"));
-      cy.getByDataTest("login-button:continue-as-guest").click();
-      cy.url().should("eq", convertUrl("/"));
+    before(() => {
       cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
+    });
+
+    it("should login", () => {
+      login();
     });
 
     it('should open "Add agent" panel', () => {

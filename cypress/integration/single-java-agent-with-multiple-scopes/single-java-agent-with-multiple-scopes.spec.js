@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { convertUrl, registerAgent } from "../../utils";
+import { registerAgent } from "../../utils";
 import data from "./single-java-agent.json";
+import { login } from "../../utils/login";
 
 Cypress.env("scopesCount", "3");
 
 context("single-java-agent-with-multiple-scopes", () => {
-  before(() => {
-    cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -33,9 +30,12 @@ context("single-java-agent-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
+    });
+
     it("should login", () => {
-      cy.visit(convertUrl("/"));
-      cy.getByDataTest("login-button:continue-as-guest").click();
+      login();
     });
 
     it('should open "Add agent" panel', () => {

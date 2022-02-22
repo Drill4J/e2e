@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { JAVA_GROUP_NAME } from "../../fixtures/constants";
-import { convertUrl } from "../../utils";
 import testNg from "./java-mcr.json";
 import { registerGroup } from "../../utils/register-group";
+import { login } from "../../utils/login";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
@@ -37,11 +36,12 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Admin part", () => {
-    it("should login", () => {
-      cy.visit(convertUrl("/"));
-      cy.getByDataTest("login-button:continue-as-guest").click();
-      cy.url().should("eq", convertUrl("/"));
+    before(() => {
       cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 300000 });
+    });
+
+    it("should login", () => {
+      login();
     });
 
     it('should open "Add agent" panel', () => {
@@ -173,25 +173,25 @@ context(Cypress.env("fixtureFile"), () => {
           });
 
           it("should display 0% in coverage block", () => {
-            cy.getByDataTest("dashboard:build-coverage:main-info", {timeout: 60000}).should("contain", "0%");
+            cy.getByDataTest("dashboard:build-coverage:main-info", { timeout: 60000 }).should("contain", "0%");
           });
 
           it("should display 0 tests count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:main-info", {timeout: 60000}).should("have.text", "0");
+            cy.getByDataTest("dashboard:tests:main-info", { timeout: 60000 }).should("have.text", "0");
           });
 
           it("should display 0 scopes count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:additional-info", {timeout: 60000}).should("contain", "0");
+            cy.getByDataTest("dashboard:tests:additional-info", { timeout: 60000 }).should("contain", "0");
           });
 
           it(`should display ${secondBuildData.summary.risksCountBeforeTestsExecuted} risks count in risks block`, () => {
-            cy.getByDataTest("dashboard:risks:main-info", {timeout: 60000})
-            .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:risks:main-info", { timeout: 60000 })
+              .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
           });
 
           it(`should display ${secondBuildData.summary.tests2RunBeforeTestsExecuted} tests2run count in tests2run block`, () => {
-            cy.getByDataTest("dashboard:tests-to-run:main-info", {timeout: 60000})
-            .should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:tests-to-run:main-info", { timeout: 60000 })
+              .should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
           });
         });
 
