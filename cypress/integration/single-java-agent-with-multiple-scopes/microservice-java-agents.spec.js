@@ -17,6 +17,7 @@
 import data from "./microservice-java-agents.json";
 import { registerGroup } from "../../utils/register-group";
 import { login } from "../../utils/login";
+import { finishAllScopes } from "../../utils/finish-all-scopes";
 
 Cypress.env("scopesCount", "3");
 
@@ -64,17 +65,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
-
-          cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
-          // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-          cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-          cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-          cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-          cy.wait("@finish-all-scopes", { timeout: 30000 });
-
-          cy.getByDataTest("system-alert:title").should("exist");
+          finishAllScopes(data.groupId, data.agentsCount);
         });
       });
     });

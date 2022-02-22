@@ -17,6 +17,8 @@
 import testNg from "./java-mcr.json";
 import { registerGroup } from "../../utils/register-group";
 import { login } from "../../utils/login";
+import { finishAllScopes } from "../../utils/finish-all-scopes";
+import { convertUrl } from "../../utils";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
@@ -66,19 +68,12 @@ context(Cypress.env("fixtureFile"), () => {
         cy.contains("Test2Code", { matchCase: false }).should("exist");
       });
 
-      it("should finishe all scopes after the tests finished executing should", () => {
+      it("should finished all scopes after the tests finished executing should", () => {
         cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
-        cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 
         // cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
         // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-        cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-        cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-        cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-        cy.wait("@finish-all-scopes", { timeout: 30000 });
-
-        cy.getByDataTest("system-alert:title").should("exist");
+        finishAllScopes(data.groupId, data.agentsCount);
       });
 
       context("_", () => { // need to save order of execution
@@ -358,21 +353,17 @@ context(Cypress.env("fixtureFile"), () => {
         before(() => {
           cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
         });
-        it("should finish all scopes after the collcet coverage", () => { // TODO refactor to api request in before hook
-          cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
+        it("should finish all scopes after the collcet coverage", () => {
+          // TODO refactor to api request in before hook
+          cy.visit(convertUrl(`/groups/${data.groupId}/plugins/test2code`));
 
-          cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-          cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-          cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-          cy.wait("@finish-all-scopes", { timeout: 30000 });
-          cy.getByDataTest("system-alert:title").should("exist");
+          finishAllScopes(data.groupId, data.agentsCount);
         });
 
         context("Dashboard", () => {
           before("Open dashboard page", () => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click();
+            cy.visit(convertUrl(`/groups/${data.groupId}/dashboard`));
           });
 
           it(`should display ${secondBuildData.summary.coverage}% in coverage block`, () => {
