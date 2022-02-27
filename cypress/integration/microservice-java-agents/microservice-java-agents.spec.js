@@ -15,7 +15,6 @@
  */
 /// <reference types="cypress" />
 import testNg from "./java-mcr.json";
-import { registerGroup } from "../../utils/register-group";
 import { convertUrl } from "../../utils";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
@@ -51,7 +50,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should register group", () => {
-      registerGroup(data.groupId, 4);
+      cy.registerGroup(data.groupId, 4);
     });
   });
 

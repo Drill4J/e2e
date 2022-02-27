@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const registerGroup = (groupId, agentsCount) => {
+Cypress.Commands.add("registerGroup", (groupId, agentsCount) => {
   cy.contains('[data-test="add-agent-panel:group-row"]', groupId)
     .find('button[data-test="add-agent-panel:group-row:register"]').click();
 
@@ -27,4 +27,4 @@ export const registerGroup = (groupId, agentsCount) => {
   cy.get('[data-test="select-agent-panel:registering-agent-row"]').should("exist", agentsCount);
 
   cy.get('[data-test="select-agent-panel:agent-row"]', { timeout: 90000 }).should("have.length", agentsCount);
-};
+});

@@ -43,7 +43,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
     });
 
     it("should register group", () => {
-      registerGroup(data.groupId, data.agentsCount);
+      cy.registerGroup(data.groupId, data.agentsCount);
     });
   });
 
