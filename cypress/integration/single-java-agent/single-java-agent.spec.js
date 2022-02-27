@@ -107,10 +107,7 @@ context(Cypress.env("fixtureFile"), () => {
       it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
 
-        finishScope(() => {
-          cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
-          cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
-        });
+        cy.finishScope(initialBuildData.coverage, initialBuildData.testsCount);
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
@@ -277,7 +274,7 @@ context(Cypress.env("fixtureFile"), () => {
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:selected-build").click();
-          finishScope();
+          cy.finishScope(buildData.coverage, buildData.testsCount);
         });
 
         context("Dashboard", () => {

@@ -76,7 +76,7 @@ context("single-java-agent-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          finishScope();
+          cy.finishScope(data.coverage, data.testsCount);
         });
 
         it("should display 0% coverage in active scope block", () => {
