@@ -16,7 +16,6 @@
 export { manualLogin } from "./manual-login";
 export { convertUrl } from "./covert-url";
 export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
-export { registerAgent } from "./register-agent";
 export { manualRegisterAgent } from "./manual-register-agent";
 export { startNewBuildAndGoToTest2Code } from "./start-new-build-and-go-to-test-to-code";
 export { startAutotestsAndWait } from "./start-autotests-and-wait";

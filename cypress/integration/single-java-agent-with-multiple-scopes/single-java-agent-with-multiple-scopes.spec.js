@@ -43,7 +43,7 @@ context("single-java-agent-with-multiple-scopes", () => {
     });
 
     it("should register agent", () => {
-      registerAgent(data.agentId);
+      cy.registerAgent(data.agentId);
     });
   });
 

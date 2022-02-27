@@ -15,7 +15,6 @@
  */
 /// <reference types="cypress" />
 // TODO add data tests for tables on risks and t2r pages
-import { registerAgent } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
@@ -84,7 +83,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should register agent", () => {
-      registerAgent(data.agentId);
+      cy.registerAgent(data.agentId);
     });
   });
 

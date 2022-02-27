@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AGENT_NAME } from "../fixtures/constants";
+import { AGENT_NAME } from "../../fixtures/constants";
 
-export const registerAgent = (agentId = AGENT_NAME) => {
+Cypress.Commands.add("registerAgent", (agentId = AGENT_NAME) => {
   cy.contains('[data-test="add-agent-panel:agent-row"]', agentId)
     .find('button[data-test="add-agent-panel:agent-row:register"]').click();
 
@@ -29,4 +29,4 @@ export const registerAgent = (agentId = AGENT_NAME) => {
   cy.contains('[data-test="select-agent-panel:registering-agent-row"]', agentId).should("exist");
 
   cy.contains('[data-test="select-agent-panel:agent-row"]', agentId, { timeout: 60000 }).should("exist");
-};
+});

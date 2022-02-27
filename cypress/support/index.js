@@ -25,5 +25,6 @@ import "./tests/tests-to-run-table";
 import "./start-admin";
 import "./tests/covered-methods-pane-with-methods-check";
 import "./tests/login";
+import "./tests/register-agent";
 
 register(Cypress, cy, localStorage);
