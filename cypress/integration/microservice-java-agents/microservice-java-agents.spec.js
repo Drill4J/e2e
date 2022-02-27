@@ -16,8 +16,6 @@
 /// <reference types="cypress" />
 import testNg from "./java-mcr.json";
 import { registerGroup } from "../../utils/register-group";
-import { login } from "../../utils/login";
-import { finishAllScopes } from "../../utils/finish-all-scopes";
 import { convertUrl } from "../../utils";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
@@ -43,7 +41,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should login", () => {
-      login();
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {

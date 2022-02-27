@@ -24,5 +24,6 @@ import "./tests/risks-table";
 import "./tests/tests-to-run-table";
 import "./start-admin";
 import "./tests/covered-methods-pane-with-methods-check";
+import "./tests/login";
 
 register(Cypress, cy, localStorage);

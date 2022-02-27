@@ -20,8 +20,6 @@ import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
 import singleJavaAgentJunit5Data from "./single-java-agent-junit5.json";
-import { login } from "../../utils/login";
-import { finishScope } from "../../utils/finish-scope";
 
 const dataObject = {
   "multinstances-single-java-agent": multiinstancesSingleJavaAgentData,
@@ -76,7 +74,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should login", () => {
-      login();
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {

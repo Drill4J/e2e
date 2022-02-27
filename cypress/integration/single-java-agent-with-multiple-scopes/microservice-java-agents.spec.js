@@ -15,9 +15,6 @@
  */
 /// <reference types="cypress" />
 import data from "./microservice-java-agents.json";
-import { registerGroup } from "../../utils/register-group";
-import { login } from "../../utils/login";
-import { finishAllScopes } from "../../utils/finish-all-scopes";
 
 Cypress.env("scopesCount", "3");
 
@@ -36,7 +33,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
     });
 
     it("should login", () => {
-      login();
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {

@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { registerAgent } from "../../utils";
 import data from "./single-java-agent.json";
-import { login } from "../../utils/login";
-import { finishScope } from "../../utils/finish-scope";
 
 Cypress.env("scopesCount", "3");
 
@@ -36,7 +33,7 @@ context("single-java-agent-with-multiple-scopes", () => {
     });
 
     it("should login", () => {
-      login();
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {

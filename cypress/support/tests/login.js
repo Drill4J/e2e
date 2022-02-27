@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { convertUrl } from "./covert-url";
+import { convertUrl } from "../../utils";
 
-export const login = () => {
+Cypress.Commands.add("login", () => {
   cy.visit(convertUrl("/"));
   cy.getByDataTest("login-button:continue-as-guest").click();
   cy.url().should("eq", convertUrl("/"));
-};
+});
