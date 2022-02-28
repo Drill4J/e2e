@@ -29,11 +29,11 @@ const dataObject = {
 // Check setups.json file with examples of cypress env combination
 
 // Multiinstances
-// const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinicMultinstaces";
-// const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
-// const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
-// const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicMultinstacesAutoTests";
-// const fixtureFile = Cypress.env("fixtureFile") || "multinstances-single-java-agent";
+// Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
+// Cypress.env("initialApplicationBuildVersion", "0.1.0");
+// Cypress.env("secondApplicationBuildVersion", "0.5.0");
+// Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
+// Cypress.env("fixtureFile", "multinstances-single-java-agent");
 
 // Single java agent
 const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
@@ -41,19 +41,18 @@ const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersi
 const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
 const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
 // Autotests params
+// Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
+// Cypress.env("fixtureFile", "single-java-agent-junit4");
+
+// Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
+// Cypress.env("fixtureFile", "single-java-agent-junit5");
+
 const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
 const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
 
-// const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-junit4";
-// const autotestsParams = Cypress.env("autotestsParams") || ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*";
-
-// const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-junit5";
-// const autotestsParams = Cypress.env("autotestsParams") || ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*";
-
 // Autotests image
+// Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
 const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
-
-// const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[fixtureFile];
