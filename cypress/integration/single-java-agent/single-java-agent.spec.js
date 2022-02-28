@@ -15,7 +15,6 @@
  */
 /// <reference types="cypress" />
 // TODO add data tests for tables on risks and t2r pages
-import { convertUrl } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
@@ -35,31 +34,31 @@ const dataObject = {
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
-// Single java agent
-// Cypress.env("startApplicationTaskName", "startPetclinic");
-// Cypress.env("initialApplicationBuildVersion", "0.1.0");
-// Cypress.env("secondApplicationBuildVersion", "0.5.0");
-// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
-// Autotests params
-// Cypress.env("fixtureFile", "single-java-agent-testNG");
-// Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
+// Single java agent
+const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
+const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
+const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
+const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
+// Autotests params
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
 
 // Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
-// Autotests image
-// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
+const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
+const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
 
+// Autotests image
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
+const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
 
 // eslint-disable-next-line import/no-dynamic-require
-const data = dataObject[Cypress.env("fixtureFile")];
+const data = dataObject[fixtureFile];
 
 // TODO rename fixtureFile env
-context(Cypress.env("fixtureFile"), () => {
+context(fixtureFile, () => {
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -69,11 +68,12 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task(startApplicationTaskName, { build: initialApplicationBuildVersion }, { timeout: 600000 });
+    });
+
     it("should login", () => {
-      cy.visit(convertUrl("/"));
-      cy.getByDataTest("login-button:continue-as-guest").click();
-      cy.url().should("eq", convertUrl("/"));
-      cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {
@@ -83,19 +83,7 @@ context(Cypress.env("fixtureFile"), () => {
     });
 
     it("should register agent", () => {
-      cy.contains('[data-test="add-agent-panel:agent-row"]', data.agentId)
-        .find('button[data-test="add-agent-panel:agent-row:register"]').click();
-
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
-
-      cy.getByDataTest("wizard:finish").click();
-
-      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
-      cy.contains('[data-test="select-agent-panel:registering-agent-row"]', data.agentId).should("exist");
-
-      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId, { timeout: 60000 }).should("exist");
+      cy.registerAgent(data.agentId);
     });
   });
 
@@ -110,22 +98,16 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {
-          autotestsParams: Cypress.env("autotestsParams"),
-          autotestsImage: Cypress.env("autotestsImage"),
+        cy.task(startApplicationTestsTaskName, {
+          autotestsParams,
+          autotestsImage,
         }, { timeout: 300000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
 
-        cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-
-        cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
-        cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
-
-        cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-        cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+        cy.finishScope(initialBuildData.coverage, initialBuildData.testsCount);
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
@@ -174,7 +156,7 @@ context(Cypress.env("fixtureFile"), () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
         cy.restoreLocalStorage();
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 600000 });
+        cy.task(startApplicationTaskName, { build: secondApplicationBuildVersion }, { timeout: 600000 });
         cy.getByDataTest("crumb:builds").click();
         cy.getByDataTest("navigation:open-dashboard").click({ force: true });
       });
@@ -286,20 +268,19 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), {
-            autotestsParams: Cypress.env("autotestsParams"),
-            autotestsImage: Cypress.env("autotestsImage"),
+          cy.task(startApplicationTestsTaskName, {
+            autotestsParams,
+            autotestsImage,
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:selected-build").click();
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+          cy.finishScope(buildData.coverage, buildData.testsCount);
         });
 
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click(); 
+            cy.getByDataTest("navigation:open-dashboard").click();
           });
 
           it(`should display ${buildData.coverage}% in coverage block`, () => {

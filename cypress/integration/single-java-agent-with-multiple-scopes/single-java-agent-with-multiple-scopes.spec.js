@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-// Cypress.env("scopesCount", "3");
+Cypress.env("scopesCount", "3");
 
 context("single-java-agent-with-multiple-scopes", () => {
-  before(() => {
-    cy.visit(convertUrl("/"));
-    cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -35,10 +28,12 @@ context("single-java-agent-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
+    });
+
     it("should login", () => {
-      cy.visit(convertUrl("/"));
-      cy.getByDataTest("login-button:continue-as-guest").click();
-      cy.url().should("eq", convertUrl("/"));
+      cy.login();
     });
 
     it('should open "Add agent" panel', () => {
@@ -48,19 +43,7 @@ context("single-java-agent-with-multiple-scopes", () => {
     });
 
     it("should register agent", () => {
-      cy.contains('[data-test="add-agent-panel:agent-row"]', data.agentId)
-        .find('button[data-test="add-agent-panel:agent-row:register"]').click();
-
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("wizard:next-step").click();
-      cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
-
-      cy.getByDataTest("wizard:finish").click();
-
-      cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
-      cy.contains('[data-test="select-agent-panel:registering-agent-row"]', data.agentId).should("exist");
-
-      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId, { timeout: 60000 }).should("exist");
+      cy.registerAgent(data.agentId);
     });
   });
 
@@ -93,9 +76,7 @@ context("single-java-agent-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-          cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+          cy.finishScope(data.coverage, data.testsCount);
         });
 
         it("should display 0% coverage in active scope block", () => {
