@@ -29,36 +29,37 @@ const dataObject = {
 // Check setups.json file with examples of cypress env combination
 
 // Multiinstances
-// Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
-// Cypress.env("initialApplicationBuildVersion", "0.1.0");
-// Cypress.env("secondApplicationBuildVersion", "0.5.0");
-// Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
-// Cypress.env("fixtureFile", "multinstances-single-java-agent");
+// const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinicMultinstaces";
+// const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
+// const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
+// const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicMultinstacesAutoTests";
+// const fixtureFile = Cypress.env("fixtureFile") || "multinstances-single-java-agent";
+
 // Single java agent
-Cypress.env("startApplicationTaskName", "startPetclinic");
-Cypress.env("initialApplicationBuildVersion", "0.1.0");
-Cypress.env("secondApplicationBuildVersion", "0.5.0");
-Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
+const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
+const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
+const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
+const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
 // Autotests params
-Cypress.env("fixtureFile", "single-java-agent-testNG");
-Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
+const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
+const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
 
-// Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
-// Cypress.env("fixtureFile", "single-java-agent-junit4");
+// const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-junit4";
+// const autotestsParams = Cypress.env("autotestsParams") || ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*";
 
-// Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
-// Cypress.env("fixtureFile", "single-java-agent-junit5");
+// const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-junit5";
+// const autotestsParams = Cypress.env("autotestsParams") || ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*";
 
 // Autotests image
-Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
+const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
 
-// Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
+// const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-maven-autotests-execute:0.1.0");
 
 // eslint-disable-next-line import/no-dynamic-require
-const data = dataObject[Cypress.env("fixtureFile")];
+const data = dataObject[fixtureFile];
 
 // TODO rename fixtureFile env
-context(Cypress.env("fixtureFile"), () => {
+context(fixtureFile, () => {
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -69,7 +70,7 @@ context(Cypress.env("fixtureFile"), () => {
 
   context("Admin part", () => {
     before(() => {
-      cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
+      cy.task(startApplicationTaskName, { build: initialApplicationBuildVersion }, { timeout: 600000 });
     });
 
     it("should login", () => {
@@ -98,9 +99,9 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {
-          autotestsParams: Cypress.env("autotestsParams"),
-          autotestsImage: Cypress.env("autotestsImage"),
+        cy.task(startApplicationTestsTaskName, {
+          autotestsParams,
+          autotestsImage,
         }, { timeout: 300000 });
       });
 
@@ -156,7 +157,7 @@ context(Cypress.env("fixtureFile"), () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
         cy.restoreLocalStorage();
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 600000 });
+        cy.task(startApplicationTaskName, { build: secondApplicationBuildVersion }, { timeout: 600000 });
         cy.getByDataTest("crumb:builds").click();
         cy.getByDataTest("navigation:open-dashboard").click({ force: true });
       });
@@ -268,9 +269,9 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), {
-            autotestsParams: Cypress.env("autotestsParams"),
-            autotestsImage: Cypress.env("autotestsImage"),
+          cy.task(startApplicationTestsTaskName, {
+            autotestsParams,
+            autotestsImage,
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
           cy.getByDataTest("crumb:selected-build").click();
