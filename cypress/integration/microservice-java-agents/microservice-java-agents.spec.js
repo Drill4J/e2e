@@ -358,7 +358,8 @@ context(Cypress.env("fixtureFile"), () => {
         context("Dashboard", () => {
           before("Open dashboard page", () => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click();
+            cy.getByDataTest("navigation:open-select-agent-panel").click();
+            cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
           });
 
           it(`should display ${secondBuildData.summary.coverage}% in coverage block`, () => {
