@@ -62,7 +62,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          finishAllScopes(data.groupId, data.agentsCount);
+          cy.finishAllScopes(data.groupId, data.agentsCount);
         });
       });
     });

@@ -15,7 +15,7 @@
  */
 /// <reference types="cypress" />
 
-export const finishAllScopes = (groupId, agentsCount) => {
+Cypress.Commands.add("finishAllScopes", (groupId, agentsCount) => {
   cy.intercept("POST", `/api/groups/${groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 
   cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", agentsCount);
@@ -27,4 +27,4 @@ export const finishAllScopes = (groupId, agentsCount) => {
   cy.wait("@finish-all-scopes", { timeout: 30000 });
 
   cy.getByDataTest("system-alert:title").should("exist");
-};
+});

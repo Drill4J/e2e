@@ -28,5 +28,6 @@ import "./tests/login";
 import "./tests/register-agent";
 import "./tests/register-group";
 import "./tests/finish-scope";
+import "./tests/finish-all-scopes";
 
 register(Cypress, cy, localStorage);

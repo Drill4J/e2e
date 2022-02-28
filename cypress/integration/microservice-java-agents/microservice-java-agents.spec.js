@@ -68,9 +68,7 @@ context(Cypress.env("fixtureFile"), () => {
       it("should finished all scopes after the tests finished executing should", () => {
         cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
 
-        // cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
-        // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-        finishAllScopes(data.groupId, data.agentsCount);
+        cy.finishAllScopes(data.groupId, data.agentsCount);
       });
 
       context("_", () => { // need to save order of execution
@@ -352,15 +350,15 @@ context(Cypress.env("fixtureFile"), () => {
         });
         it("should finish all scopes after the collcet coverage", () => {
           // TODO refactor to api request in before hook
-          cy.visit(convertUrl(`/groups/${data.groupId}/plugins/test2code`));
+          openTest2CodePluginForGroup();
 
-          finishAllScopes(data.groupId, data.agentsCount);
+          cy.finishAllScopes(data.groupId, data.agentsCount);
         });
 
         context("Dashboard", () => {
           before("Open dashboard page", () => {
             cy.restoreLocalStorage();
-            cy.visit(convertUrl(`/groups/${data.groupId}/dashboard`));
+            cy.getByDataTest("navigation:open-dashboard").click();
           });
 
           it(`should display ${secondBuildData.summary.coverage}% in coverage block`, () => {
