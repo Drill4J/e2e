@@ -77,7 +77,8 @@ function promisifiedExec(command) {
             resolve(out);
         });
         ls.stdout.on('data', (data) => {
-            fs.writeFileSync("./cypress-log", data, {flag: "a"});
+            fs.writeFileSync("./cypress-log", data.replace(
+                /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, ''), {flag: "a"});
         });
         ls.on('close', (code) => {
             console.log(`child process close all stdio with code ${code}`);
