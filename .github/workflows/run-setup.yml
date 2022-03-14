@@ -41,8 +41,13 @@ jobs:
       - name: Archive petclinic autotests log
         uses: actions/upload-artifact@v2
         with:
-          name: admin-logs
+          name: autotests-logs
           path: ./autotests-log
+      - name: Archive cypress log
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-logs
+          path: ./cypress-log
 
       - uses: Drill4J/vee-table@0.0.0
         with:

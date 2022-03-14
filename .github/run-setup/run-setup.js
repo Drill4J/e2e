@@ -77,7 +77,7 @@ function promisifiedExec(command) {
             resolve(out);
         });
         ls.stdout.on('data', (data) => {
-            console.log(data);
+            fs.writeFileSync("./cypress-log", data, {flag: "a"});
         });
         ls.on('close', (code) => {
             console.log(`child process close all stdio with code ${code}`);
