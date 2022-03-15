@@ -65,4 +65,5 @@ module.exports = (on) => {
       return null;
     },
   });
+  registerReportPortalPlugin(on);
 };

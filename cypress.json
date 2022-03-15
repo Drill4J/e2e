@@ -8,5 +8,13 @@
   },
   "testFiles": "**/*.spec.js",
   "pluginsFile": "cypress/plugins/index.js",
-  "videoCompression": 1
+  "videoCompression": 1,
+  "reporter": "@reportportal/agent-js-cypress",
+  "reporterOptions": {
+    "endpoint": "https://reportportal.epam.com/api/v1",
+    "token": "312bce33-7acc-47fb-8678-3e0c84db5b4f",
+    "launch": "oksana_gavrilova_TEST_EXAMPLE",
+    "project": "epm-d4j",
+    "description": "epm-d4j"
+  }
 }
