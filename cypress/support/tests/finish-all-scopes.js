@@ -18,7 +18,7 @@
 Cypress.Commands.add("finishAllScopes", (groupId, agentsCount) => {
   cy.intercept("POST", `/api/groups/${groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 
-  cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", agentsCount);
+  // cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", agentsCount);
   // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
   cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
   cy.get('[data-test="menu:item:finish-all-scopes"]').click();

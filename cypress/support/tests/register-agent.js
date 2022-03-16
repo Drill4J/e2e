@@ -21,7 +21,6 @@ Cypress.Commands.add("registerAgent", (agentId = AGENT_NAME) => {
 
   cy.getByDataTest("wizard:next-step").click();
   cy.getByDataTest("wizard:next-step").click();
-  cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
 
   cy.getByDataTest("wizard:finish").click();
 

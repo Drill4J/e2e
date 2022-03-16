@@ -30,4 +30,12 @@ import "./tests/register-group";
 import "./tests/finish-scope";
 import "./tests/finish-all-scopes";
 
+const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
+Cypress.on("uncaught:exception", (err) => {
+  /* returning false here prevents Cypress from failing the test */
+  if (resizeObserverLoopErrRe.test(err.message)) {
+    return false;
+  }
+});
+
 register(Cypress, cy, localStorage);

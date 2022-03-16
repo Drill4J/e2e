@@ -22,5 +22,5 @@ Cypress.Commands.add("finishScope", (coverage, testsCount) => {
   cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${testsCount}`);
 
   cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-  cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+  cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished.");
 });

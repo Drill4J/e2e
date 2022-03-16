@@ -19,8 +19,6 @@ Cypress.Commands.add("registerGroup", (groupId, agentsCount) => {
 
   cy.getByDataTest("wizard:next-step").click();
   cy.getByDataTest("wizard:next-step").click();
-  cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
-
   cy.getByDataTest("wizard:finish").click();
 
   cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
