@@ -25,7 +25,7 @@ context("single-java-agent-with-multiple-scopes", () => {
 
   afterEach(() => {
     cy.saveLocalStorage();
-    cy.wait(1000);
+    cy.wait(100);
   });
 
   context("Admin part", () => {

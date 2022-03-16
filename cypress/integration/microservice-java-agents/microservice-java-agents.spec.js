@@ -31,7 +31,7 @@ context(Cypress.env("fixtureFile"), () => {
 
   afterEach(() => {
     cy.saveLocalStorage();
-    cy.wait(1000);
+    cy.wait(100);
   });
 
   context("Admin part", () => {
@@ -69,7 +69,6 @@ context(Cypress.env("fixtureFile"), () => {
         cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
 
         cy.finishAllScopes(data.groupId, data.agentsCount);
-        cy.wait(1000);
       });
 
       context("_", () => { // need to save order of execution
