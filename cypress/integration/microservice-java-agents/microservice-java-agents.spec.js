@@ -15,7 +15,6 @@
  */
 /// <reference types="cypress" />
 import testNg from "./java-mcr.json";
-import { convertUrl } from "../../utils";
 
 Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
@@ -32,6 +31,7 @@ context(Cypress.env("fixtureFile"), () => {
 
   afterEach(() => {
     cy.saveLocalStorage();
+    cy.wait(100);
   });
 
   context("Admin part", () => {
@@ -154,7 +154,8 @@ context(Cypress.env("fixtureFile"), () => {
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("navigation:open-dashboard").click();
+            cy.getByDataTest("navigation:open-select-agent-panel").click();
+            cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
           });
 
           after(() => {
@@ -275,6 +276,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Tests2run", () => {
           context("Service group page", () => {
             it("should display summary Tests2run count", () => {
+              openTest2CodePluginForGroup();
               cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
             });
 
@@ -477,6 +479,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Tests2run", () => {
           context("Service group page", () => {
             it("should display summary tests to run count in the header", () => {
+              openTest2CodePluginForGroup();
               cy.getByDataTest("dashboard-header-cell:tests-to-run:value").should("have.text", secondBuildData.summary.testsToRunCountAfterTheTestsExecuted);
             });
 

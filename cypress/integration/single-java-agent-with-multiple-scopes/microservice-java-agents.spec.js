@@ -25,6 +25,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
 
   afterEach(() => {
     cy.saveLocalStorage();
+    cy.wait(100);
   });
 
   context("Admin part", () => {
@@ -52,7 +53,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
       cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
       cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-      cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
+      cy.contains("Test2Code", { matchCase: false }).should("exist");
     });
 
     new Array(Number(Cypress.env("scopesCount"))).fill(1).forEach((_, scopeNumber) => {
@@ -73,15 +74,13 @@ context("mcr-java-agents-with-multiple-scopes", () => {
           before(() => {
             cy.restoreLocalStorage();
             cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-            cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
+            cy.getByDataTest("navigation:open-test2code-plugin").click();
             cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
           });
 
           after(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("crumb:agents").click();
-            cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-            cy.get('[data-test="sidebar:link:Test2Code"]').click();
+            openTest2CodePluginForGroup();
           });
 
           new Array(Number(Cypress.env("scopesCount"))).fill(1).forEach((_, scopeNumber) => {
@@ -95,3 +94,9 @@ context("mcr-java-agents-with-multiple-scopes", () => {
     });
   });
 });
+
+function openTest2CodePluginForGroup() {
+  cy.getByDataTest("navigation:open-select-agent-panel").click();
+  cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
+  cy.getByDataTest("navigation:open-test2code-plugin").click();
+}

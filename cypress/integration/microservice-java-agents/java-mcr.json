@@ -580,13 +580,13 @@
     },
     "0.2.0": {
       "summary": {
-        "coverage": "22.5",
+        "coverage": "26.6",
         "testsCount": "12",
         "scopesCount": "4",
-        "tests2RunBeforeTestsExecuted": "3",
+        "tests2RunBeforeTestsExecuted": "4",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "1"
+        "risksCountAfterTheTestsExecuted": "0"
       },
       "agents": {
         "customer-service": {
@@ -599,8 +599,8 @@
         "visits-service": {
           "coverage": "16",
           "risksCountBeforeTestsExecuted": "1",
-          "risksCountAfterTheTestsExecuted": "1",
-          "tests2RunBeforeTestsExecuted": "0",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "1",
           "testsToRunCountAfterTheTestsExecuted": "0"
         },
         "api-gateway": {
@@ -652,7 +652,7 @@
         "visits-service": {
           "risks": {
             "risksCountBeforeTestsExecuted": "1",
-            "risksCountAfterTheTestsExecuted": "1",
+            "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
             "modifiedRisksCount": "1",
@@ -662,7 +662,7 @@
                 "packageName": "org/springframework/samples/petclinic/visits/web/VisitResource",
                 "type": "Modified",
                 "coverage": "0",
-                "associatedTestsCount": "0"
+                "associatedTestsCount": "1"
               }
             }
           }
