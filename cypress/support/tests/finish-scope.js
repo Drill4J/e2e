@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { manualLogin } from "./manual-login";
-export { convertUrl } from "./covert-url";
-export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
-export { manualRegisterAgent } from "./manual-register-agent";
-export { startNewBuildAndGoToTest2Code } from "./start-new-build-and-go-to-test-to-code";
-export { startAutotestsAndWait } from "./start-autotests-and-wait";
-export { checkSystemMessage } from "./check-system-message";
+/// <reference types="cypress" />
+
+Cypress.Commands.add("finishScope", (coverage, testsCount) => {
+  cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
+
+  cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${coverage}%`);
+  cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${testsCount}`);
+
+  cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+  cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+});

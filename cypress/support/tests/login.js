@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { manualLogin } from "./manual-login";
-export { convertUrl } from "./covert-url";
-export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
-export { manualRegisterAgent } from "./manual-register-agent";
-export { startNewBuildAndGoToTest2Code } from "./start-new-build-and-go-to-test-to-code";
-export { startAutotestsAndWait } from "./start-autotests-and-wait";
-export { checkSystemMessage } from "./check-system-message";
+import { convertUrl } from "../../utils";
+
+Cypress.Commands.add("login", () => {
+  cy.visit(convertUrl("/"));
+  cy.getByDataTest("login-button:continue-as-guest").click();
+  cy.url().should("eq", convertUrl("/"));
+});

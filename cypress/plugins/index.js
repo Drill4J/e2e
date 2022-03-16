@@ -31,7 +31,6 @@
  * @type {Cypress.PluginConfig}
  */
 
-const registerReportPortalPlugin = require("@reportportal/agent-js-cypress/lib/plugin");
 const {
   ping, promisifiedExec, dockerComposeUp,
 } = require("./utils");

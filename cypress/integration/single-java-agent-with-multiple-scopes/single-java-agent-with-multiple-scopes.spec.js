@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-// Cypress.env("scopesCount", "1");
+Cypress.env("scopesCount", "3");
 
 context("single-java-agent-with-multiple-scopes", () => {
-  before(() => {
-    cy.visit(convertUrl("/"));
-    cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -35,20 +28,32 @@ context("single-java-agent-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
+    });
+
+    it("should login", () => {
+      cy.login();
+    });
+
+    it('should open "Add agent" panel', () => {
+      cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
+
+      cy.contains('[data-test="panel"]', "Add Agent", { matchCase: false }).should("exist");
+    });
+
     it("should register agent", () => {
-      cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
-
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 2
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 3
-
-      cy.get('[data-test="wizard:finishng-button"]').click();
-
-      cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+      cy.registerAgent(data.agentId);
     });
   });
 
   context("Test2Code part", () => {
+    it("should open Test2Code plugin page", () => {
+      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId).click();
+      cy.getByDataTest("navigation:open-test2code-plugin").click();
+
+      cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
+    });
     (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
@@ -71,9 +76,7 @@ context("single-java-agent-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-          cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+          cy.finishScope(data.coverage, data.testsCount);
         });
 
         it("should display 0% coverage in active scope block", () => {
@@ -182,7 +185,7 @@ context("single-java-agent-with-multiple-scopes", () => {
           context("all scopes page", () => {
             it("should open all scopes page", () => {
               cy.getByDataTest("crumb:scopes").click();
-              cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
+              cy.url().should("contain", "/agents/dev-pet-standalone/plugins/test2code/builds/0.1.0/scopes");
             });
           });
         });

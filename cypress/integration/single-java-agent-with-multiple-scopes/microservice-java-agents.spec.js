@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { convertUrl } from "../../utils";
 import data from "./microservice-java-agents.json";
 
 Cypress.env("scopesCount", "3");
 
 context("mcr-java-agents-with-multiple-scopes", () => {
-  before(() => {
-    cy.login();
-    cy.visit(convertUrl("/"));
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -35,27 +28,31 @@ context("mcr-java-agents-with-multiple-scopes", () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 200000 });
+    });
+
+    it("should login", () => {
+      cy.login();
+    });
+
+    it('should open "Add agent" panel', () => {
+      cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
+
+      cy.contains('[data-test="panel"]', "Add Agent", { matchCase: false }).should("exist");
+    });
+
     it("should register group", () => {
-      cy.contains('[data-test="action-column:icons-register"]', data.agentsCount, { timeout: 45000 })
-        .click({ force: true }); // wait for agent initialization
-
-      cy.get('[data-test="wizard:continue-button"]').click();
-      cy.get('[data-test="wizard:continue-button"]').click();
-
-      cy.intercept("PATCH", `/api/groups/${data.groupId}`).as("registerGroup");
-
-      cy.get('[data-test="wizard:finishng-button"]').click();
-
-      cy.wait("@registerGroup", { timeout: 120000 });
-
-      cy.contains(`Agents ${data.agentsCount}`).should("exist");
+      cy.registerGroup(data.groupId, data.agentsCount);
     });
   });
 
   context("Test2Code part", () => {
-    before(() => {
-      cy.restoreLocalStorage();
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+    it("should open Test2Code plugin page", () => {
+      cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
+      cy.getByDataTest("navigation:open-test2code-plugin").click();
+
+      cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
     });
 
     new Array(Number(Cypress.env("scopesCount"))).fill(1).forEach((_, scopeNumber) => {
@@ -65,17 +62,7 @@ context("mcr-java-agents-with-multiple-scopes", () => {
         });
 
         it("should finish scope", () => {
-          cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
-
-          cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
-          // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-          cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-          cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-          cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-          cy.wait("@finish-all-scopes", { timeout: 30000 });
-
-          cy.getByDataTest("system-alert:title").should("exist");
+          cy.finishAllScopes(data.groupId, data.agentsCount);
         });
       });
     });

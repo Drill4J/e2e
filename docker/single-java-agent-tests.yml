@@ -11,7 +11,7 @@ services:
       - agentId=dev-pet-standalone
       - autotestAgentVersion=${AUTOTEST_AGENT_VERSION}
       - agentRunnerVersion=${AGENT_RUNNER_VERSION}
-      - params=${AUTOTESTS_PARAMS}
+      - params=${AUTOTESTS_PARAMS} # :testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true
       - withProxy=${WITH_PROXY}
     networks:
       - drill4j-dev-network

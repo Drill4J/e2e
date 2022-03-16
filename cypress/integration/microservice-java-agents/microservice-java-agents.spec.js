@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 /// <reference types="cypress" />
-import { JAVA_GROUP_NAME } from "../../fixtures/constants";
-import { convertUrl } from "../../utils";
 import testNg from "./java-mcr.json";
+import { convertUrl } from "../../utils";
 
-// Cypress.env("fixtureFile", "microservice-java-agents-testNG");
+Cypress.env("fixtureFile", "microservice-java-agents-testNG");
 
 const dataObject = {
   "microservice-java-agents-testNG": testNg,
@@ -27,12 +26,6 @@ const dataObject = {
 const data = dataObject[Cypress.env("fixtureFile")];
 
 context(Cypress.env("fixtureFile"), () => {
-  before(() => {
-    cy.visit(convertUrl("/"));
-    cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 300000 });
-  });
-
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -42,19 +35,22 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 300000 });
+    });
+
+    it("should login", () => {
+      cy.login();
+    });
+
+    it('should open "Add agent" panel', () => {
+      cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
+
+      cy.contains('[data-test="panel"]', "Add Agent", { matchCase: false }).should("exist");
+    });
+
     it("should register group", () => {
-      cy.contains('[data-test="action-column:icons-register"]', data.agentsCount, { timeout: 45000 }).click({ force: true }); // wait for agent initialization
-
-      cy.get('[data-test="wizard:continue-button"]').click();
-      cy.get('[data-test="wizard:continue-button"]').click();
-
-      cy.intercept("PATCH", `/api/groups/${data.groupId}`).as("registerGroup");
-
-      cy.get('[data-test="wizard:finishng-button"]').click();
-
-      cy.wait("@registerGroup", { timeout: 120000 });
-
-      cy.contains(`Agents ${data.agentsCount}`).should("exist");
+      cy.registerGroup(data.groupId, 4);
     });
   });
 
@@ -62,19 +58,17 @@ context(Cypress.env("fixtureFile"), () => {
     context("Initial builds", () => {
       const initialBuildData = data.builds["0.1.0"];
 
-      it("should finishe all scopes after the tests finished executing should", () => {
+      it("should open Test2Code plugin page", () => {
+        cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
+        cy.getByDataTest("navigation:open-test2code-plugin").click();
+
+        cy.contains("Test2Code", { matchCase: false }).should("exist");
+      });
+
+      it("should finished all scopes after the tests finished executing should", () => {
         cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
-        cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
 
-        // cy.getByDataTest("test-to-code-plugin:list-row").should("have.length", data.agentsCount);
-        // wait for data load and rendrer table. otherwise, the menu may close due to the re-renderer
-        cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-        cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-        cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-        cy.wait("@finish-all-scopes", { timeout: 30000 });
-
-        cy.getByDataTest("system-alert:title").should("exist");
+        cy.finishAllScopes(data.groupId, data.agentsCount);
       });
 
       context("_", () => { // need to save order of execution
@@ -94,17 +88,16 @@ context(Cypress.env("fixtureFile"), () => {
       context("Check every service data in the agent t2c page", () => {
         Object.entries(initialBuildData.agents).forEach(([serviceName, serviceData]) => {
           context(`Check ${serviceName} service`, () => {
-            before(() => {
-              cy.restoreLocalStorage();
-              cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-              cy.getByDataTest("sidebar:link:Test2Code").click();
+            it("should open group test2code page", () => {
+              openTest2CodePluginForGroup();
+              cy.contains("Test2Code", { matchCase: false }).should("exist");
+              cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
             });
+            it(`should open ${serviceName} test2code page`, () => {
+              cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+              cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-            after(() => {
-              cy.restoreLocalStorage();
-              cy.getByDataTest("crumb:agents").click();
-              cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-              cy.get('[data-test="sidebar:link:Test2Code"]').click();
+              cy.contains("Test2Code", { matchCase: false }).should("exist");
             });
 
             context("Build methods tab", () => {
@@ -152,6 +145,7 @@ context(Cypress.env("fixtureFile"), () => {
     context("Second build", () => {
       const secondBuildData = data.builds["0.2.0"];
       before(() => {
+        cy.restoreLocalStorage();
         cy.task("stopPetclinicMicroservice", {}, { timeout: 120000 });
         cy.task("startPetclinicMicroservice", { build: "0.2.0" }, { timeout: 200000 });
       });
@@ -160,39 +154,42 @@ context(Cypress.env("fixtureFile"), () => {
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("sidebar:link:Dashboard").click();
+            cy.getByDataTest("navigation:open-dashboard").click();
           });
 
           after(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("sidebar:link:Test2Code").click();
+            cy.getByDataTest("navigation:open-test2code-plugin").click();
           });
 
           it("should display 0% in coverage block", () => {
-            cy.getByDataTest("dashboard:build-coverage:main-info").should("contain", "0%");
+            cy.getByDataTest("dashboard:build-coverage:main-info", { timeout: 60000 }).should("contain", "0%");
           });
 
           it("should display 0 tests count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:main-info").should("have.text", "0");
+            cy.getByDataTest("dashboard:tests:main-info", { timeout: 60000 }).should("have.text", "0");
           });
 
           it("should display 0 scopes count in tests block", () => {
-            cy.getByDataTest("dashboard:tests:additional-info").should("contain", "0");
+            cy.getByDataTest("dashboard:tests:additional-info", { timeout: 60000 }).should("contain", "0");
           });
 
           it(`should display ${secondBuildData.summary.risksCountBeforeTestsExecuted} risks count in risks block`, () => {
-            cy.getByDataTest("dashboard:risks:main-info").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:risks:main-info", { timeout: 60000 })
+              .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
           });
 
           it(`should display ${secondBuildData.summary.tests2RunBeforeTestsExecuted} tests2run count in tests2run block`, () => {
-            cy.getByDataTest("dashboard:tests-to-run:main-info").should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
+            cy.getByDataTest("dashboard:tests-to-run:main-info", { timeout: 60000 })
+              .should("have.text", secondBuildData.summary.tests2RunBeforeTestsExecuted);
           });
         });
 
         context("Risks", () => {
           context("Service group page", () => {
             it("should display summary risks count in the header", () => {
-              cy.getByDataTest("dashboard-header-cell:risks:value").should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
+              cy.getByDataTest("dashboard-header-cell:risks:value")
+                .should("have.text", secondBuildData.summary.risksCountBeforeTestsExecuted);
             });
 
             it("should display risks count for every service", () => {
@@ -208,17 +205,16 @@ context(Cypress.env("fixtureFile"), () => {
             context("Agents with risks", () => {
               Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
                 context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  it("should open group test2code page", () => {
+                    openTest2CodePluginForGroup();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
+                  it(`should open ${serviceName} test2code page`, () => {
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
                   });
 
                   context("Overview page", () => {
@@ -252,17 +248,16 @@ context(Cypress.env("fixtureFile"), () => {
             });
             context("Agents without risks", () => {
               secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
-                before(() => {
-                  cy.restoreLocalStorage();
-                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                  cy.getByDataTest("sidebar:link:Test2Code").click();
+                it("should open group test2code page", () => {
+                  openTest2CodePluginForGroup();
+                  cy.contains("Test2Code", { matchCase: false }).should("exist");
+                  cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                 });
+                it(`should open ${serviceName} test2code page`, () => {
+                  cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                  cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                after(() => {
-                  cy.restoreLocalStorage();
-                  cy.getByDataTest("crumb:agents").click();
-                  cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                  cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                  cy.contains("Test2Code", { matchCase: false }).should("exist");
                 });
 
                 context(`Check ${serviceName} service`, () => {
@@ -296,17 +291,16 @@ context(Cypress.env("fixtureFile"), () => {
             context("Agents with tests2run", () => {
               Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
                 context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  it("should open group test2code page", () => {
+                    openTest2CodePluginForGroup();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
+                  it(`should open ${serviceName} test2code page`, () => {
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
                   });
 
                   context("Overview page", () => {
@@ -354,21 +348,18 @@ context(Cypress.env("fixtureFile"), () => {
         before(() => {
           cy.task("startPetclinicMicroserviceAutoTests", {}, { timeout: 450000 });
         });
-        it("should finish all scopes after the collcet coverage", () => { // TODO refactor to api request in before hook
-          cy.intercept("POST", `/api/groups/${data.groupId}/plugins/test2code/dispatch-action`).as("finish-all-scopes");
+        it("should finish all scopes after the collcet coverage", () => {
+          // TODO refactor to api request in before hook
+          openTest2CodePluginForGroup();
 
-          cy.get('[data-test="menu:icon:test-to-code-plugin:header-cell:actions"]').click();
-          cy.get('[data-test="menu:item:finish-all-scopes"]').click();
-          cy.get('[data-test="finish-all-scopes-modal:submit-button"]').click();
-
-          cy.wait("@finish-all-scopes", { timeout: 30000 });
-          cy.getByDataTest("system-alert:title").should("exist");
+          cy.finishAllScopes(data.groupId, data.agentsCount);
         });
 
         context("Dashboard", () => {
           before("Open dashboard page", () => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("sidebar:link:Dashboard").click();
+            cy.getByDataTest("navigation:open-select-agent-panel").click();
+            cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
           });
 
           it(`should display ${secondBuildData.summary.coverage}% in coverage block`, () => {
@@ -397,7 +388,7 @@ context(Cypress.env("fixtureFile"), () => {
           context("Service group page", () => {
             before("Open plugin page", () => {
               cy.restoreLocalStorage();
-              cy.getByDataTest("sidebar:link:Test2Code").click();
+              cy.getByDataTest("navigation:open-test2code-plugin").click();
             });
 
             it("should display summary risks count in the header", () => {
@@ -417,17 +408,16 @@ context(Cypress.env("fixtureFile"), () => {
             context("Agents with risks", () => { // TODO rename
               Object.entries(secondBuildData.agentsWithRisks).forEach(([serviceName, serviceData]) => {
                 context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  it("should open group test2code page", () => {
+                    openTest2CodePluginForGroup();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
+                  it(`should open ${serviceName} test2code page`, () => {
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
                   });
 
                   context("Overview page", () => {
@@ -462,17 +452,16 @@ context(Cypress.env("fixtureFile"), () => {
             context("Agents without risks", () => {
               secondBuildData.agentsWithoutRisks.forEach((serviceName) => {
                 context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click({ force: true });
+                  it("should open group test2code page", () => {
+                    openTest2CodePluginForGroup();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
+                  it(`should open ${serviceName} test2code page`, () => {
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
                   });
                   context("Overview page", () => {
                     it('should display "-" in the header', () => {
@@ -504,17 +493,16 @@ context(Cypress.env("fixtureFile"), () => {
             context("Agents with tests2run after tests executed", () => {
               Object.entries(secondBuildData.agentsWithTests2Run).forEach(([serviceName, serviceData]) => {
                 context(`Check ${serviceName} service`, () => {
-                  before(() => {
-                    cy.restoreLocalStorage();
-                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
-                    cy.getByDataTest("sidebar:link:Test2Code").click();
+                  it("should open group test2code page", () => {
+                    openTest2CodePluginForGroup();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
+                    cy.contains(`Online Agents ${data.agentsCount}`, { matchCase: false }).should("exist");
                   });
+                  it(`should open ${serviceName} test2code page`, () => {
+                    cy.contains('[data-test="test-to-code-name-cell:name-cell"]', serviceName).click({ force: true });
+                    cy.getByDataTest("navigation:open-test2code-plugin").click();
 
-                  after(() => {
-                    cy.restoreLocalStorage();
-                    cy.getByDataTest("crumb:agents").click();
-                    cy.contains('[data-test="name-column"]', data.groupId).click({ force: true });
-                    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+                    cy.contains("Test2Code", { matchCase: false }).should("exist");
                   });
 
                   context("Overview page", () => {
@@ -552,3 +540,9 @@ context(Cypress.env("fixtureFile"), () => {
     });
   });
 });
+
+function openTest2CodePluginForGroup() {
+  cy.getByDataTest("navigation:open-select-agent-panel").click();
+  cy.contains('[data-test="select-agent-panel:group-row"]', data.groupId).click();
+  cy.getByDataTest("navigation:open-test2code-plugin").click();
+}

@@ -15,7 +15,6 @@
  */
 /// <reference types="cypress" />
 // TODO add data tests for tables on risks and t2r pages
-import { convertUrl } from "../../utils";
 import multiinstancesSingleJavaAgentData from "./multinstances-single-java-agent.json";
 import singleJavaAgentTestNGData from "./single-java-agent-testNG.json";
 import singleJavaAgentJunit4Data from "./single-java-agent-junit4.json";
@@ -35,37 +34,31 @@ const dataObject = {
 // Cypress.env("secondApplicationBuildVersion", "0.5.0");
 // Cypress.env("startApplicationTestsTaskName", "startPetclinicMultinstacesAutoTests");
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
-// Single java agent
-// Cypress.env("startApplicationTaskName", "startPetclinic");
-// Cypress.env("initialApplicationBuildVersion", "0.1.0");
-// Cypress.env("secondApplicationBuildVersion", "0.5.0");
-// Cypress.env("startApplicationTestsTaskName", "startPetclinicAutoTests");
-// Autotests params
-// Cypress.env("fixtureFile", "single-java-agent-testNG");
-// Cypress.env("autotestsParams", ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true");
 
+// Single java agent
+const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
+const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
+const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
+const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
+// Autotests params
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
 
 // Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
-// Autotests image
-// Cypress.env("autotestsImage", "drill4j/petclinic-autotests-execute:0.3.2");
+const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
+const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
 
+// Autotests image
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
+const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
 
 // eslint-disable-next-line import/no-dynamic-require
-const data = dataObject[Cypress.env("fixtureFile")];
+const data = dataObject[fixtureFile];
 
 // TODO rename fixtureFile env
-context(Cypress.env("fixtureFile"), () => {
-  before(() => {
-    cy.visit(convertUrl("/"));
-    cy.getByDataTest("login-button:continue-as-guest").click();
-    cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("initialApplicationBuildVersion") }, { timeout: 600000 });
-  });
-
+context(fixtureFile, () => {
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -75,43 +68,46 @@ context(Cypress.env("fixtureFile"), () => {
   });
 
   context("Admin part", () => {
+    before(() => {
+      cy.task(startApplicationTaskName, { build: initialApplicationBuildVersion }, { timeout: 600000 });
+    });
+
+    it("should login", () => {
+      cy.login();
+    });
+
+    it('should open "Add agent" panel', () => {
+      cy.getByDataTest("no-agent-registered-stub:open-add-agent-panel").click();
+
+      cy.contains('[data-test="panel"]', "Add Agent", { matchCase: false }).should("exist");
+    });
+
     it("should register agent", () => {
-      cy.get('[data-test="action-column:icons-register"]', { timeout: 30000 }).click();
-
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 2
-      cy.get('[data-test="wizard:continue-button"]').click(); // step 3
-
-      cy.get('[data-test="wizard:finishng-button"]').click();
-
-      cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
-      cy.contains("Online").should("exist");
-      cy.contains("Agent has been registered").should("exist"); // need to add data-test on message-panel and assert it here
-
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
-      cy.get("[data-test=methods-table] tbody tr").should("not.have.length", 0);
+      cy.registerAgent(data.agentId);
     });
   });
 
   context("Test2Code part", () => {
+    it("should open Test2Code plugin page", () => {
+      cy.contains('[data-test="select-agent-panel:agent-row"]', data.agentId).click();
+      cy.getByDataTest("navigation:open-test2code-plugin").click();
+
+      cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
+    });
+
     context("Initial build", () => {
       const initialBuildData = data.builds["0.1.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTestsTaskName"), {
-          autotestsParams: Cypress.env("autotestsParams"),
-          autotestsImage: Cypress.env("autotestsImage"),
+        cy.task(startApplicationTestsTaskName, {
+          autotestsParams,
+          autotestsImage,
         }, { timeout: 300000 });
       });
 
       it("finish active scope after the tests finish executing should collect coverage", () => {
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
 
-        cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-
-        cy.get('[data-test="finish-scope-modal:scope-summary:code-coverage"]').should("have.text", `${initialBuildData.coverage}%`);
-        cy.get('[data-test="finish-scope-modal:scope-summary:tests-count"]').should("have.text", `${initialBuildData.testsCount}`);
-
-        cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
-        cy.get('[data-test="system-alert:title"]').should("have.text", "Scope has been finished");
+        cy.finishScope(initialBuildData.coverage, initialBuildData.testsCount);
 
         cy.get('[data-test="active-build-coverage-info:build-coverage-percentage"]').should("have.text", `${initialBuildData.coverage}%`);
         cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
@@ -159,10 +155,10 @@ context(Cypress.env("fixtureFile"), () => {
     context("Second build", () => {
       const buildData = data.builds["0.5.0"];
       before(() => {
-        cy.task(Cypress.env("startApplicationTaskName"), { build: Cypress.env("secondApplicationBuildVersion") }, { timeout: 600000 });
         cy.restoreLocalStorage();
+        cy.task(startApplicationTaskName, { build: secondApplicationBuildVersion }, { timeout: 600000 });
         cy.getByDataTest("crumb:builds").click();
-        cy.contains('[data-test="builds-table:buildVersion"]', "0.5.0").click({ force: true });
+        cy.getByDataTest("navigation:open-dashboard").click({ force: true });
       });
       // TODO add check build versions
 
@@ -192,7 +188,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Risks", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.get('a[data-test="sidebar:link:Test2Code"]').click();
+            cy.getByDataTest("navigation:open-test2code-plugin").click();
           });
           context("Overview page", () => {
             it("should display risks count in the header", () => {
@@ -207,7 +203,7 @@ context(Cypress.env("fixtureFile"), () => {
             });
 
             after(() => {
-              cy.getByDataTest("crumb:test2code").click();
+              cy.getByDataTest("crumb:selected-build").click();
             });
 
             it("should display not covered risks count in the page header", () => {
@@ -272,20 +268,19 @@ context(Cypress.env("fixtureFile"), () => {
 
       context("After tests executed", () => {
         before(() => {
-          cy.task(Cypress.env("startApplicationTestsTaskName"), {
-            autotestsParams: Cypress.env("autotestsParams"),
-            autotestsImage: Cypress.env("autotestsImage"),
+          cy.task(startApplicationTestsTaskName, {
+            autotestsParams,
+            autotestsImage,
           }, { timeout: 300000 });
           cy.restoreLocalStorage();
-          cy.getByDataTest("crumb:test2code").click();
-          cy.get('[data-test="active-scope-info:finish-scope-button"]').click();
-          cy.get('[data-test="finish-scope-modal:finish-scope-button"]').click();
+          cy.getByDataTest("crumb:selected-build").click();
+          cy.finishScope(buildData.coverage, buildData.testsCount);
         });
 
         context("Dashboard", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("sidebar:link:Dashboard").click();
+            cy.getByDataTest("navigation:open-dashboard").click();
           });
 
           it(`should display ${buildData.coverage}% in coverage block`, () => {
@@ -317,7 +312,7 @@ context(Cypress.env("fixtureFile"), () => {
         context("Risks", () => {
           before(() => {
             cy.restoreLocalStorage();
-            cy.getByDataTest("sidebar:link:Test2Code").click();
+            cy.getByDataTest("navigation:open-test2code-plugin").click();
           });
 
           context("Overview page", () => {
@@ -333,10 +328,6 @@ context(Cypress.env("fixtureFile"), () => {
             before(() => {
               cy.restoreLocalStorage();
               cy.contains('[data-test="action-section:count:risks"]', buildData.risks.risksCountAfterTheTestsExecuted).click();
-            });
-
-            after(() => {
-              cy.getByDataTest("crumb:test2code").click();
             });
 
             it("should display not covered risks count in the page header", () => {
@@ -356,6 +347,11 @@ context(Cypress.env("fixtureFile"), () => {
         });
 
         context("Tests2run", () => {
+          before(() => {
+            cy.restoreLocalStorage();
+            cy.getByDataTest("crumb:selected-build").click();
+          });
+
           context("Overview page", () => {
             it("should display suggested tests2run count in the header", () => {
               cy.getByDataTest("action-section:count:tests-to-run")
