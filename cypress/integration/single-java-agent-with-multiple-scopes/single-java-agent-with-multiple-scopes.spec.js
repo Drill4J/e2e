@@ -21,17 +21,13 @@ import data from "./single-java-agent.json";
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
+    Cypress.LocalStorage.clear = () => {
+        console.log("Clearing local storage")
+    };
+
     cy.visit(convertUrl("/"));
     cy.getByDataTest("login-button:continue-as-guest").click();
     cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
-  });
-
-  beforeEach(() => {
-    cy.restoreLocalStorage();
-  });
-
-  afterEach(() => {
-    cy.saveLocalStorage();
   });
 
   context("Admin part", () => {
@@ -52,7 +48,6 @@ context("single-java-agent-with-multiple-scopes", () => {
     (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
-          cy.restoreLocalStorage();
           cy.task("stopPetclinic"); // clear petclinic cache
           cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
         });
@@ -84,7 +79,6 @@ context("single-java-agent-with-multiple-scopes", () => {
 
     context("Should display the same coverage for every scope on all scope page", () => {
       before(() => {
-        cy.restoreLocalStorage();
         cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
       });
 
@@ -100,7 +94,6 @@ context("single-java-agent-with-multiple-scopes", () => {
       // we on all scopes page
         context("Should display tests table", () => {
           before(() => {
-            cy.restoreLocalStorage();
             cy.contains('a[data-test="scopes-list:scope-name"]', `New Scope ${scopeNumber + 1}`).click();
             cy.contains("div", "scope tests", { matchCase: false }).click();
           });
