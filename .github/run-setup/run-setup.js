@@ -34,6 +34,12 @@ try {
             [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator),
             [REPORT_ENV_KEYS.SETUP_ID]: setupId
         }
+        try {
+            fs.writeFileSync("./report-portal-metadata.json", JSON.stringify(testEnv), {flag: 'w+'})
+        }catch (e) {
+            console.log('Failed to write report-portal-metadata.json');
+            console.log(e)
+        }
 
         let publishedArtifact = publishedComponentId && publishedComponentVersion
             ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
