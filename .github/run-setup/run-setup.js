@@ -60,13 +60,13 @@ try {
         // eslint-disable-next-line no-restricted-syntax
         try {
             const parsedCypressEnv = Object.entries({...cypressEnv, ...params, ...testEnv}).reduce(parseCypressEnv, "");
-            const parsedCypressEnvWithParams = Object.entries().reduce(parseCypressEnv, parsedCypressEnv);
-            const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnvWithParams}  --spec './cypress/integration/${specFile}/${specFile}*'`
+            const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnv}  --spec './cypress/integration/${specFile}/${specFile}*'`
             console.log(`Run tests command: ${runTestsCommand}`)
             // eslint-disable-next-line no-await-in-loop
             await promisifiedExec(runTestsCommand);
             core.setOutput("status", "passed");
         } catch (e) {
+            console.log(e)
             core.setOutput("status", "failed");
         }
     })()
