@@ -65,5 +65,7 @@ module.exports = (on) => {
       return null;
     },
   });
-  registerReportPortalPlugin(on);
+  if (process.env.REPORT_PORTAL_TOKEN) { // it means that we run this tests in GH
+    registerReportPortalPlugin(on);
+  }
 };

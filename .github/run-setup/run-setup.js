@@ -17,6 +17,8 @@ const fs = require("fs");
 const {exec} = require("child_process");
 const core = require("@actions/core");
 const github = require("@actions/github");
+const { REPORT_ENV_KEYS } = require("../../constants");
+
 
 try {
     (async () => {
@@ -25,6 +27,13 @@ try {
             params, cypressEnv, versions, specFile, setupId, initiator,
             componentId: publishedComponentId, componentVersion: publishedComponentVersion
         } = github.context.payload.client_payload;
+        const testEnv = {
+            [REPORT_ENV_KEYS.LINK_TO_RUN]: `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`,
+            [REPORT_ENV_KEYS.TEST_PARAMS]: JSON.stringify(params),
+            [REPORT_ENV_KEYS.VERSIONS]: JSON.stringify(versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {})),
+            [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator),
+            [REPORT_ENV_KEYS.SETUP_ID]: setupId
+        }
 
         let publishedArtifact = publishedComponentId && publishedComponentVersion
             ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
@@ -33,13 +42,12 @@ try {
             console.log(`Published artifact: ${publishedArtifact}`);
             core.setOutput("releasedComponent", JSON.stringify({componentId: publishedComponentId, tag: publishedComponentVersion}));
         }
-        core.setOutput('linkToRun', `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`)
-        core.setOutput('testParams', JSON.stringify(params))
-        core.setOutput("setupId", setupId);
-        core.setOutput("versions", JSON.stringify(
-            versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}),
-        ));
-        core.setOutput("initiator", JSON.stringify(initiator));
+
+        core.setOutput('linkToRun', testEnv[REPORT_ENV_KEYS.LINK_TO_RUN]);
+        core.setOutput('testParams', testEnv[REPORT_ENV_KEYS.TEST_PARAMS]);
+        core.setOutput("setupId", testEnv[REPORT_ENV_KEYS.SETUP_ID]);
+        core.setOutput("versions", testEnv[REPORT_ENV_KEYS.VERSIONS]);
+        core.setOutput("initiator", testEnv[REPORT_ENV_KEYS.INITIATOR]);
 
         console.log(`Payload: ${JSON.stringify(github.context.payload.client_payload)}`)
 
@@ -51,8 +59,8 @@ try {
 
         // eslint-disable-next-line no-restricted-syntax
         try {
-            const parsedCypressEnv = Object.entries(cypressEnv).reduce(parseCypressEnv, "");
-            const parsedCypressEnvWithParams = Object.entries(params).reduce(parseCypressEnv, parsedCypressEnv);
+            const parsedCypressEnv = Object.entries({...cypressEnv, ...params, ...testEnv}).reduce(parseCypressEnv, "");
+            const parsedCypressEnvWithParams = Object.entries().reduce(parseCypressEnv, parsedCypressEnv);
             const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnvWithParams}  --spec './cypress/integration/${specFile}/${specFile}*'`
             console.log(`Run tests command: ${runTestsCommand}`)
             // eslint-disable-next-line no-await-in-loop
