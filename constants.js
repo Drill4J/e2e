@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { register } from "./local-storage/register";
-import "./report-portal";
-import "./commands";
-import "./tests/methods-table";
-import "./tests/tests-table";
-import "./tests/covered-methods-pane";
-import "./tests/associated-tests-pane";
-import "./tests/risks-count-in-the-cards";
-import "./tests/risks-table";
-import "./tests/tests-to-run-table";
-import "./start-admin";
-import "./tests/covered-methods-pane-with-methods-check";
-
-register(Cypress, cy, localStorage);
+module.exports = {
+  REPORT_ENV_KEYS: {
+    LINK_TO_RUN: "LINK_TO_RUN",
+    TEST_PARAMS: "TEST_PARAMS",
+    VERSIONS: "VERSIONS",
+    INITIATOR: "INITIATOR",
+    SETUP_ID: "SETUP_ID",
+  },
+};
