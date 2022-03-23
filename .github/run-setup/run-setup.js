@@ -59,7 +59,7 @@ try {
 
         // eslint-disable-next-line no-restricted-syntax
         try {
-            const parsedCypressEnv = Object.entries({...cypressEnv, ...params, ...testEnv}).reduce(parseCypressEnv, "");
+            const parsedCypressEnv = Object.entries({...cypressEnv, ...params}).reduce(parseCypressEnv, "");
             const runTestsCommand = `$(npm bin)/cypress run --env ${parsedCypressEnv}  --spec './cypress/integration/${specFile}/${specFile}*'`
             console.log(`Run tests command: ${runTestsCommand}`)
             // eslint-disable-next-line no-await-in-loop
