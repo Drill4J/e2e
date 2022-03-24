@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import "@reportportal/agent-js-cypress/lib/commands/reportPortalCommands";
 import { register } from "./local-storage/register";
 import "./report-portal";
 import "./commands";
