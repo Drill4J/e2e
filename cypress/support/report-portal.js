@@ -23,9 +23,9 @@ before("Send metadata to report portal", () => {
   if (process.env.REPORT_PORTAL_TOKEN) { // it means that we run this tests in GH
     const data = JSON.parse(rpMetaData);
     Cypress.env("reporterOptions.launch", data[REPORT_ENV_KEYS.SETUP_ID]);
-    cy.setTestDescription(rpMetaData);
+    Cypress.setTestDescription(rpMetaData);
     Cypress.env("reporterOptions.description", rpMetaData);
-    cy.addTestAttributes([
+    Cypress.addTestAttributes([
       {
         key: REPORT_ENV_KEYS.LINK_TO_RUN,
         value: data[REPORT_ENV_KEYS.LINK_TO_RUN],
