@@ -2,7 +2,7 @@
   "agentId": "dev-pet-standalone",
   "coverage": "26.7",
   "testsWithCoveredMethods": {
-    "junit4GetHomePage.()": {
+    "[engine:junit]/[class:api.standalone.StandaloneApiTest]/[method:junit4GetHomePage()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "0.2",
@@ -12,7 +12,7 @@
         {"name": "welcome", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4GetOwner4EditPage.()": {
+    "[engine:junit]/[class:api.standalone.StandaloneApiTest]/[method:junit4GetOwner4EditPage()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "7.7",
@@ -35,7 +35,7 @@
         {"name": "PetType", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4GetOwner4InfoPage.()": {
+    "[engine:junit]/[class:api.standalone.StandaloneApiTest]/[method:junit4GetOwner4InfoPage()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "14.9",
@@ -66,7 +66,7 @@
         {"name": "PetType", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4CheckPageHeader[1].()": {
+    "[engine:junit]/[class:ui.standalone.StandaloneChromeUITest]/[method:junit4CheckPageHeader[1]()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "3.9",
@@ -82,7 +82,7 @@
         {"name": "welcome", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4CheckPageHeader[0].()": {
+    "[engine:junit]/[class:ui.standalone.StandaloneChromeUITest]/[method:junit4CheckPageHeader[0]()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "0.2",
@@ -92,7 +92,7 @@
         {"name": "welcome", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4CheckPageHeader[2].()": {
+    "[engine:junit]/[class:ui.standalone.StandaloneChromeUITest]/[method:junit4CheckPageHeader[2]()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "10.3",
@@ -116,7 +116,7 @@
         {"name": "Vet", "type": "unaffected", "coverage": "100"}
       ]
     },
-    "junit4CheckPageHeader[3].()": {
+    "[engine:junit]/[class:ui.standalone.StandaloneChromeUITest]/[method:junit4CheckPageHeader[3]()]": {
       "type": "Auto",
       "expectedStatus": "Passed",
       "coverage": "0.8",
@@ -129,13 +129,13 @@
     }
   },
   "testsWithoutCoveredMethods": {
-    "junit4IgnoredTest.()": {
+    "[engine:junit]/[class:api.standalone.StandaloneApiTest]/[method:junit4IgnoredTest()]": {
       "type": "Auto",
       "expectedStatus": "Skipped",
       "coverage": "0",
       "methodsCovered": "0"
     },
-    "junit4FailedTest.()": {
+    "[engine:junit]/[class:api.standalone.StandaloneApiTest]/[method:junit4FailedTest()]": {
       "type": "Auto",
       "expectedStatus": "Failed",
       "coverage": "0",

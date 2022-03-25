@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/// <reference types="cypress" />
+/// <reference types="cypress" /> 
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-//Cypress.env("scopesCount", "2");
+Cypress.env("scopesCount", "9");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -26,7 +26,7 @@ context("single-java-agent-with-multiple-scopes", () => {
     };
 
     cy.visit(convertUrl("/"));
-    cy.getByDataTest("login-button:continue-as-guest").click();
+    cy.contains("button", "Continue as a guest (with admin rights)").click();
     cy.task("startPetclinic", { build: "0.1.0" }, { timeout: 150000 });
   });
 
@@ -40,7 +40,6 @@ context("single-java-agent-with-multiple-scopes", () => {
       cy.get('[data-test="wizard:finishng-button"]').click();
 
       cy.url({ timeout: 90000 }).should("include", "/dashboard", { timeout: 90000 });
-      cy.get('a[data-test="sidebar:link:Test2Code"]').click();
     });
   });
 
@@ -95,14 +94,14 @@ context("single-java-agent-with-multiple-scopes", () => {
         context("Should display tests table", () => {
           before(() => {
             cy.contains('a[data-test="scopes-list:scope-name"]', `New Scope ${scopeNumber + 1}`).click();
-            cy.contains("div", "scope tests", { matchCase: false }).click();
+            cy.contains("a", "scope tests", { matchCase: false }).click();
           });
 
           Object.entries(data.testsWithCoveredMethods).forEach(([testName, testData]) => {
             context(`${testName} row`, () => {
               it(`should display ${testName} name`, () => {
                 cy.contains("table tbody tr", testName)
-                  .find('[data-test="td-row-cell-overview.details.name"]').should("have.text", testName);
+                  .find('[data-test="compound-cell:name"]').should("have.text", testName);
               });
 
               it(`should display ${testName} type`, () => {
@@ -112,7 +111,7 @@ context("single-java-agent-with-multiple-scopes", () => {
 
               it(`should display ${testName} status`, () => {
                 cy.contains("table tbody tr", testName)
-                  .find('[data-test="td-row-cell-overview.result"]').should("have.text", testData.expectedStatus);
+                  .find('[data-test="td-row-cell-details.result"]').should("have.text", testData.expectedStatus);
               });
 
               it(`should display ${testName} coverage`, () => {
@@ -174,8 +173,8 @@ context("single-java-agent-with-multiple-scopes", () => {
 
           context("all scopes page", () => {
             it("should open all scopes page", () => {
-              cy.getByDataTest("crumb:scopes").click();
-              cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
+              cy.contains("a", "All scopes", { matchCase: false }).click();
+              // cy.url().should("contain", "/agents/dev-pet-standalone/builds/0.1.0/dashboard/test2code/scopes");
             });
           });
         });

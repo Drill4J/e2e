@@ -338,8 +338,6 @@ typedef struct {
             libdrill_agent_kref_com_epam_drill_common_AgentType (*get_AGENT_TYPE)();
             const char* (*get_DRILL_PACKAGE)();
             const char* (*get_HTTP_HOOK_ENABLED)();
-            const char* (*get_KAFKA_CONSUMER_SPRING)();
-            const char* (*get_KAFKA_PRODUCER_INTERFACE)();
             const char* (*get_SPRING_BOOT_PREFIX)();
             const char* (*get_SYSTEM_CONFIG_PATH)();
             const char* (*get_SYSTEM_HTTP_HOOK_ENABLED)();
@@ -553,6 +551,8 @@ typedef struct {
                 struct {
                   libdrill_agent_KType* (*_type)(void);
                   libdrill_agent_kref_com_epam_drill_agent_instrument_KafkaTransformer (*_instance)();
+                  const char* (*get_KAFKA_CONSUMER_INTERFACE)(libdrill_agent_kref_com_epam_drill_agent_instrument_KafkaTransformer thiz);
+                  const char* (*get_KAFKA_PRODUCER_INTERFACE)(libdrill_agent_kref_com_epam_drill_agent_instrument_KafkaTransformer thiz);
                   libdrill_agent_kref_kotlin_ByteArray (*transform)(libdrill_agent_kref_com_epam_drill_agent_instrument_KafkaTransformer thiz, const char* className, libdrill_agent_kref_kotlin_ByteArray classfileBuffer, libdrill_agent_kref_kotlin_Any loader);
                 } KafkaTransformer;
                 struct {
