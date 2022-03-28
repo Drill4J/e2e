@@ -10,8 +10,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.event.client_payload.ref || 'main' }}
       - run: 'echo "field: ${{ github.event.client_payload.admin_version }}"'
       - run: 'echo "client_payload: ${{ toJson(github.event.client_payload) }}"'
+
+      - name: Declare branch variable variables
+        id: gh_vars
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
       - uses: actions/setup-node@v2
         with:
@@ -68,6 +77,7 @@ jobs:
           initiator: ${{ steps.run_setup.outputs.initiator }}
           link-to-run: ${{ steps.run_setup.outputs.linkToRun }}
           test-params: ${{ steps.run_setup.outputs.testParams }}
+          description: "Branch name: ${{ steps.gh_vars.outputs.branch }}, Commit hash: ${{ steps.gh_vars.outputs.sha_short }}"
       - name: Handle tests status
         id: handle_status
         uses: "./.github/handle-status"
