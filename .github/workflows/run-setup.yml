@@ -72,12 +72,11 @@ jobs:
           # steps.run_setup is your test step name (defined above)
           test-status: ${{ steps.run_setup.outputs.status }} # 1. Pass test status (any string)
           test-component-version-map: ${{ steps.run_setup.outputs.versions }}
-          test-description: ${{ steps.run_setup.outputs.description }}
           released-component: ${{ steps.run_setup.outputs.releasedComponent }}
           initiator: ${{ steps.run_setup.outputs.initiator }}
           link-to-run: ${{ steps.run_setup.outputs.linkToRun }}
           test-params: ${{ steps.run_setup.outputs.testParams }}
-          description: "Branch name: ${{ steps.gh_vars.outputs.branch }}, Commit hash: ${{ steps.gh_vars.outputs.sha_short }}"
+          test-description: 'Branch name: ${{ steps.gh_vars.outputs.branch }}, Commit hash: ${{ steps.gh_vars.outputs.sha_short }}'
       - name: Handle tests status
         id: handle_status
         uses: "./.github/handle-status"
