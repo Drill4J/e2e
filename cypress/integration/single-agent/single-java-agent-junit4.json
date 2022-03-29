@@ -1,5 +1,6 @@
 {
   "agentId": "dev-pet-standalone",
+  "systemSettings": {},
   "builds": {
     "0.1.0": {
       "coverage": "30",

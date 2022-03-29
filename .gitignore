@@ -2,5 +2,5 @@
 /node_modules/
 /cypress/screenshots/
 /cypress/videos/
-/admin-logs
-/autotests-log
+/*log
+/*logs

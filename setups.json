@@ -1,6 +1,6 @@
 {
   "single-java-agent-gradle": {
-    "file": "single-java-agent",
+    "file": "single-agent",
     "cypressEnv": {
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",
@@ -25,8 +25,18 @@
       }
     ]
   },
+  "single-js-agent": {
+    "file": "single-agent",
+    "cypressEnv": {
+      "startApplicationTaskName": "startToDoMVC",
+      "initialApplicationBuildVersion": "1.0.0",
+      "secondApplicationBuildVersion": "2.0.0",
+      "startApplicationTestsTaskName": "startToDoMVCAutotests"
+    },
+    "params": [{ "fixtureFile": "single-js-agent" }]
+  },
   "single-java-agent-maven": {
-    "file": "single-java-agent",
+    "file": "single-agent",
     "cypressEnv": {
       "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",

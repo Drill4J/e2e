@@ -37,12 +37,14 @@ const {
 const adminScripts = require("./admin");
 const singlejavaAgentScripts = require("./single-java-agent");
 const microserviceJavaAgentsScripts = require("./microservice-java-agents");
+const singleJsAgentScripts = require("./single-js-agent");
 
 module.exports = (on) => {
   on("task", {
     ...adminScripts,
     ...singlejavaAgentScripts,
     ...microserviceJavaAgentsScripts,
+    ...singleJsAgentScripts,
     async startPetclinicMultinstaces({ build = "0.1.0" }) {
       const log = await dockerComposeUp(
         "./docker/multinstances-single-java-agent.yml",
