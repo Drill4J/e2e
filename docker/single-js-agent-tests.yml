@@ -3,11 +3,11 @@ version: '3'
 services:
   single-js-agent-tests:
     container_name: single-js-agent-tests
-    image: drill4j/example-js-selenium-mocha:1.0.0
+    image: drill4j/example-js-selenium-mocha:0.8.0
     environment:
       APP_URL: http://host.docker.internal:${TODO_MVC_PORT}
       SELENIUM_HUB_HOST: host.docker.internal
-      SELENIUM_HUB_PORT: 4444
+      SELENIUM_HUB_PORT: 4445
 
       DRILL4J_ADMIN_BACKEND_URL: http://${ADMIN_ADDRESS}
       DRILL4J_DEVTOOLS_PROXY_URL: http://host.docker.internal:8093
