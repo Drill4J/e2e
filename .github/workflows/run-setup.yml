@@ -38,11 +38,6 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-      - name: Archive cypress.json
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress.json
-          path: cypress.json
       - name: Archive cypress screenshots results
         uses: actions/upload-artifact@v2
         with:

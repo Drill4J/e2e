@@ -27,6 +27,14 @@ try {
             params, cypressEnv, versions, specFile, setupId, initiator,
             componentId: publishedComponentId, componentVersion: publishedComponentVersion
         } = github.context.payload.client_payload;
+        configureReportPortal({
+            [REPORT_ENV_KEYS.LINK_TO_RUN]: `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`,
+            [REPORT_ENV_KEYS.TEST_PARAMS]: params,
+            [REPORT_ENV_KEYS.VERSIONS]: versions,
+            [REPORT_ENV_KEYS.INITIATOR]: initiator,
+            [REPORT_ENV_KEYS.SETUP_ID]: setupId
+        });
+
         const testEnv = {
             [REPORT_ENV_KEYS.LINK_TO_RUN]: `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`,
             [REPORT_ENV_KEYS.TEST_PARAMS]: JSON.stringify(params, null, 2),
@@ -34,8 +42,6 @@ try {
             [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator, null, 2),
             [REPORT_ENV_KEYS.SETUP_ID]: setupId
         }
-
-        configureReportPortal(testEnv);
 
         let publishedArtifact = publishedComponentId && publishedComponentVersion
             ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
@@ -111,10 +117,7 @@ function configureReportPortal(testEnv) {
     try {
         const rawdata =  fs.readFileSync('./cypress.json', 'utf8');
         const config = JSON.parse(rawdata);
-
-        config.reporterOptions.token = process.env.REPORT_PORTAL_TOKEN;
-        config.reporterOptions.launch = testEnv[REPORT_ENV_KEYS.SETUP_ID];
-        config.reporterOptions.attributes = [
+        const attributes = [
             {
                 key: REPORT_ENV_KEYS.LINK_TO_RUN,
                 value: testEnv[REPORT_ENV_KEYS.LINK_TO_RUN],
@@ -123,15 +126,13 @@ function configureReportPortal(testEnv) {
                 key: REPORT_ENV_KEYS.INITIATOR,
                 value: testEnv[REPORT_ENV_KEYS.INITIATOR],
             },
-            {
-                key: REPORT_ENV_KEYS.TEST_PARAMS,
-                value: testEnv[REPORT_ENV_KEYS.TEST_PARAMS],
-            },
-            {
-                key: REPORT_ENV_KEYS.VERSIONS,
-                value: testEnv[REPORT_ENV_KEYS.VERSIONS],
-            },
-        ];
+            ...testEnv[REPORT_ENV_KEYS.VERSIONS].map(({componentId, tag}) => ({key: componentId, value: tag})),
+            ...Object.entries(testEnv[REPORT_ENV_KEYS.TEST_PARAMS]).map(([paramName, paramValue]) => ({key: paramName, value: paramValue}))
+        ]
+
+        config.reporterOptions.token = process.env.REPORT_PORTAL_TOKEN;
+        config.reporterOptions.launch = testEnv[REPORT_ENV_KEYS.SETUP_ID];
+        config.reporterOptions.attributes = attributes;
 
         fs.writeFileSync("./cypress.json", JSON.stringify(config), {flag: 'w+'});
     }catch (e) {
