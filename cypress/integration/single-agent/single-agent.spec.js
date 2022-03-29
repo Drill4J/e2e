@@ -30,6 +30,14 @@ const dataObject = {
 };
 // Check setups.json file with examples of cypress env combination
 
+// Single js Agent
+// Cypress.env("startApplicationTaskName", "startToDoMVC");
+// Cypress.env("initialApplicationBuildVersion", "1.0.0");
+// Cypress.env("secondApplicationBuildVersion", "2.0.0");
+// Cypress.env("startApplicationTestsTaskName", "startToDoMVCAutotests");
+// Cypress.env("fixtureFile", "single-js-agent");
+
+
 // Multiinstances
 // Cypress.env("startApplicationTaskName", "startPetclinicMultinstaces");
 // Cypress.env("initialApplicationBuildVersion", "0.1.0");
@@ -38,10 +46,6 @@ const dataObject = {
 // Cypress.env("fixtureFile", "multinstances-single-java-agent");
 
 // Single java agent
-const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
-const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
-const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
-const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
 // Autotests params
 // Cypress.env("autotestsParams", ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit4");
@@ -49,19 +53,18 @@ const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName
 // Cypress.env("autotestsParams", ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*");
 // Cypress.env("fixtureFile", "single-java-agent-junit5");
 
-const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
-const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
+
 
 // Autotests image
 // Cypress.env("autotestsImage", "drill4j/petclinic-maven-autotests-execute:0.1.0");
-const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
 
-// Single js Agent
-// Cypress.env("startApplicationTaskName", "startToDoMVC");
-// Cypress.env("initialApplicationBuildVersion", "1.0.0");
-// Cypress.env("secondApplicationBuildVersion", "2.0.0");
-// Cypress.env("startApplicationTestsTaskName", "startToDoMVCAutotests");
-// Cypress.env("fixtureFile", "single-js-agent");
+const startApplicationTaskName = Cypress.env("startApplicationTaskName") || "startPetclinic";
+const initialApplicationBuildVersion = Cypress.env("initialApplicationBuildVersion") || "0.1.0";
+const secondApplicationBuildVersion = Cypress.env("secondApplicationBuildVersion") || "0.5.0";
+const startApplicationTestsTaskName = Cypress.env("startApplicationTestsTaskName") || "startPetclinicAutoTests";
+const autotestsImage = Cypress.env("autotestsImage") || "drill4j/petclinic-autotests-execute:0.3.2";
+const fixtureFile = Cypress.env("fixtureFile") || "single-java-agent-testNG";
+const autotestsParams = Cypress.env("autotestsParams") || ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true";
 
 // eslint-disable-next-line import/no-dynamic-require
 const data = dataObject[fixtureFile];
@@ -180,7 +183,7 @@ context(fixtureFile, () => {
     });
 
     context("Second build", () => {
-      const buildData = data.builds["0.5.0"];
+      const buildData = data.builds[secondApplicationBuildVersion];
       before(() => {
         cy.restoreLocalStorage();
         cy.task(startApplicationTaskName, { build: secondApplicationBuildVersion }, { timeout: 600000 });
@@ -267,11 +270,11 @@ context(fixtureFile, () => {
             });
 
             it("should display current build version", () => {
-              cy.getByDataTest("tests-to-run-header:current-build-version").should("contain", "0.5.0");
+              cy.getByDataTest("tests-to-run-header:current-build-version").should("contain", secondApplicationBuildVersion);
             });
 
             it("should display parent build version", () => {
-              cy.getByDataTest("tests-to-run-header:compared-build-version").should("contain", "0.1.0");
+              cy.getByDataTest("tests-to-run-header:compared-build-version").should("contain", initialApplicationBuildVersion);
             });
 
             context("Tests to run table", () => {
@@ -283,12 +286,6 @@ context(fixtureFile, () => {
                 cy.get("table tbody tr").should("have.length", buildData.testsToRun.tests2RunBeforeTestsExecuted);
               });
             });
-          });
-        });
-
-        context("Time savings", () => {
-          it("should display bar chart", () => {
-            cy.getByDataTest("bar-chart").should("exist");
           });
         });
       });
@@ -345,8 +342,6 @@ context(fixtureFile, () => {
           context("Overview page", () => {
             it("should display risks count in the cards", () => {
               cy.getByDataTest("build-methods-card:total-count:NEW").should("have.text", buildData.risks.newRisksCount);
-              cy.getByDataTest("build-project-methods:link-button:new:risks")
-                .should("contain", buildData.risks.newRisksCountAfterTheTestsExecuted);
               cy.getByDataTest("build-methods-card:total-count:MODIFIED").should("have.text", buildData.risks.modifiedRisksCount);
             });
           });
@@ -400,16 +395,6 @@ context(fixtureFile, () => {
             it("should display tests data in the table", () => {
               cy.testsToRunTableTest(buildData.testsToRun.tests);
             });
-          });
-        });
-
-        context("Time savings", () => {
-          it("should display duration chart", () => {
-            cy.getByDataTest("bar-chart:time-saved-chart").should("exist");
-          });
-
-          it("should display total time saved chart", () => {
-            cy.getByDataTest("bar-chart:duration-chart").should("exist");
           });
         });
       });

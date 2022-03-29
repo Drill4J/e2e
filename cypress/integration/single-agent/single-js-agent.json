@@ -232,14 +232,14 @@
           "expectedStatus": "Passed",
           "coverage": "62.8",
           "methodsCovered": "22",
-          "path": "/specs/create.spec.ts"
+          "path": "/specs/delete.spec.ts"
         },
         "delete can delete one": {
           "type": "E2e",
           "expectedStatus": "Passed",
           "coverage": "55.8",
           "methodsCovered": "19",
-          "path": "/specs/create.spec.ts"
+          "path": "/specs/delete.spec.ts"
         },
         "create name with regex-specific characters: ()[]": {
           "type": "E2e",
@@ -253,7 +253,7 @@
           "expectedStatus": "Passed",
           "coverage": "48.8",
           "methodsCovered": "16",
-          "path": "/specs/create.spec.ts"
+          "path": "/specs/edit.spec.ts"
         },
         "create Parameterized suite with param \"value2\" value case with param \"value2\"": {
           "type": "E2e",
@@ -272,7 +272,7 @@
         "create can create": {
           "type": "E2e",
           "expectedStatus": "Passed",
-          "coverage": "51.2\n",
+          "coverage": "51.2",
           "methodsCovered": "16",
           "path": "/specs/create.spec.ts"
         },
@@ -286,59 +286,41 @@
       },
       "testsWithoutCoveredMethods": {}
     },
-    "0.5.0": {
-      "coverage": "26.4",
-      "comparedToTheBaselineBuildCoverage": "- 3.6",
+    "2.0.0": {
+      "coverage": "59.1",
+      "comparedToTheBaselineBuildCoverage": "- 10.7",
       "scopesCount": "1",
-      "testsCount": "12",
+      "testsCount": "1",
       "risks": {
-        "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "2",
-        "newRisksCount": "2",
-        "newRisksCountAfterTheTestsExecuted": "2",
-        "modifiedRisksCount": "3",
-        "modifiedRisksCountAfterTheTestsExecuted": "3",
+        "risksCountBeforeTestsExecuted": "2",
+        "risksCountAfterTheTestsExecuted": "0",
+        "newRisksCount": "1",
+        "newRisksCountAfterTheTestsExecuted": "0",
+        "modifiedRisksCount": "1",
+        "modifiedRisksCountAfterTheTestsExecuted": "0",
         "methods": {
-          "newMethod1": {
-            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+          "newMethod": {
+            "packageName": "js/controllers/TodoCtrl.ts.TodoCtrl",
             "type": "New",
-            "coverage": "0",
-            "associatedTestsCount": "0"
-          },
-          "newMethod2": {
-            "packageName": "org/springframework/samples/petclinic/vet/VetController",
-            "type": "New",
-            "coverage": "0",
-            "associatedTestsCount": "0"
-          },
-          "initFindForm": {
-            "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
-            "type": "Modified",
-            "coverage": "100",
-            "associatedTestsCount": "2"
-          },
-          "triggerException": {
-            "packageName": "org/springframework/samples/petclinic/system/CrashController",
-            "type": "Modified",
             "coverage": "100",
             "associatedTestsCount": "1"
           },
-          "welcome": {
-            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+          "removeTodo": {
+            "packageName": "js/controllers/TodoCtrl.ts.TodoCtrl",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "6"
+            "associatedTestsCount": "1"
           }
         }
       },
       "testsToRun": {
-        "tests2RunBeforeTestsExecuted": "6",
+        "tests2RunBeforeTestsExecuted": "1",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "junit4GetHomePage()": {
-            "type": "Auto",
-            "coverage": "0.2",
-            "methodsCovered": "1"
+          "delete can delete one": {
+            "type": "E2e",
+            "coverage": "59.1",
+            "methodsCovered": "20"
           }
         }
       }
