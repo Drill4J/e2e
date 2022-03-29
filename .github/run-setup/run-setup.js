@@ -29,9 +29,9 @@ try {
         } = github.context.payload.client_payload;
         const testEnv = {
             [REPORT_ENV_KEYS.LINK_TO_RUN]: `https://github.com/Drill4J/e2e/actions/runs/${github.context.runId}`,
-            [REPORT_ENV_KEYS.TEST_PARAMS]: JSON.stringify(params),
-            [REPORT_ENV_KEYS.VERSIONS]: JSON.stringify(versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {})),
-            [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator),
+            [REPORT_ENV_KEYS.TEST_PARAMS]: JSON.stringify(params, null, 2),
+            [REPORT_ENV_KEYS.VERSIONS]: JSON.stringify(versions.reduce((acc, {componentId, tag}) => ({...acc, [componentId]: tag}), {}), null, 2),
+            [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator, null, 2),
             [REPORT_ENV_KEYS.SETUP_ID]: setupId
         }
 
