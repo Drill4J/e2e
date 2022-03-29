@@ -48,6 +48,11 @@ jobs:
         with:
           name: admin-logs
           path: ./admin-logs
+      - name: Archive cypress.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress.json
+          path: cypress.json
       - name: Archive petclinic autotests log
         uses: actions/upload-artifact@v2
         with:
