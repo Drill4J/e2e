@@ -29,6 +29,8 @@ jobs:
 
       - name: Run setup
         id: run_setup
+        env:
+          REPORT_PORTAL_TOKEN: ${{ secrets.REPORT_PORTAL_TOKEN }}
         uses: "./.github/run-setup"
 
       - name: Archive cypress videos results

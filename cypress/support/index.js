@@ -15,7 +15,6 @@
  */
 import "@reportportal/agent-js-cypress/lib/commands/reportPortalCommands";
 import { register } from "./local-storage/register";
-import "./report-portal";
 import "./commands";
 import "./tests/methods-table";
 import "./tests/tests-table";

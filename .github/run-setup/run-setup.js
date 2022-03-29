@@ -34,12 +34,8 @@ try {
             [REPORT_ENV_KEYS.INITIATOR]: JSON.stringify(initiator),
             [REPORT_ENV_KEYS.SETUP_ID]: setupId
         }
-        try {
-            fs.writeFileSync("./report-portal-metadata.json", JSON.stringify(testEnv), {flag: 'w+'})
-        }catch (e) {
-            console.log('Failed to write report-portal-metadata.json');
-            console.log(e)
-        }
+
+        configureReportPortal(testEnv);
 
         let publishedArtifact = publishedComponentId && publishedComponentVersion
             ? `${github.context.payload.client_payload.componentId}: ${github.context.payload.client_payload.componentVersion}` : '';
@@ -109,3 +105,37 @@ function parseCypressEnv(acc, [key, value]) {
 }
 
 // actionPayload="{\"test2code-ui\": \"0.1.0-93\"}" node start-tests.js
+
+
+function configureReportPortal(testEnv) {
+    try {
+        const rawdata =  fs.readFileSync('./cypress.json', 'utf8');
+        const config = JSON.parse(rawdata);
+
+        config.reporterOptions.token = process.env.REPORT_PORTAL_TOKEN;
+        config.reporterOptions.launch = testEnv[REPORT_ENV_KEYS.SETUP_ID];
+        config.reporterOptions.attributes = [
+            {
+                key: REPORT_ENV_KEYS.LINK_TO_RUN,
+                value: testEnv[REPORT_ENV_KEYS.LINK_TO_RUN],
+            },
+            {
+                key: REPORT_ENV_KEYS.INITIATOR,
+                value: testEnv[REPORT_ENV_KEYS.INITIATOR],
+            },
+            {
+                key: REPORT_ENV_KEYS.TEST_PARAMS,
+                value: testEnv[REPORT_ENV_KEYS.TEST_PARAMS],
+            },
+            {
+                key: REPORT_ENV_KEYS.VERSIONS,
+                value: testEnv[REPORT_ENV_KEYS.VERSIONS],
+            },
+        ];
+
+        fs.writeFileSync("./cypress.json", JSON.stringify(config), {flag: 'w+'});
+    }catch (e) {
+        console.log('Failed to write cypress.json.json');
+        console.log(e);
+    }
+}
