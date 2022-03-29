@@ -122,10 +122,6 @@ function configureReportPortal(testEnv) {
                 key: REPORT_ENV_KEYS.LINK_TO_RUN,
                 value: testEnv[REPORT_ENV_KEYS.LINK_TO_RUN],
             },
-            {
-                key: REPORT_ENV_KEYS.INITIATOR,
-                value: testEnv[REPORT_ENV_KEYS.INITIATOR],
-            },
             ...testEnv[REPORT_ENV_KEYS.VERSIONS].map(({componentId, tag}) => ({key: componentId, value: tag})),
             ...Object.entries(testEnv[REPORT_ENV_KEYS.TEST_PARAMS]).map(([paramName, paramValue]) => ({key: paramName, value: paramValue}))
         ]
