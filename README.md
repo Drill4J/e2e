@@ -15,7 +15,9 @@ To launch the development environment, follow these steps:
 4. start docker
 5. enjoy the development.
 
-## Single agent setup environment
+## Single agent setup
+
+### Environment
 
 * startApplicationTaskName - task name that will up application up the docker
     * `startPetclinic`
@@ -47,25 +49,60 @@ To launch the development environment, follow these steps:
     * `single-java-agent-junit5`
     * `single-js-agent`
 
-## Examples of starting setups in headless mode
+### Default environment
 
-### Single Java Agent
+* startApplicationTaskName - startPetclinic
+* initialApplicationBuildVersion - 0.1.0
+* secondApplicationBuildVersion - 0.2.0
+* autotestsImage - drill4j/petclinic-autotests-execute:0.3.2
+* autotestsParams - :testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true
+* fixtureFile - single-java-agent-testNG
+
+### Examples of starting setups in headless mode
+
+* with default parameters
+
+  ``
+  cypress run --spec ./cypress/integration/single-agent/single-agent.spec.js
+  ``
+
+* single java-agent with testNG runner
+
+  ``
+  cypress run --env "initialApplicationBuildVersion"="0.1.0","secondApplicationBuildVersion"="0.5.0","startApplicationTaskName"="startPetclinic","startApplicationTestsTaskName"="startPetclinicAutoTests","autotestsImage"="drill4j/petclinic-autotests-execute:0.3.2","autotestsParams"=":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true","fixtureFile"="single-java-agent-testNG"  --spec './cypress/integration/single-agent/single-agent.spec.js'
+  ``
+
+* single js-agent
+  ``
+  cypress run --env "initialApplicationBuildVersion"="1.0.0","secondApplicationBuildVersion"="2.0.0","startApplicationTaskName"="startToDoMVC","startApplicationTestsTaskName"="startToDoMVCAutotests","fixtureFile"="single-js-agent"  --spec './cypress/integration/single-agent/single-agent.spec.js'
+  ``
+
+## Microservice java agent setup environment
+
+### Environment
+
+* fixtureFile - key of **dataObject** object. Values of **dataObject** is json files with data for setups
+    * `microservice-java-agents-testNG`
+
+  Since there is only one parameter option, it can not be passed, it will be selected by default
+
+### Example of starting setups in headless mode
 
 ``
-cypress run --spec ./cypress/integration/single-java-agent/single-agent.spec.js
+    cypress run --spec ./cypress/integration/microservice-java-agents/microservice-java-agents.spec.js
 ``
 
 ## Notes
 
-### Clear docker environment
+### Clearing docker environment
 
-Before running every spec files scripts will remove all your docker containers and volumes. The code responsible for this stay
+Before running every spec files scripts will remove all your docker containers and volumes. The code responsible for this is
 in `cypress/support/start-admin.js`
 
 To disable it you need:
 
 1. Open `cypress/support/start-admin.js`
-2. Comment `cy.task("removeContainers");`
+2. Comment out `cy.task("removeContainers");`
 
 ### Local storage hack
 

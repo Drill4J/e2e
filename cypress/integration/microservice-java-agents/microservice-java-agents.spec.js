@@ -16,7 +16,9 @@
 /// <reference types="cypress" />
 import testNg from "./java-mcr.json";
 
-Cypress.env("fixtureFile", "microservice-java-agents-testNG");
+// Cypress.env("fixtureFile", "microservice-java-agents-testNG");
+
+const fixtureFile = Cypress.env("fixtureFile") || "microservice-java-agents-testNG";
 
 const dataObject = {
   "microservice-java-agents-testNG": testNg,
