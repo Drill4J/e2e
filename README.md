@@ -70,20 +70,20 @@ To launch the development environment, follow these steps:
 
 * with default parameters
 
-  ``
+  ```
   cypress run --spec ./cypress/integration/single-agent/single-agent.spec.js
-  ``
+  ```
 
 * single java-agent with testNG runner
 
-  ``
+  ```
   cypress run --env "initialApplicationBuildVersion"="0.1.0","secondApplicationBuildVersion"="0.5.0","startApplicationTaskName"="startPetclinic","startApplicationTestsTaskName"="startPetclinicAutoTests","autotestsImage"="drill4j/petclinic-autotests-execute:0.3.2","autotestsParams"=":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true","fixtureFile"="single-java-agent-testNG"  --spec './cypress/integration/single-agent/single-agent.spec.js'
-  ``
+  ```
 
 * single js-agent
-  ``
+  ```
   cypress run --env "initialApplicationBuildVersion"="1.0.0","secondApplicationBuildVersion"="2.0.0","startApplicationTaskName"="startToDoMVC","startApplicationTestsTaskName"="startToDoMVCAutotests","fixtureFile"="single-js-agent"  --spec './cypress/integration/single-agent/single-agent.spec.js'
-  ``
+  ```
 
 ## Microservice java agent setup environment
 
