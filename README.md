@@ -107,10 +107,9 @@ To disable it you need:
 ### Local storage hack
 
 Since all our tests are dependent on the previous steps, and we store the authorization token in local storage, we decided to disable
-storage cleanup before each test.
+storage cleanup before each test. 
 
-Implementation:
-Inside the "before" hook after the login step you need to add this code
+If you were redirected to login page between tests you need to add inside the "before" hook after the login step 
 
 ```
     Cypress.LocalStorage.clear = () => {};
