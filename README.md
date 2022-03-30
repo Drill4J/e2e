@@ -120,5 +120,5 @@ Inside the "before" hook after the login step you need to add this code
 
 1. After the group registration on Test2Code page you can see not all registered agents. To fix it you should finish all scope. And after it
    all agents should display in Test2Code table
-2. After the collect coverage multiple times via autotests you can see floating coverage. It assigns with petclinic caching. To fix it you
+2. After the collect coverage multiple times with using autotests you can see floating coverage. It assigns with petclinic caching. To fix it you
    need to run ` cy.task("stopPetclinicMicroservice)"` or `cy.task("stopPetclinic")` command between tests running.
