@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/// <reference types="cypress" /> 
+/// <reference types="cypress" />
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-Cypress.env("scopesCount", "9");
+// Cypress.env("scopesCount", "9");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
