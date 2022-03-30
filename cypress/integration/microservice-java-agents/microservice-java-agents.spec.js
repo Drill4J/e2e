@@ -24,9 +24,9 @@ const dataObject = {
   "microservice-java-agents-testNG": testNg,
 };
 
-const data = dataObject[Cypress.env("fixtureFile")];
+const data = dataObject[fixtureFile];
 
-context(Cypress.env("fixtureFile"), () => {
+context(fixtureFile, () => {
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
