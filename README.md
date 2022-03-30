@@ -2,7 +2,7 @@
 
 ## Development
 
-**Prerequisite:**
+### Prerequisite
 
 1. [Node.js](https://nodejs.org). I recommend to using nodejs 14 version because with 16 versions cypress working unstable.
 2. [Docker](https://www.docker.com/products/docker-desktop/)
