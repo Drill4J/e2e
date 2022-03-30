@@ -15,6 +15,14 @@ To launch the development environment, follow these steps:
 4. start docker
 5. enjoy the development.
 
+## Structure of repository
+
+* docker folder -  compose files for start applications and tests for it. All files has only one environment file: ``.env``
+* cypress/support folder - common utilities functions and scripts that should execute before all tests
+* cypress/plugins folder - tasks with scripts for start applications and tests for them
+* setups.json - object with data for starting setups with using vee-table
+* artifacts.json - object with ``key`` =  ``component id from vee-table``  and ``value`` = ``environment variable name for start using in docker compose files ``
+
 ## Single agent setup
 
 ### Environment
@@ -92,6 +100,16 @@ To launch the development environment, follow these steps:
     cypress run --spec ./cypress/integration/microservice-java-agents/microservice-java-agents.spec.js
 ``
 
+## Github actions
+
+* run-tests - started after the deploying some artifact in github
+* manual-run-tests-for-component - start after manual trigger from vee-table
+* run-all-setups - start after manual trigger from vee-table
+* run-setup - start after manual trigger from vee-table or after api call in actions:
+    * run-tests
+    * manual-run-tests-for-component
+    * run-all-setups
+
 ## Notes
 
 ### Clearing docker environment
@@ -122,10 +140,5 @@ If you were redirected to login page between tests you need to add inside the "b
 2. After the collect coverage multiple times with using autotests you can see floating coverage. It assigns with petclinic caching. To fix it you
    need to run ` cy.task("stopPetclinicMicroservice)"` or `cy.task("stopPetclinic")` command between tests running.
    
-## Structure of repository
 
-* docker folder -  compose files for start applications and tests for it. All files has only one environment file: ``.env``
-* cypress/support folder - common utilities functions and scripts that should execute before all tests
-* cypress/plugins folder - tasks with scripts for start applications and tests for them
-* setups.json - object with data for starting setups with using vee-table
-* artifacts.json - object with ``key`` =  ``component id from vee-table``  and ``value`` = ``environment variable name for start using in docker compose files `` 
+
