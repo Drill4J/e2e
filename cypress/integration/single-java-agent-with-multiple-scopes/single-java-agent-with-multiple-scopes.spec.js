@@ -16,7 +16,9 @@
 /// <reference types="cypress" />
 import data from "./single-java-agent.json";
 
-Cypress.env("scopesCount", "3");
+// Cypress.env("scopesCount", "3");
+
+const scopesCount = Cypress.env("scopesCount") || "3";
 
 context("single-java-agent-with-multiple-scopes", () => {
   beforeEach(() => {
@@ -55,7 +57,7 @@ context("single-java-agent-with-multiple-scopes", () => {
 
       cy.contains('[data-test="coverage-plugin-header:plugin-name"]', "Test2Code", { matchCase: false }).should("exist");
     });
-    (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+    (new Array(+scopesCount).fill(1)).forEach((_, scopeNumber) => {
       context(`Collect coverage and finish ${scopeNumber + 1} scope`, () => {
         after(() => {
           cy.restoreLocalStorage();
@@ -92,14 +94,14 @@ context("single-java-agent-with-multiple-scopes", () => {
         cy.get('a[data-test="active-scope-info:all-scopes-link"]').click();
       });
 
-      (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+      (new Array(+scopesCount).fill(1)).forEach((_, scopeNumber) => {
         it(`should display ${data.coverage}% for New Scope ${scopeNumber + 1}`, () => {
           cy.contains("table tr", `New Scope ${scopeNumber + 1}`).find('[data-test="scopes-list:coverage"]')
             .should("contain", data.coverage);
         });
       });
     });
-    (new Array(+Cypress.env("scopesCount")).fill(1)).forEach((_, scopeNumber) => {
+    (new Array(+scopesCount).fill(1)).forEach((_, scopeNumber) => {
       context(`New Scope ${scopeNumber + 1}`, () => {
       // we on all scopes page
         context("Should display tests table", () => {
