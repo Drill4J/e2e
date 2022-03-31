@@ -110,6 +110,25 @@ To launch the development environment, follow these steps:
     * manual-run-tests-for-component
     * run-all-setups
 
+## How create a new setup 
+
+### Vee-table
+
+1. Click to Add "Setup" link in the header
+2. Add uniq id for the setup
+3. Add name for the setup
+4. Select components that assign with this setup. After the publish some of selected component this setup will start
+5. Click to "Submit" button
+
+### E2E repo
+
+1. Open ``cypress.json`` file
+2. Add preperty with key = *uniq id* that we select in *vee-table* step and value = object with properties:
+  * ``file`` - spec file
+  * ``cypressEnv`` - object with not configured params that won`t send to *vee-table*
+  * ``params`` - array with objects with configured params that will send to *vee-table* 
+3. If you was create new component you need to update ``artifact.json``
+
 ## Notes
 
 ### Clearing docker environment
