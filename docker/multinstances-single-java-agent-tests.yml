@@ -5,7 +5,7 @@ services:
     image: ${AUTOTESTS_IMAGE}   # drill4j/petclinic-autotests-execute:0.3.2
     container_name: start-petclinic-tests
     environment:
-      - petclinicUrl=http://spring-petclinic-sample:8080
+      - petclinicUrl=http://multiinstance-petclinic-balancer
       - adminHost=drill-admin
       - adminPort=8090
       - agentId=dev-pet-standalone

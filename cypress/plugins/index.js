@@ -31,13 +31,11 @@
  * @type {Cypress.PluginConfig}
  */
 
-const {
-  ping, promisifiedExec, dockerComposeUp,
-} = require("./utils");
 const adminScripts = require("./admin");
 const singlejavaAgentScripts = require("./single-java-agent");
 const microserviceJavaAgentsScripts = require("./microservice-java-agents");
 const singleJsAgentScripts = require("./single-js-agent");
+const multiinstancesJavaAgentScripts = require("./multiinstance-java-agent");
 
 module.exports = (on) => {
   on("task", {
@@ -45,25 +43,6 @@ module.exports = (on) => {
     ...singlejavaAgentScripts,
     ...microserviceJavaAgentsScripts,
     ...singleJsAgentScripts,
-    async startPetclinicMultinstaces({ build = "0.1.0" }) {
-      const log = await dockerComposeUp(
-        "./docker/multinstances-single-java-agent.yml",
-        `./docker/multinstances-single-java-agent-${build}.env`,
-      );
-      console.log(log);
-      try {
-        await ping("http://localhost:8087");
-        console.log("Petclinic is available");
-      } catch (e) {
-        console.log("Petclinic is not available");
-      }
-      return null;
-    },
-    async startPetclinicMultinstacesAutoTests() {
-      const log = await promisifiedExec("docker-compose -f ./docker/multinstances-single-java-agent-tests.yml up");
-      console.log(log);
-      console.log("petclinic tests container exited");
-      return null;
-    },
+    ...multiinstancesJavaAgentScripts,
   });
 };
