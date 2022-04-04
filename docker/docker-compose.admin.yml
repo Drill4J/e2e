@@ -14,7 +14,9 @@ services:
       - DRILL_DB_NAME=${POSTGRES_DB}
       - DRILL_DB_USER_NAME=${POSTGRES_USER}
       - DRILL_DB_PASSWORD=${POSTGRES_PASSWORD}
-
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - 9090:8090
       - 6006:5006
