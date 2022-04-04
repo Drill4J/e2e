@@ -17,7 +17,7 @@
 import { convertUrl } from "../../utils";
 import data from "./single-java-agent.json";
 
-// Cypress.env("scopesCount", "9");
+Cypress.env("scopesCount", "1");
 
 context("single-java-agent-with-multiple-scopes", () => {
   before(() => {
@@ -62,6 +62,13 @@ context("single-java-agent-with-multiple-scopes", () => {
             withProxy: false,
           }, { timeout: 300000 });
           cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", `${data.coverage}%`);
+        });
+
+        it("should finish all sessions", () => {
+          cy.get('[data-test="active-scope-info:sessions-management-link"]').click();
+          cy.get('[data-test="management-active-sessions:finish-all"]').click();
+          cy.get('[data-test="operation-action-warning:yes-button"]').click();
+          cy.get('[data-test="modal:close-button"]').click();
         });
 
         it("should finish scope", () => {
