@@ -66,6 +66,11 @@ To launch the development environment, follow these steps:
 * autotestsParams - :testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true
 * fixtureFile - single-java-agent-testNG
 
+### Starting cypress on Windows
+```
+$(npm bin)/cypress run --spec ...
+```
+
 ### Examples of starting setups in headless mode
 
 * with default parameters
