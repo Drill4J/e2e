@@ -30,7 +30,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-
+const registerReportPortalPlugin = require("@reportportal/agent-js-cypress/lib/plugin");
 const adminScripts = require("./admin");
 const singlejavaAgentScripts = require("./single-java-agent");
 const microserviceJavaAgentsScripts = require("./microservice-java-agents");
