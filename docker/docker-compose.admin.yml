@@ -1,28 +1,9 @@
 version: '3'
 
 services:
-  drill-admin:
-    image: drill4j/admin:${ADMIN_VERSION}
-    container_name: drill-admin
-    environment:
-      - TEST2CODE_PLUGIN_VERSION=${TEST2CODE_PLUGIN_VERSION}
-      - JAVA_TOOL_OPTIONS="-Dplugin.feature.drealtime=true"
-      - LOG_LEVEL=trace
-      - DRILL_DEFAULT_PACKAGES=org/springframework/samples/petclinic
-      - DRILL_DB_HOST=${POSTGRES_HOST}
-      - DRILL_DB_PORT=5432
-      - DRILL_DB_NAME=${POSTGRES_DB}
-      - DRILL_DB_USER_NAME=${POSTGRES_USER}
-      - DRILL_DB_PASSWORD=${POSTGRES_PASSWORD}
-
-    ports:
-      - 9090:8090
-      - 6006:5006
-    networks:
-      - drill4j-dev-network
-
   postgres:
     image: postgres:14.1
+    container_name: postgres
     ports:
       - '5432:5432'
     environment:
@@ -37,6 +18,55 @@ services:
     networks:
       - drill4j-dev-network
 
+  drill-admin:
+    image: drill4j/admin:${ADMIN_VERSION}
+    container_name: drill-admin
+    environment:
+      - TEST2CODE_PLUGIN_VERSION=${TEST2CODE_PLUGIN_VERSION}
+      - JAVA_TOOL_OPTIONS="-Dplugin.feature.drealtime=true"
+      - LOG_LEVEL=trace
+      - DRILL_DEFAULT_PACKAGES=org/springframework/samples/petclinic
+      - DRILL_DB_HOST=${POSTGRES_HOST}
+      - DRILL_DB_PORT=5432
+      - DRILL_DB_NAME=${POSTGRES_DB}
+      - DRILL_DB_USER_NAME=${POSTGRES_USER}
+      - DRILL_DB_PASSWORD=${POSTGRES_PASSWORD}
+      - analytic.disable=true
+    ports:
+      - 9090:8090
+      - 6006:5006
+    depends_on:
+      postgres:
+        condition: service_started
+    networks:
+      - drill4j-dev-network
+
+  js-agent:
+    image: drill4j/js-agent:${JS_AGENT_VERSION}
+    container_name: js-agent
+    ports:
+      - '8092:8080'
+    environment:
+      # RECEIVED_PATH_OMIT_PREFIX: "webpack:///"
+      RECEIVED_PATH_APPEND_PREFIX: 'js/'
+      DRILL_ADMIN_HOST: ${ADMIN_ADDRESS}
+      DRILL_ADMIN_PROTOCOL: 'http'
+      DEBUG_PROBES_ENABLED: 'true'
+      PERF_MEASUREMENT_ENABLED: 'true'
+      PERF_DIFFS_ENABLED: 'true'
+      DEBUG_AGENT_SERVICE_CONNECTION: 'true'
+      DEBUG_AGENT_SERVICE_CONNECTION_MAX_ARGS_LENGTH: '400'
+      WAIT_HOSTS: ${ADMIN_ADDRESS}
+    volumes:
+      - drill-data-js-agent:/usr/src/app/js-agent-data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - drill4j-dev-network
+    depends_on:
+      drill-admin:
+        condition: service_started
+
   admin-ui:
     image: drill4j/admin-ui-root-config:${ADMIN_UI_ROOT_CONFIG_VERSION}
     container_name: admin-ui
@@ -44,6 +74,9 @@ services:
       - UI_PLUGINS_URLS=test2code#https://cdn.jsdelivr.net/npm/@drill4j/test2code-ui@${TEST2CODE_UI_VERSION}/dist/Drill4J-test-to-code.js
     ports:
       - 9091:8080
+    depends_on:
+      drill-admin:
+        condition: service_started
     networks:
       - drill4j-dev-network
 
@@ -52,6 +85,19 @@ services:
     image: drill4j/browser-proxy:0.2.0
     ports:
       - 7777:7777
+    networks:
+      - drill4j-dev-network
+
+  devtools-proxy:
+    container_name: devtools-proxy
+    image: drill4j/devtools-proxy:${DEVTOOLS_PROXY_VERSION}
+    ports:
+      - 8093:8080
+    environment:
+      DEBUG: 'drill:*'
+      DEBUG_COLORS: 'true'
+      FORCE_COLOR: '3'
+      DEBUG_LOG_LEVEL: '2'
     networks:
       - drill4j-dev-network
 
@@ -66,7 +112,6 @@ services:
       - ".:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs", "-container-network", "drill4j-dev-network"]
-
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest-release
@@ -85,7 +130,20 @@ services:
     image: selenoid/firefox:94.0
     container_name: firefox
 
+  selenium-chrome:
+    container_name: selenium-chrome
+    image: selenium/standalone-chrome:latest
+    ports:
+      - '9222:9222' # devtools
+      - '4444:4444' # webdriver
+    shm_size: '2gb'
+    networks:
+      - drill4j-dev-network
+
 networks:
   drill4j-dev-network:
     external: false
     name: drill4j-dev-network
+
+volumes:
+  drill-data-js-agent:

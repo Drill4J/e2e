@@ -25,5 +25,18 @@ import "./tests/risks-table";
 import "./tests/tests-to-run-table";
 import "./start-admin";
 import "./tests/covered-methods-pane-with-methods-check";
+import "./tests/login";
+import "./tests/register-agent";
+import "./tests/register-group";
+import "./tests/finish-scope";
+import "./tests/finish-all-scopes";
+
+const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
+Cypress.on("uncaught:exception", (err) => {
+  /* returning false here prevents Cypress from failing the test */
+  if (resizeObserverLoopErrRe.test(err.message)) {
+    return false;
+  }
+});
 
 register(Cypress, cy, localStorage);

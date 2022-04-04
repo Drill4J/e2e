@@ -4,7 +4,7 @@
   "builds": {
     "0.1.0": {
       "summary": {
-        "coverage": "21.9"
+        "coverage": "25.9"
       },
       "agents": {
         "customer-service": {
@@ -157,7 +157,7 @@
           }
         },
         "visits-service": {
-          "coverage": "16.5",
+          "coverage": "59.3",
           "testsCount": "12",
           "packagesCount": "3",
           "packages": {
@@ -169,28 +169,45 @@
             },
             "org/springframework/samples/petclinic/visits/model": {
               "methodsTotal": "9",
-              "coverage": "0",
-              "methodsCovered": "0",
-              "associatedTestsCount": "n/a"
+              "coverage": "57.8",
+              "methodsCovered": "7",
+              "associatedTestsCount": "2"
             },
             "org/springframework/samples/petclinic/visits/web": {
               "methodsTotal": "5",
-              "coverage": "39.5",
-              "methodsCovered": "2",
-              "associatedTestsCount": "2"
+              "coverage": "73.7",
+              "methodsCovered": "3",
+              "associatedTestsCount": "3"
             }
           },
           "packagesWithAssociatedTests": {
             "org/springframework/samples/petclinic/visits/web": {
-              "associatedTestsCount": "2",
+              "associatedTestsCount": "3",
               "associatedTests": [
                 {
                   "name": "testOwnerDetailes()",
                   "path": "api.microservices.McrApiTest"
                 },
                 {
+                  "name": "testNgCreateNewVisitTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
                   "name": "testNgCheckPageHeader(String,String)[2]",
                   "path": "ui.microservices.McrChromeUITest"
+                }
+              ]
+            },
+            "org/springframework/samples/petclinic/visits/model": {
+              "associatedTestsCount": "2",
+              "associatedTests": [
+                {
+                  "name": "testNgCreateNewVisitTest()",
+                  "path": "api.microservices.McrApiTest"
+                },
+                {
+                  "name": "testOwnerDetailes()",
+                  "path": "api.microservices.McrApiTest"
                 }
               ]
             }
@@ -214,7 +231,8 @@
               "type": "Auto",
               "expectedStatus": "Passed",
               "coverage": "42.9",
-              "methodsCovered": "8"
+              "methodsCovered": "8",
+              "path": "api.microservices.McrApiTest"
             }
           },
           "testsWithoutCoveredMethods": {
@@ -275,14 +293,14 @@
             },
             "org/springframework/samples/petclinic/api/boundary/web": {
               "methodsTotal": "10",
-              "coverage": "65.1",
-              "methodsCovered": "6",
+              "coverage": "75.6",
+              "methodsCovered": "7",
               "associatedTestsCount": "2"
             },
             "org/springframework/samples/petclinic/api/dto": {
               "methodsTotal": "58",
-              "coverage": "12.8",
-              "methodsCovered": "30",
+              "coverage": "17.3",
+              "methodsCovered": "39",
               "associatedTestsCount": "1"
             }
           },
@@ -562,13 +580,13 @@
     },
     "0.2.0": {
       "summary": {
-        "coverage": "22.5",
+        "coverage": "26.6",
         "testsCount": "12",
         "scopesCount": "4",
-        "tests2RunBeforeTestsExecuted": "3",
+        "tests2RunBeforeTestsExecuted": "4",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "risksCountBeforeTestsExecuted": "5",
-        "risksCountAfterTheTestsExecuted": "1"
+        "risksCountAfterTheTestsExecuted": "0"
       },
       "agents": {
         "customer-service": {
@@ -581,8 +599,8 @@
         "visits-service": {
           "coverage": "16",
           "risksCountBeforeTestsExecuted": "1",
-          "risksCountAfterTheTestsExecuted": "1",
-          "tests2RunBeforeTestsExecuted": "0",
+          "risksCountAfterTheTestsExecuted": "0",
+          "tests2RunBeforeTestsExecuted": "1",
           "testsToRunCountAfterTheTestsExecuted": "0"
         },
         "api-gateway": {
@@ -634,7 +652,7 @@
         "visits-service": {
           "risks": {
             "risksCountBeforeTestsExecuted": "1",
-            "risksCountAfterTheTestsExecuted": "1",
+            "risksCountAfterTheTestsExecuted": "0",
             "newRisksCount": "0",
             "newRisksCountAfterTheTestsExecuted": "0",
             "modifiedRisksCount": "1",
@@ -644,7 +662,7 @@
                 "packageName": "org/springframework/samples/petclinic/visits/web/VisitResource",
                 "type": "Modified",
                 "coverage": "0",
-                "associatedTestsCount": "0"
+                "associatedTestsCount": "1"
               }
             }
           }

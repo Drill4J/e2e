@@ -1,5 +1,6 @@
 {
   "agentId": "dev-pet-standalone",
+  "systemSettings": {},
   "builds": {
     "0.1.0": {
       "coverage": "30",
@@ -28,7 +29,7 @@
           "methodsTotal": "8",
           "coverage": "21.9",
           "methodsCovered": "2",
-          "associatedTestsCount": "7"
+          "associatedTestsCount": "6"
         },
         "org/springframework/samples/petclinic/vet": {
           "methodsTotal": "12",
@@ -48,23 +49,23 @@
           "associatedTestsCount": "5",
           "associatedTests": [
             {
-              "name": "junit5GetOwner4EditPage()",
+              "name": "testNgGetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit5GetOwner4InfoPage()",
+              "name": "testNgGetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "name": "testNgCheckPageHeader(String,String)[1]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "name": "testNgCheckPageHeader(String,String)[2]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5FindOwnersTestSelenide()",
+              "name": "testNgFindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -73,52 +74,48 @@
           "associatedTestsCount": "4",
           "associatedTests": [
             {
-              "name": "junit5GetOwner4EditPage()",
+              "name": "testNgGetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit5GetOwner4InfoPage()",
+              "name": "testNgGetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "name": "testNgCheckPageHeader(String,String)[1]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5FindOwnersTestSelenide()",
+              "name": "testNgFindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
         },
         "org/springframework/samples/petclinic/system": {
-          "associatedTestsCount": "7",
+          "associatedTestsCount": "6",
           "associatedTests": [
             {
-              "name": "junit5GetHomePage()",
+              "name": "testNgGetHomePage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1",
+              "name": "testNgCheckPageHeader(String,String)[0]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "name": "testNgCheckPageHeader(String,String)[1]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "name": "testNgCheckPageHeader(String,String)[2]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4",
+              "name": "testNgCheckPageHeader(String,String)[3]",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "junit5FindOwnersTestSelenide()",
-              "path": "ui.standalone.StandaloneFireFoxUITest"
-            },
-            {
-              "name": "junit5UiFailedTest()",
+              "name": "testNgFindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -127,63 +124,65 @@
           "associatedTestsCount": "1",
           "associatedTests": [
             {
-              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "name": "testNgCheckPageHeader(String,String)[2]",
               "path": "ui.standalone.StandaloneChromeUITest"
             }
           ]
         }
       },
       "testsWithCoveredMethods": {
-        "junit5GetHomePage()": {
+        "testNgGetHomePage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit5GetOwner4EditPage()": {
+        "testNgGetOwner4EditPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "7.7",
           "methodsCovered": "14",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit5GetOwner4InfoPage()": {
+        "testNgGetOwner4InfoPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "14.9",
           "methodsCovered": "22",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1": {
-          "type": "Auto",
-          "expectedStatus": "Passed",
-          "coverage": "0.2",
-          "methodsCovered": "1",
-          "path": "ui.standalone.StandaloneChromeUITest"
-        },
-        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2": {
+        "testNgCheckPageHeader(String,String)[1]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "3.9",
           "methodsCovered": "7",
           "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3": {
+        "testNgCheckPageHeader(String,String)[0]": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.2",
+          "methodsCovered": "1",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "testNgCheckPageHeader(String,String)[2]": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "10.3",
           "methodsCovered": "15",
           "path": "ui.standalone.StandaloneChromeUITest"
+
         },
-        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4": {
+        "testNgCheckPageHeader(String,String)[3]": {
           "type": "Auto",
           "expectedStatus": "Passed",
-          "coverage": "0.8",
-          "methodsCovered": "2",
+          "coverage": "0.6",
+          "methodsCovered": "1",
           "path": "ui.standalone.StandaloneChromeUITest"
+
         },
-        "junit5FindOwnersTestSelenide()": {
+        "testNgFindOwnersTestSelenide()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "13.8",
@@ -192,29 +191,29 @@
         }
       },
       "testsWithoutCoveredMethods": {
-        "junit5IgnoredTest()": {
+        "testNgIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit5FailedTest()": {
+        "testNgFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit5UiIgnoredTest()": {
+        "testNgUiIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "junit5UiFailedTest()": {
+        "testNgUiFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
-          "coverage": "0.2",
-          "methodsCovered": "1"
+          "coverage": "0",
+          "methodsCovered": "0"
         }
       }
     },
@@ -259,15 +258,15 @@
             "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
             "type": "Modified",
             "coverage": "100",
-            "associatedTestsCount": "7"
+            "associatedTestsCount": "5"
           }
         }
       },
       "testsToRun": {
-        "tests2RunBeforeTestsExecuted": "7",
+        "tests2RunBeforeTestsExecuted": "6",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "junit5GetHomePage()": {
+          "testNgGetHomePage()": {
             "type": "Auto",
             "coverage": "0.2",
             "methodsCovered": "1"

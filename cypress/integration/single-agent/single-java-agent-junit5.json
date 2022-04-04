@@ -1,0 +1,280 @@
+{
+  "agentId": "dev-pet-standalone",
+  "systemSettings": {},
+  "builds": {
+    "0.1.0": {
+      "coverage": "30",
+      "testsCount": "12",
+      "packagesCount": "6",
+      "packages": {
+        "org/springframework/samples/petclinic": {
+          "methodsTotal": "2",
+          "coverage": "0",
+          "methodsCovered": "0",
+          "associatedTestsCount": "n/a"
+        },
+        "org/springframework/samples/petclinic/model": {
+          "methodsTotal": "13",
+          "coverage": "70.2",
+          "methodsCovered": "10",
+          "associatedTestsCount": "5"
+        },
+        "org/springframework/samples/petclinic/owner": {
+          "methodsTotal": "55",
+          "coverage": "23.3",
+          "methodsCovered": "17",
+          "associatedTestsCount": "4"
+        },
+        "org/springframework/samples/petclinic/system": {
+          "methodsTotal": "8",
+          "coverage": "21.9",
+          "methodsCovered": "2",
+          "associatedTestsCount": "7"
+        },
+        "org/springframework/samples/petclinic/vet": {
+          "methodsTotal": "12",
+          "coverage": "65.7",
+          "methodsCovered": "8",
+          "associatedTestsCount": "1"
+        },
+        "org/springframework/samples/petclinic/visit": {
+          "methodsTotal": "7",
+          "coverage": "0",
+          "methodsCovered": "0",
+          "associatedTestsCount": "n/a"
+        }
+      },
+      "packagesWithAssociatedTests": {
+        "org/springframework/samples/petclinic/model": {
+          "associatedTestsCount": "5",
+          "associatedTests": [
+            {
+              "name": "junit5GetOwner4EditPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "junit5GetOwner4InfoPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5FindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
+          ]
+        },
+        "org/springframework/samples/petclinic/owner": {
+          "associatedTestsCount": "4",
+          "associatedTests": [
+            {
+              "name": "junit5GetOwner4EditPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "junit5GetOwner4InfoPage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5FindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
+          ]
+        },
+        "org/springframework/samples/petclinic/system": {
+          "associatedTestsCount": "7",
+          "associatedTests": [
+            {
+              "name": "junit5GetHomePage()",
+              "path": "api.standalone.StandaloneApiTest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            },
+            {
+              "name": "junit5FindOwnersTestSelenide()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            },
+            {
+              "name": "junit5UiFailedTest()",
+              "path": "ui.standalone.StandaloneFireFoxUITest"
+            }
+          ]
+        },
+        "org/springframework/samples/petclinic/vet": {
+          "associatedTestsCount": "1",
+          "associatedTests": [
+            {
+              "name": "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3",
+              "path": "ui.standalone.StandaloneChromeUITest"
+            }
+          ]
+        }
+      },
+      "testsWithCoveredMethods": {
+        "junit5GetHomePage()": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.2",
+          "methodsCovered": "1",
+          "path": "api.standalone.StandaloneApiTest"
+        },
+        "junit5GetOwner4EditPage()": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "7.7",
+          "methodsCovered": "14",
+          "path": "api.standalone.StandaloneApiTest"
+        },
+        "junit5GetOwner4InfoPage()": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "14.9",
+          "methodsCovered": "22",
+          "path": "api.standalone.StandaloneApiTest"
+        },
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#1": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.2",
+          "methodsCovered": "1",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#2": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "3.9",
+          "methodsCovered": "7",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#3": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "10.3",
+          "methodsCovered": "15",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "junit5CheckPageHeaderJunit5(java.lang.String, java.lang.String)#4": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "0.8",
+          "methodsCovered": "2",
+          "path": "ui.standalone.StandaloneChromeUITest"
+        },
+        "junit5FindOwnersTestSelenide()": {
+          "type": "Auto",
+          "expectedStatus": "Passed",
+          "coverage": "13.8",
+          "methodsCovered": "20",
+          "path": "ui.standalone.StandaloneFireFoxUITest"
+        }
+      },
+      "testsWithoutCoveredMethods": {
+        "junit5IgnoredTest()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "junit5FailedTest()": {
+          "type": "Auto",
+          "expectedStatus": "Failed",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "junit5UiIgnoredTest()": {
+          "type": "Auto",
+          "expectedStatus": "Skipped",
+          "coverage": "0",
+          "methodsCovered": "0"
+        },
+        "junit5UiFailedTest()": {
+          "type": "Auto",
+          "expectedStatus": "Failed",
+          "coverage": "0.2",
+          "methodsCovered": "1"
+        }
+      }
+    },
+    "0.5.0": {
+      "coverage": "26.4",
+      "comparedToTheBaselineBuildCoverage": "- 3.6",
+      "scopesCount": "1",
+      "testsCount": "12",
+      "risks": {
+        "risksCountBeforeTestsExecuted": "5",
+        "risksCountAfterTheTestsExecuted": "2",
+        "newRisksCount": "2",
+        "newRisksCountAfterTheTestsExecuted": "2",
+        "modifiedRisksCount": "3",
+        "modifiedRisksCountAfterTheTestsExecuted": "3",
+        "methods": {
+          "newMethod1": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "newMethod2": {
+            "packageName": "org/springframework/samples/petclinic/vet/VetController",
+            "type": "New",
+            "coverage": "0",
+            "associatedTestsCount": "0"
+          },
+          "initFindForm": {
+            "packageName": "org/springframework/samples/petclinic/owner/OwnerController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "2"
+          },
+          "triggerException": {
+            "packageName": "org/springframework/samples/petclinic/system/CrashController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "1"
+          },
+          "welcome": {
+            "packageName": "org/springframework/samples/petclinic/system/WelcomeController",
+            "type": "Modified",
+            "coverage": "100",
+            "associatedTestsCount": "7"
+          }
+        }
+      },
+      "testsToRun": {
+        "tests2RunBeforeTestsExecuted": "7",
+        "testsToRunCountAfterTheTestsExecuted": "0",
+        "tests": {
+          "junit5GetHomePage()": {
+            "type": "Auto",
+            "coverage": "0.2",
+            "methodsCovered": "1"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 {
   "agentId": "dev-pet-standalone",
+  "systemSettings": {},
   "builds": {
     "0.1.0": {
       "coverage": "30",
@@ -48,23 +49,23 @@
           "associatedTestsCount": "5",
           "associatedTests": [
             {
-              "name": "testNgGetOwner4EditPage()",
+              "name": "junit4GetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "testNgGetOwner4InfoPage()",
+              "name": "junit4GetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[1]",
+              "name": "junit4CheckPageHeader[1]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[2]",
+              "name": "junit4CheckPageHeader[2]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgFindOwnersTestSelenide()",
+              "name": "junit4FindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -73,19 +74,19 @@
           "associatedTestsCount": "4",
           "associatedTests": [
             {
-              "name": "testNgGetOwner4EditPage()",
+              "name": "junit4GetOwner4EditPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "testNgGetOwner4InfoPage()",
+              "name": "junit4GetOwner4InfoPage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[1]",
+              "name": "junit4CheckPageHeader[1]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgFindOwnersTestSelenide()",
+              "name": "junit4FindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -94,27 +95,27 @@
           "associatedTestsCount": "6",
           "associatedTests": [
             {
-              "name": "testNgGetHomePage()",
+              "name": "junit4GetHomePage()",
               "path": "api.standalone.StandaloneApiTest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[0]",
+              "name": "junit4CheckPageHeader[0]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[1]",
+              "name": "junit4CheckPageHeader[1]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[2]",
+              "name": "junit4CheckPageHeader[2]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgCheckPageHeader(String,String)[3]",
+              "name": "junit4CheckPageHeader[3]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             },
             {
-              "name": "testNgFindOwnersTestSelenide()",
+              "name": "junit4FindOwnersTestSelenide()",
               "path": "ui.standalone.StandaloneFireFoxUITest"
             }
           ]
@@ -123,49 +124,49 @@
           "associatedTestsCount": "1",
           "associatedTests": [
             {
-              "name": "testNgCheckPageHeader(String,String)[2]",
+              "name": "junit4CheckPageHeader[2]()",
               "path": "ui.standalone.StandaloneChromeUITest"
             }
           ]
         }
       },
       "testsWithCoveredMethods": {
-        "testNgGetHomePage()": {
+        "junit4GetHomePage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgGetOwner4EditPage()": {
+        "junit4GetOwner4EditPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "7.7",
           "methodsCovered": "14",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgGetOwner4InfoPage()": {
+        "junit4GetOwner4InfoPage()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "14.9",
           "methodsCovered": "22",
           "path": "api.standalone.StandaloneApiTest"
         },
-        "testNgCheckPageHeader(String,String)[1]": {
+        "junit4CheckPageHeader[1]()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "3.9",
           "methodsCovered": "7",
           "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "testNgCheckPageHeader(String,String)[0]": {
+        "junit4CheckPageHeader[0]()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.2",
           "methodsCovered": "1",
           "path": "ui.standalone.StandaloneChromeUITest"
         },
-        "testNgCheckPageHeader(String,String)[2]": {
+        "junit4CheckPageHeader[2]()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "10.3",
@@ -173,7 +174,7 @@
           "path": "ui.standalone.StandaloneChromeUITest"
 
         },
-        "testNgCheckPageHeader(String,String)[3]": {
+        "junit4CheckPageHeader[3]()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "0.8",
@@ -181,7 +182,7 @@
           "path": "ui.standalone.StandaloneChromeUITest"
 
         },
-        "testNgFindOwnersTestSelenide()": {
+        "junit4FindOwnersTestSelenide()": {
           "type": "Auto",
           "expectedStatus": "Passed",
           "coverage": "13.8",
@@ -190,25 +191,25 @@
         }
       },
       "testsWithoutCoveredMethods": {
-        "testNgIgnoredTest()": {
+        "junit4IgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgFailedTest()": {
+        "junit4FailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgUiIgnoredTest()": {
+        "junit4UiIgnoredTest()": {
           "type": "Auto",
           "expectedStatus": "Skipped",
           "coverage": "0",
           "methodsCovered": "0"
         },
-        "testNgUiFailedTest()": {
+        "junit4UiIFailedTest()": {
           "type": "Auto",
           "expectedStatus": "Failed",
           "coverage": "0",
@@ -265,7 +266,7 @@
         "tests2RunBeforeTestsExecuted": "6",
         "testsToRunCountAfterTheTestsExecuted": "0",
         "tests": {
-          "testNgGetHomePage()": {
+          "junit4GetHomePage()": {
             "type": "Auto",
             "coverage": "0.2",
             "methodsCovered": "1"

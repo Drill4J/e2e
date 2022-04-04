@@ -19,9 +19,9 @@ const { promisifiedExec, ping } = require("./utils");
 exports.removeContainers = async () => {
   const containersIds = await promisifiedExec("docker ps -aq");
   if (containersIds) {
-    const stoppedIds = await promisifiedExec(`docker stop ${containersIds.replaceAll(/\s+/g, " ")}`);
+    const stoppedIds = await promisifiedExec(`docker stop ${containersIds.replace(/\s+/g, " ")}`);
     console.log(`Stopped containers: ${stoppedIds}`);
-    const removedIds = await promisifiedExec(`docker rm ${containersIds.replaceAll(/\s+/g, " ")}`);
+    const removedIds = await promisifiedExec(`docker rm ${containersIds.replace(/\s+/g, " ")}`);
     console.log(`Removed containers: ${removedIds}`);
     await promisifiedExec("docker volume prune -f");
     await promisifiedExec("docker network prune -f");
@@ -29,7 +29,7 @@ exports.removeContainers = async () => {
   return null;
 };
 exports.startAdmin = async () => {
-  promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml --env-file ./docker/.env up ", {}, async (data) => {
+  promisifiedExec("docker-compose -f ./docker/docker-compose.admin.yml up", {}, async (data) => {
     await fs.writeFile("./admin-logs", data, { flag: "a+" }, (err) => {
       if (err) return console.log(err);
     });
