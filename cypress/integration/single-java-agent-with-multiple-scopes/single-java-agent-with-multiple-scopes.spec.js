@@ -18,7 +18,7 @@ import data from "./single-java-agent.json";
 
 // Cypress.env("scopesCount", "3");
 
-const scopesCount = Cypress.env("scopesCount") || "3";
+const scopesCount = Cypress.env("scopesCount") || "8";
 
 context("single-java-agent-with-multiple-scopes", () => {
   context("Admin part", () => {
