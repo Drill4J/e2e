@@ -2,26 +2,37 @@
   "single-java-agent-gradle": {
     "file": "single-agent",
     "cypressEnv": {
-      "startApplicationTaskName": "startPetclinic",
       "initialApplicationBuildVersion": "0.1.0",
-      "secondApplicationBuildVersion": "0.5.0",
-      "startApplicationTestsTaskName": "startPetclinicAutoTests"
+      "secondApplicationBuildVersion": "0.5.0"
     },
     "params": [
       {
         "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true",
         "fixtureFile": "single-java-agent-testNG",
-        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2"
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2",
+        "startApplicationTaskName": "startPetclinic",
+        "startApplicationTestsTaskName": "startPetclinicAutoTests"
       },
       {
         "autotestsParams": ":junit5:test -Djunit5Version=5.8.0 --tests *.standalone.*",
         "fixtureFile": "single-java-agent-junit5",
-        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2"
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2",
+        "startApplicationTaskName": "startPetclinic",
+        "startApplicationTestsTaskName": "startPetclinicAutoTests"
       },
       {
         "autotestsParams": ":junit4:test -Djunit4Version=4.13.2 --tests *.standalone.*",
         "fixtureFile": "single-java-agent-junit4",
-        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2"
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2",
+        "startApplicationTaskName": "startPetclinic",
+        "startApplicationTestsTaskName": "startPetclinicAutoTests"
+      },
+      {
+        "autotestsParams": ":testng:test -DtestNGVersion=7.4.0 -Dtestng.dtd.http=true",
+        "fixtureFile": "multinstances-single-java-agent",
+        "autotestsImage": "drill4j/petclinic-autotests-execute:0.3.2",
+        "startApplicationTaskName": "startPetclinicMultinstaces",
+        "startApplicationTestsTaskName": "startPetclinicMultinstacesAutoTests"
       }
     ]
   },
@@ -33,7 +44,11 @@
       "secondApplicationBuildVersion": "2.0.0",
       "startApplicationTestsTaskName": "startToDoMVCAutotests"
     },
-    "params": [{ "fixtureFile": "single-js-agent" }]
+    "params": [
+      {
+        "fixtureFile": "single-js-agent"
+      }
+    ]
   },
   "single-java-agent-maven": {
     "file": "single-agent",
