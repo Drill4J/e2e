@@ -27,15 +27,6 @@ const dataObject = {
 const data = dataObject[fixtureFile];
 
 context(fixtureFile, () => {
-  beforeEach(() => {
-    cy.restoreLocalStorage();
-  });
-
-  afterEach(() => {
-    cy.saveLocalStorage();
-    cy.wait(100);
-  });
-
   context("Admin part", () => {
     before(() => {
       cy.task("startPetclinicMicroservice", { build: "0.1.0" }, { timeout: 300000 });
@@ -43,6 +34,9 @@ context(fixtureFile, () => {
 
     it("should login", () => {
       cy.login();
+      Cypress.LocalStorage.clear = () => {
+        console.log("Clearing local storage")
+      };
     });
 
     it('should open "Add agent" panel', () => {

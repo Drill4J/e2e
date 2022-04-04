@@ -74,15 +74,6 @@ const data = dataObject[fixtureFile];
 
 // TODO rename fixtureFile env
 context(fixtureFile, () => {
-  beforeEach(() => {
-    cy.restoreLocalStorage();
-  });
-
-  afterEach(() => {
-    cy.saveLocalStorage();
-    cy.wait(100);
-  });
-
   context("Admin part", () => {
     before(() => {
       cy.task(startApplicationTaskName, { build: initialApplicationBuildVersion }, { timeout: 600000 });
@@ -90,6 +81,9 @@ context(fixtureFile, () => {
 
     it("should login", () => {
       cy.login();
+      Cypress.LocalStorage.clear = () => {
+        console.log("Clearing local storage")
+      };
     });
 
     it('should open "Add agent" panel', () => {
