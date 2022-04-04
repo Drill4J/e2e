@@ -105,6 +105,19 @@ $(npm bin)/cypress run --spec ...
     cypress run --spec ./cypress/integration/microservice-java-agents/microservice-java-agents.spec.js
 ``
 
+## Single java agent with multiple scope setup environment
+
+### Environment
+
+* scopesCount
+
+### Example of starting setup in headless mode
+
+``
+cypress run --spec ./cypress/integration/single-java-agent-with-multiple-scopes/single-java-agent-with-multiple-scopes.spec.js --env "scopesCount"="8"
+``
+
+
 ## Github actions
 
 * run-tests - started after the deploying some artifact in github
