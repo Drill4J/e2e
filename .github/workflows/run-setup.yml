@@ -82,7 +82,7 @@ jobs:
           initiator: ${{ steps.run_setup.outputs.initiator }}
           link-to-run: ${{ steps.run_setup.outputs.linkToRun }}
           test-params: ${{ steps.run_setup.outputs.testParams }}
-          test-description: 'Branch name: ${{ steps.gh_vars.outputs.branch }}, Commit hash: ${{ steps.gh_vars.outputs.sha_short }}'
+          test-description: 'Ref: ${{ github.event.client_payload.ref || steps.gh_vars.outputs.sha_short }}'
       - name: Handle tests status
         id: handle_status
         uses: "./.github/handle-status"
