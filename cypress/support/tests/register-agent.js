@@ -22,6 +22,11 @@ Cypress.Commands.add("registerAgent", (agentId = AGENT_NAME) => {
   cy.getByDataTest("wizard:next-step").click();
   cy.getByDataTest("wizard:next-step").click();
 
+  // HACK: not auto select plugin in cypress
+  if (cy.get('[type="checkbox"]').should("be.not.checked")) {
+    cy.get('[type="checkbox"]').check();
+  }
+
   cy.getByDataTest("wizard:finish").click();
 
   cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");

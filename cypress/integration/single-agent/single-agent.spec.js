@@ -105,6 +105,11 @@ context(fixtureFile, () => {
       cy.getByDataTest("wizard:next-step").click();
       cy.getByDataTest("add-agent:add-plugins-step:add-plugin").click();
 
+      // HACK: not auto select plugin in cypress
+      if (cy.get('[type="checkbox"]').should("be.not.checked")) {
+        cy.get('[type="checkbox"]').check();
+      }
+
       cy.getByDataTest("wizard:finish").click();
 
       cy.contains('[data-test="panel"]', "select agent", { matchCase: false }).should("exist");
